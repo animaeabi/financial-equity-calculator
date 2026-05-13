@@ -1,10 +1,10 @@
-# Buy or Invest
+# Financial Equity Calculator
 
 A research-backed calculator that answers one question with intellectual honesty:
 
 > **Should I buy this house, or invest the same money in the stock market?**
 
-**[→ Open the calculator](https://animaeabi.github.io/buy-or-invest/)**
+**[→ Open the calculator](https://animaeabi.github.io/financial-equity-calculator/)**
 
 ## What this is
 
