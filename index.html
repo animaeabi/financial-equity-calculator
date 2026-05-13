@@ -3,7 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Buy vs. Invest — Research-Backed Calculator</title>
+<title>Financial Equity Calculator</title>
+<meta name="description" content="A research-backed Financial Equity Calculator. Models whether buying a home or investing the same money in the market builds more equity for you, conditional on length of stay, price-to-rent ratio, discipline, and state tax. Beracha-Johnson, Himmelberg-Mayer-Sinai, Flavin-Yamashita, Goodman-Mayer sourced. Single self-contained HTML, no accounts, no lead capture." />
+<meta property="og:title" content="Financial Equity Calculator" />
+<meta property="og:description" content="Should I buy this home, or keep renting and invest? A 2D regime map answers honestly — buy and invest each dominate in different zones, and the calculator places YOU on the map." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://animaeabi.github.io/financial-equity-calculator/" />
+<meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -86,8 +92,16 @@ header.app {
   background: linear-gradient(135deg, var(--brand-500), var(--brand-700));
   display: flex; align-items: center; justify-content: center; color: white;
 }
-.brand-text { font-weight: 600; font-size: 14px; color: var(--text-1); letter-spacing: -0.01em; }
-.brand-sub  { font-size: 11px; color: var(--text-3); margin-top: 1px; letter-spacing: 0.02em; text-transform: uppercase; font-weight: 500; }
+.brand-text { font-weight: 600; font-size: 14px; color: var(--text-1); letter-spacing: -0.01em; white-space: nowrap; }
+.brand-sub  { font-size: 11px; color: var(--text-3); margin-top: 1px; letter-spacing: 0.02em; text-transform: uppercase; font-weight: 500; white-space: nowrap; }
+@media (max-width: 640px) {
+  .brand-text { font-size: 13px; }
+  .brand-sub  { display: none; }
+}
+@media (max-width: 400px) {
+  /* On the smallest phones, abbreviate so the mode pill + share + theme fit */
+  .brand-text { font-size: 12px; max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
+}
 .header-actions { display: flex; align-items: center; gap: var(--s-2); }
 
 /* ---------- Buttons ---------- */
@@ -1220,7 +1234,8 @@ footer.method b { color: var(--text-2); font-weight: 500; }
     <div class="brand">
       <div class="brand-mark"><svg width="16" height="16"><use href="#i-trend"/></svg></div>
       <div>
-        <div class="brand-text">Buy vs. Invest</div>
+        <div class="brand-text">Financial Equity Calculator</div>
+        <div class="brand-sub">Buy vs. Invest, honestly</div>
       </div>
     </div>
     <div class="header-actions">
