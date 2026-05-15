@@ -31,15 +31,15 @@
 </script>
 <style>
 :root {
-  --bg: #FBFBFD; --surface: #FFFFFF; --surface-sunken: #F4F5F9; --elevated: #FFFFFF;
+  --bg: #FBFBFD; --surface: #FFFFFF; --surface-sunken: #F7F8FA; --elevated: #FFFFFF;
   --text-1: #0B0D12; --text-2: #4A5160; --text-3: #7B8294;
   --border-1: #ECEEF3; --border-2: #D6DAE3;
-  --brand-50: #EEF1FF; --brand-500: #3B5BFF; --brand-700: #2742CC;
-  --pos-50: #E8F6EE; --pos-500: #1F8B4C; --pos-700: #14653A;
-  --warn-50: #FCF2DE; --warn-500: #9A6B0A; --warn-700: #6E4B05;
-  --neg-50: #FBEAEA; --neg-500: #B5322A; --neg-700: #8A2620;
-  --info-50: #E7F0FB; --info-500: #1E63B8;
-  --ring: rgba(59,91,255,0.4);
+  --brand-50: #EEF2FB; --brand-500: #2E66E5; --brand-700: #1F4FB8;
+  --pos-50: #ECF6EF; --pos-500: #2A9D5F; --pos-700: #1A6E40;
+  --warn-50: #FAF3E1; --warn-500: #B5862C; --warn-700: #815E1B;
+  --neg-50: #FAECEA; --neg-500: #C8443A; --neg-700: #963027;
+  --info-50: #ECF2F9; --info-500: #3683C2; --info-700: #235E8E;
+  --ring: rgba(46,102,229,0.32);
   --shadow-card: 0 1px 2px rgba(11,13,18,.04), 0 1px 1px rgba(11,13,18,.03);
   --shadow-popover: 0 8px 24px rgba(11,13,18,.10), 0 2px 6px rgba(11,13,18,.06);
   --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px;
@@ -51,13 +51,13 @@
 [data-theme="dark"] {
   --bg: #0A0B0F; --surface: #14161C; --surface-sunken: #0F1117; --elevated: #1B1E26;
   --text-1: #F2F4F8; --text-2: #B6BCCB; --text-3: #7B8294;
-  --border-1: #232732; --border-2: #333847;
-  --brand-50: #1A2240; --brand-500: #6F87FF; --brand-700: #94A6FF;
-  --pos-500: #4FCB7E; --pos-50: #14291E; --pos-700: #8FE3AE;
-  --warn-500: #E0B14A; --warn-50: #2A2110; --warn-700: #F0CB7E;
-  --neg-500: #F26A60; --neg-50: #2C1614; --neg-700: #FF9089;
-  --info-500: #5DA0E8; --info-50: #112236;
-  --ring: rgba(111,135,255,0.5);
+  --border-1: #1F2128; --border-2: #2B2F3A;
+  --brand-50: #1A2240; --brand-500: #6E8BEA; --brand-700: #95AAEF;
+  --pos-500: #58BD86; --pos-50: #142A1F; --pos-700: #8FD6AC;
+  --warn-500: #D6A858; --warn-50: #2A2210; --warn-700: #E8C684;
+  --neg-500: #E0786E; --neg-50: #2C1715; --neg-700: #F2998F;
+  --info-500: #6FA3D6; --info-50: #11222F; --info-700: #98BFE0;
+  --ring: rgba(110,139,234,0.4);
   --shadow-card: 0 1px 2px rgba(0,0,0,.4), 0 1px 1px rgba(0,0,0,.3);
 }
 
@@ -67,6 +67,7 @@ body {
   background: var(--bg); color: var(--text-1);
   font-family: 'Inter', -apple-system, 'SF Pro Text', 'Segoe UI', system-ui, sans-serif;
   font-size: 14px; line-height: 22px;
+  font-feature-settings: "ss01", "cv11", "cv05";
   -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
   transition: background-color var(--dur-base) var(--ease), color var(--dur-base) var(--ease);
 }
@@ -142,8 +143,8 @@ main { max-width: 1120px; margin: 0 auto; padding: var(--s-6) var(--s-5) var(--s
   margin-bottom: var(--s-6);
 }
 .intro h1 {
-  font-size: 48px; line-height: 1.05; margin: 0;
-  font-weight: 700; letter-spacing: -0.035em;
+  font-size: 48px; line-height: 1.04; margin: 0;
+  font-weight: 700; letter-spacing: -0.045em;
   color: var(--text-1);
   max-width: 22ch;
 }
@@ -313,6 +314,31 @@ main { max-width: 1120px; margin: 0 auto; padding: var(--s-6) var(--s-5) var(--s
   font-size: 12px;
   line-height: 18px;
 }
+.path-metric.path-metric-stack { gap: 0; padding-top: 0; border-top: none; }
+.path-metric-row {
+  display: flex; flex-direction: column; gap: 2px;
+  padding-top: var(--s-4);
+}
+.path-metric-row:first-child { padding-top: var(--s-4); border-top: 1px solid var(--border-1); }
+.path-metric-row span {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--text-3);
+}
+.path-metric-row strong {
+  color: var(--text-1);
+  font-size: 24px; line-height: 30px;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+.path-metric-row small {
+  color: var(--text-2);
+  font-size: 12px; line-height: 18px;
+}
+.path-metric-divider {
+  height: 1px; background: var(--border-1);
+  margin: var(--s-4) 0 0;
+}
 .path-bridge {
   align-self: center;
   min-height: 112px;
@@ -381,20 +407,41 @@ main { max-width: 1120px; margin: 0 auto; padding: var(--s-6) var(--s-5) var(--s
   .path-metric strong { font-size: 24px; line-height: 30px; }
 }
 
-/* Length-of-stay chips */
+/* Length-of-stay chips — Apple segmented-control feel */
 .chips { display: flex; flex-wrap: wrap; gap: var(--s-1); }
 .chip {
   flex: 1 1 0; min-width: 44px;
   height: 44px; padding: 0 var(--s-2);
   display: inline-flex; align-items: center; justify-content: center;
   font-family: inherit; font-size: 13px; font-weight: 500;
-  background: var(--bg); border: 1px solid var(--border-2); color: var(--text-1);
+  background: var(--surface); border: 1px solid var(--border-1); color: var(--text-2);
   border-radius: var(--r-1); cursor: pointer;
   transition: background var(--dur-instant) var(--ease), border-color var(--dur-instant) var(--ease), color var(--dur-instant) var(--ease);
 }
-.chip:hover { border-color: var(--text-3); }
-.chip.active { background: var(--brand-500); border-color: var(--brand-500); color: white; }
+.chip:hover { background: var(--surface-sunken); color: var(--text-1); }
+.chip.active {
+  background: var(--brand-50);
+  border-color: rgba(46,102,229,0.28);
+  color: var(--brand-700);
+  font-weight: 600;
+}
+[data-theme="dark"] .chip.active {
+  border-color: rgba(110,139,234,0.35);
+}
 .chip:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--ring); }
+
+/* Quick-pick chips for currency inputs (smaller, sit below the input) */
+.chips-quick { gap: 6px; margin-top: 6px; }
+.chip-quick {
+  flex: 1 1 0; min-width: 0;
+  height: 28px; padding: 0 8px;
+  font-size: 12px; font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  border-radius: var(--r-1);
+  color: var(--text-2);
+  background: transparent;
+}
+.chip-quick:hover { color: var(--text-1); }
 
 /* ---------- Verdict card ---------- */
 .verdict {
@@ -402,14 +449,14 @@ main { max-width: 1120px; margin: 0 auto; padding: var(--s-6) var(--s-5) var(--s
   margin-bottom: var(--s-5);
   border: 1px solid transparent;
   background: var(--brand-50);
-  border-color: rgba(59,91,255,0.18);
+  border-color: rgba(46,102,229,0.18);
   animation: cardIn var(--dur-deliberate) var(--ease-emph);
 }
-[data-theme="dark"] .verdict { background: var(--brand-50); border-color: rgba(111,135,255,0.25); }
-.verdict.pos { background: var(--pos-50); border-color: rgba(31,139,76,0.25); }
-.verdict.neg { background: var(--neg-50); border-color: rgba(181,50,42,0.25); }
-[data-theme="dark"] .verdict.pos { background: var(--pos-50); border-color: rgba(79,203,126,0.3); }
-[data-theme="dark"] .verdict.neg { background: var(--neg-50); border-color: rgba(242,106,96,0.3); }
+[data-theme="dark"] .verdict { background: var(--brand-50); border-color: rgba(110,139,234,0.25); }
+.verdict.pos { background: var(--pos-50); border-color: rgba(42,157,95,0.22); }
+.verdict.neg { background: var(--neg-50); border-color: rgba(200,68,58,0.22); }
+[data-theme="dark"] .verdict.pos { background: var(--pos-50); border-color: rgba(88,189,134,0.28); }
+[data-theme="dark"] .verdict.neg { background: var(--neg-50); border-color: rgba(224,120,110,0.28); }
 @keyframes cardIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .verdict-eyebrow {
   display: inline-flex; align-items: center; gap: var(--s-2);
@@ -482,12 +529,12 @@ main { max-width: 1120px; margin: 0 auto; padding: var(--s-6) var(--s-5) var(--s
 .pr-track {
   position: relative; height: 8px; border-radius: 999px;
   background: linear-gradient(to right,
-    rgba(31,139,76,0.35) 0%,
-    rgba(31,139,76,0.35) 33%,
-    rgba(154,107,10,0.35) 33%,
-    rgba(154,107,10,0.35) 66%,
-    rgba(181,50,42,0.35) 66%,
-    rgba(181,50,42,0.35) 100%);
+    rgba(42,157,95,0.30) 0%,
+    rgba(42,157,95,0.30) 33%,
+    rgba(181,134,44,0.30) 33%,
+    rgba(181,134,44,0.30) 66%,
+    rgba(200,68,58,0.30) 66%,
+    rgba(200,68,58,0.30) 100%);
   margin: var(--s-5) 0 var(--s-3);
 }
 .pr-marker {
@@ -577,7 +624,7 @@ main { max-width: 1120px; margin: 0 auto; padding: var(--s-6) var(--s-5) var(--s
   display: flex; align-items: center; justify-content: space-between;
   padding: var(--s-4); margin-bottom: var(--s-4);
   background: var(--brand-50);
-  border: 1px solid rgba(59,91,255,0.2);
+  border: 1px solid rgba(46,102,229,0.2);
   border-radius: var(--r-2);
   grid-column: 1 / -1;
 }
@@ -649,6 +696,30 @@ body.simple-mode .verdict h2 { font-size: 24px; line-height: 32px; }
 @media (min-width: 760px) { body.simple-mode .verdict h2 { font-size: 30px; line-height: 38px; } }
 body.simple-mode .verdict-eyebrow { display: none; }
 
+/* Simple mode: hide the 2D regime map (confusing for novices) and let the
+   typographic text column take the full width of the verdict card. The map
+   remains visible in Advanced mode (no rule there). */
+body.simple-mode .v6-map-col { display: none; }
+body.simple-mode .v6-grid { grid-template-columns: 1fr; }
+
+/* Simple mode: make the trajectory chart feel like a continuation of the
+   verdict card (not a separate boxed section). Only applied in Simple. */
+body.simple-mode #trajectory-card {
+  margin-top: 0;
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+body.simple-mode .verdict-v5 {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* Gray-bar fix: hide the afford-banner placeholder when it has no content.
+   When no household income is entered, renderAffordability() clears innerHTML
+   but the container's padding/border was still rendering as an empty gray strip. */
+#afford-banner:empty { display: none; }
+
 /* Mode toggle in header */
 .mode-pill {
   display: inline-flex;
@@ -704,9 +775,10 @@ body:not(.simple-mode) .show-advanced-cta { display: none; }
 /* Sample-data state (UX #1: untouched defaults look like a personalized verdict) */
 body.untouched .verdict { position: relative; }
 body.untouched .verdict::before {
-  content: 'SAMPLE DATA';
+  content: 'EXAMPLE — CHANGE THE INPUTS ABOVE';
   position: absolute; top: var(--s-3); right: var(--s-3);
-  background: var(--warn-50); color: var(--warn-700);
+  background: var(--brand-50); color: var(--brand-700);
+  border: 1px solid var(--brand-500);
   font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
   padding: 3px 8px; border-radius: var(--r-1);
   z-index: 2;
@@ -715,7 +787,7 @@ body.untouched .verdict-headline,
 body.untouched .verdict-rationale,
 body.untouched .why-body,
 body.untouched .verdict-meta,
-body.untouched #chart { opacity: 0.55; transition: opacity var(--dur-base) var(--ease); }
+body.untouched #chart { opacity: 0.85; transition: opacity var(--dur-base) var(--ease); }
 body.untouched .untouched-prompt {
   display: block;
   font-size: 14px; font-weight: 500; color: var(--text-2);
@@ -727,8 +799,8 @@ body.untouched .untouched-prompt {
 body:not(.untouched) .untouched-prompt { display: none; }
 
 /* Verdict state classes (3-state: lean buy / lean invest / close) */
-.verdict.close { background: var(--warn-50); border-color: rgba(154,107,10,0.25); }
-[data-theme="dark"] .verdict.close { background: var(--warn-50); border-color: rgba(224,177,74,0.30); }
+.verdict.close { background: var(--warn-50); border-color: rgba(181,134,44,0.22); }
+[data-theme="dark"] .verdict.close { background: var(--warn-50); border-color: rgba(214,168,88,0.28); }
 
 /* Always-on why bullets (Round 3: replace toggle with permanent block) */
 .why-always {
@@ -779,11 +851,11 @@ body:not(.untouched) .untouched-prompt { display: none; }
   width: 64px; height: 64px; border-radius: 50%;
   background: var(--brand-50);
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 8px 24px -12px rgba(59,91,255,0.45);
+  box-shadow: 0 8px 24px -12px rgba(46,102,229,0.40);
   color: var(--brand-500);
 }
 .v5-hero-circle svg { width: 40px; height: 40px; }
-[data-theme="dark"] .v5-hero-circle { background: var(--brand-50); color: var(--brand-500); box-shadow: 0 8px 24px -12px rgba(111,135,255,0.5); }
+[data-theme="dark"] .v5-hero-circle { background: var(--brand-50); color: var(--brand-500); box-shadow: 0 8px 24px -12px rgba(110,139,234,0.45); }
 .verdict-v5.close .v5-hero-circle { background: transparent; box-shadow: none; color: var(--text-3); width: 56px; height: 56px; }
 .verdict-v5.close .v5-hero-circle svg { width: 56px; height: 56px; }
 
@@ -929,7 +1001,7 @@ body:not(.untouched) .untouched-prompt { display: none; }
 /* 96px display number → 64px caption */
 .v6-big {
   font-size: 64px; line-height: 0.95; font-weight: 700;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums slashed-zero;
   color: var(--text-1);
   margin: 0;
@@ -1026,27 +1098,37 @@ body:not(.untouched) .untouched-prompt { display: none; }
   letter-spacing: 0.04em; text-transform: uppercase;
   fill: var(--text-3);
 }
-.v6-regime-map .map-region-word {
-  font-size: 28px; font-weight: 700;
-  letter-spacing: 0.04em; text-transform: uppercase;
-  fill: var(--text-1); opacity: 0.18;
+.v6-regime-map .map-tick {
+  font-size: 9px; font-weight: 500;
+  fill: var(--text-3);
+  font-variant-numeric: tabular-nums;
 }
-.v6-regime-map .map-buy-fill { fill: var(--text-1); opacity: 0.06; }
-.v6-regime-map .map-close-band { fill: var(--text-1); opacity: 0.03; }
-.v6-regime-map .map-curve { stroke: var(--text-3); stroke-width: 1; fill: none; }
-.v6-regime-map .map-ref-dot { fill: var(--text-3); opacity: 0.4; }
+.v6-regime-map .map-region-label {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  fill: var(--text-2); opacity: 0.8;
+}
+.v6-regime-map .map-buy-fill { fill: var(--pos-500); opacity: 0.15; }
+.v6-regime-map .map-invest-fill { fill: var(--info-500); opacity: 0.15; }
+.v6-regime-map .map-curve {
+  stroke: var(--text-2); stroke-width: 1.5; fill: none;
+  stroke-linecap: round; stroke-linejoin: round;
+}
 .v6-regime-map .map-you-dot {
   fill: var(--brand-500);
   stroke: var(--surface); stroke-width: 2;
   transition: cx 200ms cubic-bezier(0.2, 0, 0, 1), cy 200ms cubic-bezier(0.2, 0, 0, 1);
 }
+.v6-regime-map .map-you-label-bg {
+  fill: var(--surface); opacity: 0.92;
+}
 .v6-regime-map .map-you-label {
-  font-size: 12px; font-weight: 600;
+  font-size: 10px; font-weight: 700;
   letter-spacing: 0.06em; text-transform: uppercase;
   fill: var(--text-1);
 }
 .v6-regime-map .map-you-sub {
-  font-size: 11px; font-weight: 500;
+  font-size: 9px; font-weight: 500;
   fill: var(--text-2);
   font-variant-numeric: tabular-nums;
 }
@@ -1066,7 +1148,7 @@ body.untouched .v6-regime-label,
 body.untouched .v6-crossover,
 body.untouched .v6-big,
 body.untouched .v6-framing,
-body.untouched .v6-contingency { opacity: 0.55; transition: opacity var(--dur-base) var(--ease); }
+body.untouched .v6-contingency { opacity: 0.85; transition: opacity var(--dur-base) var(--ease); }
 
 /* ===========================================================================
    v6 Phase 4: Discipline archetype cards in Tier-1 (CFP + UX brief)
@@ -1130,28 +1212,39 @@ body.untouched .v6-contingency { opacity: 0.55; transition: opacity var(--dur-ba
 .v6-banner {
   max-width: 720px;
   margin: 0 auto var(--s-3);
-  padding: 14px 18px;
-  border-radius: var(--r-3);
+  padding: 16px 18px;
+  border-radius: 12px;
   border: 1px solid var(--border-1);
-  background: var(--surface-sunken);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
   display: flex; align-items: flex-start; gap: 12px;
+  position: relative;
   font-size: 13px; line-height: 1.5;
   color: var(--text-1);
 }
-.v6-banner.warn {
-  border-color: var(--warn-200, var(--warn-50));
-  background: var(--warn-50);
-  color: var(--warn-700, var(--text-1));
+.v6-banner[hidden] { display: none; }
+/* Color cue lives only in a thin left accent bar — not a full wash. */
+.v6-banner::before {
+  content: ''; position: absolute;
+  left: 0; top: 12px; bottom: 12px; width: 3px;
+  border-radius: 0 2px 2px 0;
+  background: var(--text-3);
 }
-.v6-banner.danger {
-  border-color: var(--neg-200, var(--neg-500));
-  background: var(--neg-50);
-  color: var(--neg-700, var(--text-1));
+.v6-banner.warn::before { background: var(--warn-500); }
+.v6-banner.danger::before { background: var(--neg-500); }
+.v6-banner .b-icon { flex-shrink: 0; margin-top: 1px; color: var(--text-2); }
+.v6-banner .b-icon svg { width: 18px; height: 18px; stroke-width: 1.5; }
+.v6-banner .b-title {
+  font-size: 15px; font-weight: 600; line-height: 1.35;
+  color: var(--text-1);
+  letter-spacing: -0.005em;
+  margin-bottom: 4px;
 }
-.v6-banner .b-icon { flex-shrink: 0; margin-top: 2px; }
-.v6-banner .b-icon svg { width: 18px; height: 18px; }
-.v6-banner .b-title { font-weight: 600; margin-bottom: 2px; }
-.v6-banner .b-body { font-weight: 500; color: inherit; opacity: 0.9; }
+.v6-banner .b-body {
+  font-size: 13px; line-height: 1.5; font-weight: 400;
+  color: var(--text-2);
+}
+.v6-banner .b-body b { color: var(--text-1); font-weight: 600; }
 
 /* Non-verdict state: when the model refuses to answer, the regime map's YOU dot
    becomes a question mark and the typography stack shows the redirect. */
@@ -1161,6 +1254,22 @@ body.untouched .v6-contingency { opacity: 0.55; transition: opacity var(--dur-ba
 .verdict-v5.no-verdict .v5-battle,
 .verdict-v5.no-verdict .v6-flip-bar,
 .verdict-v5.no-verdict .v5-pills { display: none; }
+
+/* Color-code the winner. Renter winning is NOT bad — use info-blue, not red.
+   Reserve --neg-* for the no-verdict warning state. */
+.verdict-v5.buy { border-left: 4px solid var(--pos-500); }
+.verdict-v5.buy .v6-regime-label { color: var(--pos-500); }
+.verdict-v5.buy .v6-big { color: var(--pos-700); }
+.verdict-v5.invest { border-left: 4px solid var(--info-500); }
+.verdict-v5.invest .v6-regime-label { color: var(--info-500); }
+.verdict-v5.invest .v6-big { color: var(--info-500); }
+.verdict-v5.close .v6-regime-label { color: var(--text-2); }
+
+/* Battle bar caps & fill follow the verdict color. */
+.verdict-v5.buy .v5-battle-cap.win { background: var(--pos-500); border-color: var(--pos-500); color: white; }
+.verdict-v5.buy .v5-battle-fill { background: var(--pos-500); }
+.verdict-v5.invest .v5-battle-cap.win { background: var(--info-500); border-color: var(--info-500); color: white; }
+.verdict-v5.invest .v5-battle-fill { background: var(--info-500); }
 
 /* Hide v3 verdict + meta grid in v5 — they live in advanced "Details" below */
 body .verdict { display: none; }
@@ -1181,9 +1290,10 @@ body .why-always { display: none; }
 /* Hide untouched-prompt inside v5 (sample-data pill is shown via verdict-v5::before) */
 body.untouched .verdict-v5 { position: relative; }
 body.untouched .verdict-v5::before {
-  content: 'SAMPLE DATA';
+  content: 'EXAMPLE — CHANGE THE INPUTS ABOVE';
   position: absolute; top: 12px; right: 12px;
-  background: var(--warn-50); color: var(--warn-700);
+  background: var(--brand-50); color: var(--brand-700);
+  border: 1px solid var(--brand-500);
   font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
   padding: 3px 8px; border-radius: var(--r-1);
   z-index: 2;
@@ -1192,20 +1302,29 @@ body.untouched .v5-big,
 body.untouched .v5-sub,
 body.untouched .v5-battle,
 body.untouched .v5-pills,
-body.untouched .v5-hero-circle { opacity: 0.55; transition: opacity var(--dur-base) var(--ease); }
+body.untouched .v5-hero-circle { opacity: 0.85; transition: opacity var(--dur-base) var(--ease); }
 body.untouched .untouched-prompt { display: none; }
 
-/* Inline DTI chip (CFP #1: affordability gate) */
+/* Inline DTI chip (CFP #1: affordability gate) — neutral pill with small colored dot */
 .dti-chip {
-  display: inline-flex; align-items: center; gap: 6px;
+  display: inline-flex; align-items: center; gap: 8px;
   margin-top: var(--s-2);
-  padding: 4px 10px; border-radius: var(--r-1);
-  font-size: 11px; font-weight: 500;
-  background: var(--pos-50); color: var(--pos-700);
+  padding: 5px 11px 5px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 500; line-height: 1.4;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border-1);
+  color: var(--text-2);
 }
-.dti-chip.warn { background: var(--warn-50); color: var(--warn-700); }
-.dti-chip.bad { background: var(--neg-50); color: var(--neg-700); }
-[data-theme="dark"] .dti-chip { color: var(--pos-700); }
+.dti-chip::before {
+  content: ''; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--pos-500);
+  flex-shrink: 0;
+}
+.dti-chip.warn::before { background: var(--warn-500); }
+.dti-chip.bad::before { background: var(--neg-500); }
+.dti-chip b { color: var(--text-1); font-weight: 600; font-variant-numeric: tabular-nums; }
+.dti-chip svg { display: none; }
+[data-theme="dark"] .dti-chip { color: var(--text-2); }
 body.simple-mode .show-advanced-cta {
   display: block; text-align: center;
   margin: var(--s-5) auto;
@@ -1379,21 +1498,39 @@ body.simple-mode .show-advanced-cta button:hover { color: var(--text-1); border-
 .acc-body li b { color: var(--text-1); font-weight: 600; }
 .acc-fine { font-size: 11px; color: var(--text-3); margin-top: var(--s-3) !important; padding-top: var(--s-3); border-top: 1px solid var(--border-1); }
 
-/* Affordability banner */
+/* Affordability banner — neutral-surface card with a small colored dot indicator */
 .afford {
-  border-radius: var(--r-3); padding: var(--s-4) var(--s-5);
-  margin-bottom: var(--s-5); border: 1px solid; display: flex; gap: var(--s-3); align-items: flex-start;
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 16px 18px;
+  margin-bottom: var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--border-1);
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  color: var(--text-1);
 }
-.afford.pos { background: var(--pos-50); border-color: rgba(31,139,76,0.25); color: var(--pos-700); }
-.afford.warn { background: var(--warn-50); border-color: rgba(154,107,10,0.3); color: var(--warn-700); }
-.afford.neg { background: var(--neg-50); border-color: rgba(181,50,42,0.3); color: var(--neg-700); }
-[data-theme="dark"] .afford.pos { color: var(--pos-700); }
-[data-theme="dark"] .afford.warn { color: var(--warn-700); }
-[data-theme="dark"] .afford.neg { color: var(--neg-700); }
-.afford-icon { flex-shrink: 0; margin-top: 2px; }
-.afford-body { flex: 1; }
-.afford-body .h { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-.afford-body .b { font-size: 13px; line-height: 20px; opacity: 0.92; }
+.afford .afford-icon { display: none; }
+.afford-body { display: contents; }
+.afford-body .h {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 15px; font-weight: 600; line-height: 1.35;
+  color: var(--text-1);
+  letter-spacing: -0.005em;
+}
+.afford-body .h::before {
+  content: ''; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--text-3);
+  flex-shrink: 0;
+}
+.afford.pos .afford-body .h::before { background: var(--pos-500); }
+.afford.warn .afford-body .h::before { background: var(--warn-500); }
+.afford.neg .afford-body .h::before { background: var(--neg-500); }
+.afford-body .b {
+  font-size: 13px; line-height: 1.5;
+  color: var(--text-2);
+  padding-left: 16px;
+}
+.afford-body .b b { color: var(--text-1); font-weight: 600; }
 
 /* Methodology footer */
 footer.method {
@@ -1423,7 +1560,7 @@ footer.method b { color: var(--text-2); font-weight: 500; }
   margin-top: var(--s-2);
   box-shadow: inset 0 0 0 1px var(--brand-50);
 }
-[data-theme="dark"] .archetype-field { box-shadow: inset 0 0 0 1px rgba(111,135,255,0.15); }
+[data-theme="dark"] .archetype-field { box-shadow: inset 0 0 0 1px rgba(110,139,234,0.15); }
 .archetype-heading {
   display: flex; flex-direction: column; gap: 2px;
   margin-bottom: var(--s-3);
@@ -1688,7 +1825,13 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
             <label for="homePrice">Home price</label>
             <div class="input-affix">
               <span class="affix">$</span>
-              <input type="number" id="homePrice" inputmode="numeric" min="50000" step="10000" />
+              <input type="text" id="homePrice" inputmode="numeric" autocomplete="off" />
+            </div>
+            <div class="chips chips-quick" id="homePrice-chips" role="radiogroup" aria-label="Common home prices">
+              <button class="chip chip-quick" type="button" data-home="400000">$400K</button>
+              <button class="chip chip-quick" type="button" data-home="750000">$750K</button>
+              <button class="chip chip-quick" type="button" data-home="1000000">$1M</button>
+              <button class="chip chip-quick" type="button" data-home="1500000">$1.5M</button>
             </div>
           </div>
 
@@ -1707,12 +1850,28 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
               <span class="affix right">%</span>
             </div>
           </div>
+
+          <div class="field">
+            <label>Loan term</label>
+            <div class="chips chips-quick" id="buyerLoanTerm-chips" role="radiogroup" aria-label="Loan term in years">
+              <button class="chip chip-quick" type="button" data-loan="15">15 yr</button>
+              <button class="chip chip-quick" type="button" data-loan="30">30 yr</button>
+            </div>
+          </div>
         </div>
 
-        <div class="path-metric">
-          <span>Cash committed on day 1</span>
-          <strong id="buyer-start-cash">—</strong>
-          <small id="buyer-start-note">—</small>
+        <div class="path-metric path-metric-stack">
+          <div class="path-metric-row">
+            <span>Monthly housing cost</span>
+            <strong id="buyer-monthly-cost">—</strong>
+            <small id="buyer-monthly-breakdown">—</small>
+          </div>
+          <div class="path-metric-divider"></div>
+          <div class="path-metric-row">
+            <span>Cash committed on day 1</span>
+            <strong id="buyer-start-cash">—</strong>
+            <small id="buyer-start-note">—</small>
+          </div>
         </div>
       </article>
 
@@ -1735,7 +1894,7 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
             <label for="monthlyRent">Rent for a similar home</label>
             <div class="input-affix">
               <span class="affix">$</span>
-              <input type="number" id="monthlyRent" inputmode="numeric" min="200" step="50" />
+              <input type="text" id="monthlyRent" inputmode="numeric" autocomplete="off" />
               <span class="affix right">/mo</span>
             </div>
           </div>
@@ -1760,26 +1919,26 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
         <!-- If the renter does not set an exact monthly contribution, use the existing discipline path. -->
         <div class="field archetype-field">
           <div class="archetype-heading">
-            <label class="archetype-label">If monthly investment is blank</label>
+            <label class="archetype-label">How disciplined are you with investing?</label>
           </div>
-          <div class="archetype-pick" role="radiogroup" aria-label="Investing discipline archetype">
+          <div class="archetype-pick" role="radiogroup" aria-label="How much of the savings would you actually invest?">
             <button type="button" class="archetype-card" data-archetype="automated" data-disc="90" role="radio" aria-checked="false">
               <div class="ac-title">Automated</div>
               <div class="ac-desc">Payday transfers</div>
               <div class="ac-pct">90%</div>
-              <div class="ac-sub">of gap invested</div>
+              <div class="ac-sub">of savings</div>
             </button>
             <button type="button" class="archetype-card" data-archetype="mixed" data-disc="50" role="radio" aria-checked="true">
               <div class="ac-title">Mixed</div>
               <div class="ac-desc">Some drift</div>
               <div class="ac-pct">50%</div>
-              <div class="ac-sub">of gap invested</div>
+              <div class="ac-sub">of savings</div>
             </button>
             <button type="button" class="archetype-card" data-archetype="spender" data-disc="20" role="radio" aria-checked="false">
               <div class="ac-title">Spender</div>
               <div class="ac-desc">Cash gets spent</div>
               <div class="ac-pct">20%</div>
-              <div class="ac-sub">of gap invested</div>
+              <div class="ac-sub">of savings</div>
             </button>
           </div>
         </div>
@@ -1791,7 +1950,7 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
         <label for="grossIncomeTier1">Household gross income</label>
         <div class="input-affix">
           <span class="affix">$</span>
-          <input type="number" id="grossIncomeTier1" inputmode="numeric" min="0" step="500" placeholder="0 = skip" />
+          <input type="text" id="grossIncomeTier1" inputmode="numeric" autocomplete="off" placeholder="0 = skip" />
           <span class="affix right">/mo</span>
         </div>
         <div class="hint" id="dti-hint">Optional affordability check.</div>
@@ -1883,6 +2042,22 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
   <span id="verdict-rationale" hidden></span>
   <span id="why-body" hidden></span>
   <span id="verdict" hidden></span>
+
+  <!-- Net-worth chart — the trajectory chart that actually answers the question.
+       Promoted to sit immediately after the verdict block (Phase 2 UX redesign):
+       this line chart is the most intuitive visual in the app, so it now appears
+       right after the verdict in both Simple and Advanced mode. In Simple mode,
+       CSS visually merges it with the verdict card (no top border/radius). -->
+  <section class="chart-card" id="trajectory-card">
+    <div class="section-title"><svg width="14" height="14"><use href="#i-trend"/></svg> How each asset grows</div>
+    <p class="section-sub">Buyer: home equity after sale. Renter: stock portfolio after tax, starting with the same cash.</p>
+    <div class="chart-legend">
+      <div class="legend-item"><span class="legend-dot" style="background: var(--brand-500)"></span>Buy: home equity at sale</div>
+      <div class="legend-item"><span class="legend-dot" style="background: var(--info-500)"></span>Rent + invest: portfolio after tax</div>
+    </div>
+    <svg class="chart-svg" id="chart" viewBox="0 0 800 280" preserveAspectRatio="none"></svg>
+    <div class="chart-endpoints" id="chart-endpoints" aria-live="polite"></div>
+  </section>
 
   <!-- "Show advanced" CTA visible only in simple mode -->
   <div class="show-advanced-cta">
@@ -2321,25 +2496,13 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
         <label for="grossIncome">Annual gross income (optional)</label>
         <div class="input-affix">
           <span class="affix">$</span>
-          <input type="number" id="grossIncome" min="0" step="5000" />
+          <input type="text" id="grossIncome" inputmode="numeric" autocomplete="off" />
           <span class="affix right">/yr</span>
         </div>
         <div class="cite">Industry "28% rule": PITI ≤ 28% of gross. Leave 0 to skip.</div>
       </div>
     </div>
   </div>
-
-  <!-- Net-worth chart — the trajectory chart that actually answers the question -->
-  <section class="chart-card" id="trajectory-card">
-    <div class="section-title"><svg width="14" height="14"><use href="#i-trend"/></svg> How each asset grows</div>
-    <p class="section-sub">Buyer: home equity after sale. Renter: stock portfolio after tax, starting with the same cash.</p>
-    <div class="chart-legend">
-      <div class="legend-item"><span class="legend-dot" style="background: var(--brand-500)"></span>Buy: home equity at sale</div>
-      <div class="legend-item"><span class="legend-dot" style="background: var(--info-500)"></span>Rent + invest: portfolio after tax</div>
-    </div>
-    <svg class="chart-svg" id="chart" viewBox="0 0 800 280" preserveAspectRatio="none"></svg>
-    <div class="chart-endpoints" id="chart-endpoints" aria-live="polite"></div>
-  </section>
 
   <!-- Forced-sale stress test (CFP Q8 / Quant Q2 — horizon endogeneity) -->
   <section class="chart-card" id="stress-test-card">
@@ -3374,6 +3537,14 @@ function renderPathSummary(inp, result) {
 
   setText('buyer-start-cash', fmtMoneyExact(upfront));
   setText('buyer-start-note', `${fmtMoneyExact(downPayment)} down + ${fmtMoneyExact(closingCosts)} closing`);
+  // Monthly housing cost: full year-1 ownership cost (P+I + tax + insurance + HOA + maintenance)
+  if (firstYear && typeof firstYear.yearOwnerCostReal === 'number') {
+    const monthlyTotal = firstYear.yearOwnerCostReal / 12;
+    const monthlyPI = result.monthlyPaymentNominal || 0;
+    const monthlyTaxIns = (inp.homePrice * inp.propertyTaxRate / 100 / 12) + (inp.homeInsurance / 12) + (inp.monthlyHOA || 0);
+    setText('buyer-monthly-cost', `${fmtMoneyExact(monthlyTotal)}/mo`);
+    setText('buyer-monthly-breakdown', `${fmtMoneyExact(monthlyPI)} mortgage + ${fmtMoneyExact(monthlyTaxIns)} tax/ins/HOA + ${fmtMoneyExact(monthlyTotal - monthlyPI - monthlyTaxIns)} maint`);
+  }
   setText('shared-start-cash', fmtMoneyExact(upfront));
   setText('renter-start-cash', fmtMoneyExact(upfront));
   setText('renter-start-note', `Matches the buyer's day-1 cash, invested in stocks.`);
@@ -3394,34 +3565,43 @@ function renderPathSummary(inp, result) {
 
   const gi1 = document.getElementById('grossIncomeTier1');
   if (gi1 && document.activeElement !== gi1) {
-    gi1.value = inp.grossIncome > 0 ? Math.round(inp.grossIncome / 12) : '';
+    const monthly = inp.grossIncome > 0 ? Math.round(inp.grossIncome / 12) : 0;
+    gi1.value = monthly > 0 ? monthly.toLocaleString('en-US') : '';
   }
 }
 
 // v6: crossover sentence — the single most useful sentence in the app.
-// Templates: far / near / already-won / never. Uses breakEven + breakEvenPersistent.
-// Brand-aligned framing: home equity vs market equity. "Overtakes" is the verb
-// because the math is literally about which equity stack ends higher.
+// Plain-English copy: tells the user when buying catches up to renting+investing,
+// and whether their planned stay is past that point.
 function buildCrossoverSentence(result, inp, verdictState) {
   const yrs = inp.yearsStay;
   const be = result.breakEvenPersistent || result.breakEven;
   if (be === 99 || be === null || be === undefined) {
-    return 'Home equity never overtakes the market at these assumptions.';
+    return `At these numbers, buying never catches up.`;
   }
-  if (be <= 2 && verdictState === 'buy') {
-    return `Home equity is ahead from year ${be} in your scenario.`;
+  if (verdictState === 'invest') {
+    const extra = be - yrs;
+    if (extra > 0) {
+      return `You'd need to stay ${be} years for buying to catch up — ${extra} longer than planned.`;
+    }
+    return `You'd need to stay ${be} years for buying to catch up.`;
   }
-  if (be <= yrs && verdictState === 'buy') {
-    return `Home equity overtakes the market at year ${be} — your ${yrs}-year stay is past it.`;
-  }
-  if (be <= yrs && Math.abs(be - yrs) <= 2) {
-    return `Home equity overtakes the market around year ${be} — about when you'd sell.`;
-  }
-  if (be > yrs) {
+  if (verdictState === 'buy') {
+    if (be <= 2) {
+      return `Buying pulls ahead from year ${be} in your scenario.`;
+    }
+    // Near break-even: within 2 years of planned stay
+    if (Math.abs(be - yrs) <= 2 && be <= yrs) {
+      return `Buying just barely pulls ahead at year ${be} — close to your ${yrs}-year plan.`;
+    }
+    if (be <= yrs) {
+      return `Buying pulls ahead at year ${be} — your ${yrs}-year plan is well past that.`;
+    }
     const short = be - yrs;
-    return `Home equity overtakes the market at year ${be} — your ${yrs}-year stay is ${short} year${short === 1 ? '' : 's'} short.`;
+    return `Buying pulls ahead at year ${be} — your ${yrs}-year stay is ${short} year${short === 1 ? '' : 's'} short.`;
   }
-  return `Home equity overtakes the market around year ${be}.`;
+  // close
+  return `Buying pulls ahead around year ${be}.`;
 }
 
 // v6: 2D regime map. The new hero of the verdict card.
@@ -3433,9 +3613,9 @@ function renderRegimeMap(inp, result) {
   const svg = document.getElementById('v6-regime-map');
   if (!svg) return;
 
-  // viewBox 280×160. Padding 24px left/bottom for axis micro-labels, 16px right/top.
+  // viewBox 280×160. Padding: extra left for Y-tick numbers, extra bottom for X-tick numbers.
   const W = 280, H = 160;
-  const padL = 28, padR = 16, padT = 16, padB = 28;
+  const padL = 36, padR = 12, padT = 14, padB = 32;
   const innerW = W - padL - padR, innerH = H - padT - padB;
 
   // Axes: X = P/R ratio (8 to 32), Y = years stay (1 to 30, bottom-to-top means lower Y svg = higher year)
@@ -3511,11 +3691,27 @@ function renderRegimeMap(inp, result) {
   }
   buyPath += `L ${xOf(prMin)} ${yOf(yrMin)} Z`;
 
-  // Curve path (the contour line itself)
+  // Invest-region fill (lower-right polygon, the complement to buy)
+  let investPath = `M ${xOf(prMax)} ${yOf(yrMax)} `;
+  for (const { yr, crossPR } of sortedDesc) {
+    investPath += `L ${xOf(crossPR)} ${yOf(yr)} `;
+  }
+  investPath += `L ${xOf(prMax)} ${yOf(yrMin)} Z`;
+
+  // Smoothed contour curve (quadratic-bezier through midpoints for soft, readable line)
+  const pts = sortedDesc.map(({ yr, crossPR }) => ({ x: xOf(crossPR), y: yOf(yr) }));
   let curvePath = '';
-  for (let i = 0; i < sortedDesc.length; i++) {
-    const cmd = i === 0 ? 'M' : 'L';
-    curvePath += `${cmd} ${xOf(sortedDesc[i].crossPR).toFixed(1)} ${yOf(sortedDesc[i].yr).toFixed(1)} `;
+  if (pts.length >= 2) {
+    curvePath = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)} `;
+    for (let i = 1; i < pts.length - 1; i++) {
+      const mx = (pts[i].x + pts[i + 1].x) / 2;
+      const my = (pts[i].y + pts[i + 1].y) / 2;
+      curvePath += `Q ${pts[i].x.toFixed(1)} ${pts[i].y.toFixed(1)} ${mx.toFixed(1)} ${my.toFixed(1)} `;
+    }
+    const last = pts[pts.length - 1];
+    curvePath += `T ${last.x.toFixed(1)} ${last.y.toFixed(1)} `;
+  } else if (pts.length === 1) {
+    curvePath = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)} `;
   }
 
   // User's position
@@ -3524,37 +3720,79 @@ function renderRegimeMap(inp, result) {
   const youCx = xOf(userPR);
   const youCy = yOf(userYR);
 
-  // Render
-  const REF_DOTS = [
-    { pr: 12, yr: 10 },  // deep buy
-    { pr: 22, yr: 4 },   // deep invest
-    { pr: 15, yr: 7 },   // median market
-  ].filter(d => Math.hypot(xOf(d.pr) - youCx, yOf(d.yr) - youCy) > 16); // hide if near YOU
+  // Decide which region the user falls in (interpolate the boundary at userYR)
+  // If userPR < boundary at userYR → BUY region (left). Else → INVEST region (right).
+  let boundaryPRAtUser = prMax;
+  const sortedAsc = [...crossings].sort((a, b) => a.yr - b.yr);
+  for (let i = 0; i < sortedAsc.length - 1; i++) {
+    if (userYR >= sortedAsc[i].yr && userYR <= sortedAsc[i + 1].yr) {
+      const t = (userYR - sortedAsc[i].yr) / (sortedAsc[i + 1].yr - sortedAsc[i].yr);
+      boundaryPRAtUser = sortedAsc[i].crossPR + t * (sortedAsc[i + 1].crossPR - sortedAsc[i].crossPR);
+      break;
+    }
+  }
+  const youInBuy = userPR < boundaryPRAtUser;
 
-  // Position YOU label — to the right of the dot by default, flip to left if dot is near right edge
-  const labelOnLeft = youCx > W - 70;
-  const labelX = labelOnLeft ? youCx - 12 : youCx + 12;
+  // X-axis ticks: P/R = 10, 15, 20, 25, 30
+  const xTicks = [10, 15, 20, 25, 30];
+  // Y-axis ticks: years = 5, 10, 20, 30
+  const yTicks = [5, 10, 20, 30];
+
+  // Region label positions: tucked into far TOP corners of each region so they
+  // stay clear of the YOU dot, which typically sits at low-to-mid stay years.
+  // BUY label → top-left of buy region; INVEST label → top-right of invest region.
+  const buyLabelX = xOf(10);
+  const buyLabelY = yOf(28);
+  const investLabelX = xOf(30);
+  const investLabelY = yOf(28);
+
+  // Position YOU label — opposite side of region: in BUY → label right, in INVEST → label left.
+  // Also flip if near edge to avoid clipping.
+  let labelOnLeft = !youInBuy;
+  if (youInBuy && youCx > W - 60) labelOnLeft = true;
+  if (!youInBuy && youCx < padL + 60) labelOnLeft = false;
+  const labelGap = 10;
+  const labelX = labelOnLeft ? youCx - labelGap : youCx + labelGap;
   const labelAnchor = labelOnLeft ? 'end' : 'start';
 
+  // YOU label text + background rect dims (estimate width based on chars)
+  const youSubText = `P/R ${userPR.toFixed(0)} · ${userYR} yr${userYR === 1 ? '' : 's'}`;
+  const youSubW = youSubText.length * 4.7 + 6;  // ~4.7px per char at 9px font + padding
+  const youLabelW = 22;  // "YOU" at 10px bold ≈ 22px
+  const bgW = Math.max(youSubW, youLabelW);
+  const bgX = labelOnLeft ? labelX - bgW + 2 : labelX - 2;
+  const bgY = youCy - 16;
+  const bgH = 26;
+  const bgCx = bgX + bgW / 2;
+  const bgCy = bgY + bgH / 2;
+  // Collision avoidance: hide a region label if the YOU label rect's center is within
+  // 80 SVG units horizontally AND 16 vertically of the region label position. With
+  // region labels parked in the top corners and stay years usually <25, this rarely fires.
+  const buyLabelHidden = Math.abs(bgCx - buyLabelX) < 80 && Math.abs(bgCy - buyLabelY) < 16;
+  const investLabelHidden = Math.abs(bgCx - investLabelX) < 80 && Math.abs(bgCy - investLabelY) < 16;
+
   svg.innerHTML = `
-    <!-- Buy-region tint -->
+    <!-- Region fills: buy (green) and invest (blue) -->
     <path class="map-buy-fill" d="${buyPath}" />
-    <!-- Close-band straddling the curve (thick stroke) -->
-    <path class="map-close-band" d="${curvePath}" stroke="currentColor" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--text-1); opacity: 0.03;" fill="none" />
-    <!-- Contour curve -->
+    <path class="map-invest-fill" d="${investPath}" />
+    <!-- Contour curve (smoothed) -->
     <path class="map-curve" d="${curvePath}" />
-    <!-- Region landmarks (ghosted, large) — brand-aligned to where the equity grows -->
-    <text class="map-region-word" x="${padL + 8}" y="${padT + 28}">HOME</text>
-    <text class="map-region-word" x="${W - padR - 8}" y="${H - padB - 8}" text-anchor="end">MARKET</text>
-    <!-- Axis micro-labels -->
-    <text class="map-axis-label" x="${padL}" y="${H - 6}">PRICE / RENT →</text>
-    <text class="map-axis-label" x="${padL - 4}" y="${padT - 4}" transform="rotate(-90 ${padL - 4} ${padT - 4})" style="text-anchor: end;">← YEARS YOU STAY</text>
-    <!-- Reference dots -->
-    ${REF_DOTS.map(d => `<circle class="map-ref-dot" cx="${xOf(d.pr).toFixed(1)}" cy="${yOf(d.yr).toFixed(1)}" r="2.5" />`).join('')}
-    <!-- YOU dot (the one saturated brand-color moment on the entire card; r=4 → 8px diameter per Visual Designer brief) -->
-    <circle class="map-you-dot" cx="${youCx.toFixed(1)}" cy="${youCy.toFixed(1)}" r="4" />
-    <text class="map-you-label" x="${labelX}" y="${(youCy - 8).toFixed(1)}" text-anchor="${labelAnchor}">YOU</text>
-    <text class="map-you-sub" x="${labelX}" y="${(youCy + 14).toFixed(1)}" text-anchor="${labelAnchor}">P/R ${userPR.toFixed(0)} · ${userYR} yr${userYR === 1 ? '' : 's'}</text>
+    <!-- Y-axis tick labels (years) -->
+    ${yTicks.map(t => `<text class="map-tick" x="${padL - 6}" y="${(yOf(t) + 3).toFixed(1)}" text-anchor="end">${t}</text>`).join('')}
+    <!-- X-axis tick labels (P/R) -->
+    ${xTicks.map(t => `<text class="map-tick" x="${xOf(t).toFixed(1)}" y="${H - padB + 12}" text-anchor="middle">${t}</text>`).join('')}
+    <!-- Region labels (parked in far top corners; dropped if YOU label collides) -->
+    ${buyLabelHidden ? '' : `<text class="map-region-label" x="${buyLabelX.toFixed(1)}" y="${buyLabelY.toFixed(1)}" text-anchor="start">BUY</text>`}
+    ${investLabelHidden ? '' : `<text class="map-region-label" x="${investLabelX.toFixed(1)}" y="${investLabelY.toFixed(1)}" text-anchor="end">INVEST</text>`}
+    <!-- Axis arrows -->
+    <text class="map-axis-label" x="${padL}" y="${H - 2}">PRICE / RENT →</text>
+    <text class="map-axis-label" x="8" y="${(padT + innerH / 2).toFixed(1)}" transform="rotate(-90 8 ${(padT + innerH / 2).toFixed(1)})" style="text-anchor: middle;">↑ YEARS YOU STAY</text>
+    <!-- YOU dot (the one saturated brand-color moment; r=5 for prominence) -->
+    <circle class="map-you-dot" cx="${youCx.toFixed(1)}" cy="${youCy.toFixed(1)}" r="5" />
+    <!-- YOU label background (always legible regardless of which region it sits over) -->
+    <rect class="map-you-label-bg" x="${bgX.toFixed(1)}" y="${bgY.toFixed(1)}" width="${bgW.toFixed(1)}" height="${bgH}" rx="3" />
+    <text class="map-you-label" x="${labelX}" y="${(youCy - 4).toFixed(1)}" text-anchor="${labelAnchor}">YOU</text>
+    <text class="map-you-sub" x="${labelX}" y="${(youCy + 7).toFixed(1)}" text-anchor="${labelAnchor}">${youSubText}</text>
   `;
 }
 
@@ -3973,9 +4211,9 @@ function render() {
       if (sub) sub.textContent = `Address DTI > 43% before the math matters.`;
     } else {
       if (regimeLabelEl) {
-        regimeLabelEl.textContent = verdictState === 'buy' ? 'Home equity ahead'
-                                  : verdictState === 'invest' ? 'Stock portfolio ahead'
-                                  : 'Too close to call';
+        regimeLabelEl.textContent = verdictState === 'buy' ? 'BUYING WINS'
+                                  : verdictState === 'invest' ? 'RENTING + INVESTING WINS'
+                                  : 'TOO CLOSE TO CALL';
       }
       if (crossoverEl) {
         crossoverEl.textContent = buildCrossoverSentence(result, inp, verdictState);
@@ -3988,7 +4226,7 @@ function render() {
         const sign = verdictState === 'buy' ? '+' : '−';
         big.textContent = sign + signedAmt;
         const monthlyEqStr = fmtMoneyExact(monthlyEq);
-        sub.textContent = `over ${yrs} years · about ${monthlyEqStr}/mo`;
+        sub.textContent = `after ${yrs} years — that's about ${monthlyEqStr}/month more in your pocket`;
       }
     }
 
@@ -4002,7 +4240,7 @@ function render() {
         const p90Str = (mc.finalDeltaP90 >= 0 ? '+' : '−') + fmtMoney(Math.abs(mc.finalDeltaP90));
         contingencyEl.textContent = `Median ${medStr}. Range ${p10Str} to ${p90Str} across ${mc.n.toLocaleString()} scenarios.`;
       } else {
-        contingencyEl.textContent = `Deterministic median. Enable Monte Carlo (Advanced) to see the range across thousands of paths.`;
+        contingencyEl.textContent = `Best estimate using your numbers. Switch to Advanced for a range of possible outcomes.`;
       }
     }
 
@@ -4366,6 +4604,41 @@ function bindNumber(id, key, decimals = 0) {
   });
 }
 
+// Currency-style number input: shows commas, accepts digits or commas while typing.
+// Optional quickChipsSelector wires up "$400K / $750K / $1M" style chips next to the input.
+function bindCurrencyNumber(id, key, quickChipsSelector) {
+  const el = document.getElementById(id);
+  const fmt = (n) => (n > 0 ? n.toLocaleString('en-US') : '');
+  const sync = () => { el.value = fmt(state[key]); };
+  sync();
+  el.addEventListener('input', () => {
+    // Strip everything except digits, parse, update state. Reformat with commas
+    // and restore an approximate cursor position (placed at end — fine for short inputs).
+    const raw = el.value.replace(/[^\d]/g, '');
+    const v = raw === '' ? 0 : parseInt(raw, 10);
+    state[key] = isNaN(v) ? 0 : v;
+    el.value = fmt(state[key]);
+    debouncedRender();
+    if (quickChipsSelector) syncQuickChips();
+  });
+  el.addEventListener('blur', sync);
+
+  function syncQuickChips() {
+    document.querySelectorAll(quickChipsSelector).forEach(c => {
+      c.classList.toggle('active', parseInt(c.getAttribute('data-home') || c.getAttribute('data-rent'), 10) === state[key]);
+    });
+  }
+  if (quickChipsSelector) {
+    syncQuickChips();
+    document.querySelectorAll(quickChipsSelector).forEach(c => {
+      c.addEventListener('click', () => {
+        const v = parseInt(c.getAttribute('data-home') || c.getAttribute('data-rent'), 10);
+        if (!isNaN(v)) { state[key] = v; el.value = fmt(v); syncQuickChips(); render(); }
+      });
+    });
+  }
+}
+
 function bindSlider(id, key) {
   const slider = document.getElementById(id);
   const num = document.getElementById(id + '-input');
@@ -4538,8 +4811,8 @@ function renderRecessionScenario(inp, baseResult) {
 function init() {
   loadFromURL();
 
-  bindNumber('homePrice', 'homePrice');
-  bindNumber('monthlyRent', 'monthlyRent');
+  bindCurrencyNumber('homePrice', 'homePrice', '#homePrice-chips [data-home]');
+  bindCurrencyNumber('monthlyRent', 'monthlyRent');
   bindNumber('mortgageRate', 'mortgageRate');
   // Renter override: empty input means "no override" (0), so we don't use bindNumber
   const renterContribEl = document.getElementById('renterMonthlyContribution');
@@ -4554,7 +4827,7 @@ function init() {
   }
   bindNumber('homeInsurance', 'homeInsurance');
   bindNumber('monthlyHOA', 'monthlyHOA');
-  bindNumber('grossIncome', 'grossIncome');
+  bindCurrencyNumber('grossIncome', 'grossIncome');
   bindNumber('currentYear', 'currentYear');
   bindNumber('loanOriginationYear', 'loanOriginationYear');
   bindNumber('pointsPaid', 'pointsPaid');
@@ -4590,7 +4863,7 @@ function init() {
   bindToggle('useWeibullHorizon', 'useWeibullHorizon');
 
   bindChips('.chips [data-stay]', 'data-stay', 'yearsStay');
-  bindChips('#loanTerm-chips [data-loan]', 'data-loan', 'loanTerm');
+  bindChips('[data-loan]', 'data-loan', 'loanTerm');
   // String-valued chip groups need a small adapter
   function bindStringChips(selector, attr, key) {
     const chips = document.querySelectorAll(selector);
@@ -4687,14 +4960,15 @@ function init() {
   const gi1 = document.getElementById('grossIncomeTier1');
   const giDrawer = document.getElementById('grossIncome');
   if (gi1 && giDrawer) {
-    if (state.grossIncome > 0) gi1.value = Math.round(state.grossIncome / 12);
+    const fmt = (n) => (n > 0 ? n.toLocaleString('en-US') : '');
+    if (state.grossIncome > 0) gi1.value = fmt(Math.round(state.grossIncome / 12));
     gi1.addEventListener('input', () => {
-      const monthly = parseFloat(gi1.value);
-      if (!isNaN(monthly)) {
-        state.grossIncome = monthly * 12;
-        giDrawer.value = state.grossIncome;
-        debouncedRender();
-      }
+      const raw = gi1.value.replace(/[^\d]/g, '');
+      const monthly = raw === '' ? 0 : parseInt(raw, 10);
+      state.grossIncome = isNaN(monthly) ? 0 : monthly * 12;
+      gi1.value = fmt(monthly);
+      giDrawer.value = fmt(state.grossIncome);
+      debouncedRender();
     });
   }
 
