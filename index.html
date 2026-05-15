@@ -1394,6 +1394,11 @@ body.simple-mode .show-advanced-cta button:hover { color: var(--text-1); border-
 .drawer-umbrella-title.ut-buyer  .ut-icon { color: var(--pos-700);  background: var(--pos-50); }
 .drawer-umbrella-title.ut-renter .ut-icon { color: var(--info-700); background: var(--info-50); }
 .drawer-umbrella-title.ut-shared .ut-icon { color: var(--text-2);   background: var(--surface-sunken); }
+/* Title text follows the same hue as the icon swatch — so Buyer vs Renter
+   are differentiated at a glance, not only by the small icon. */
+.drawer-umbrella-title.ut-buyer  { color: var(--pos-700); border-bottom-color: var(--pos-500); }
+.drawer-umbrella-title.ut-renter { color: var(--info-700); border-bottom-color: var(--info-500); }
+.drawer-umbrella-title.ut-shared { color: var(--text-2); }
 .drawer-umbrella-title .ut-sub {
   margin-left: auto;
   font-size: 11px; font-weight: 400;
@@ -4320,9 +4325,9 @@ function render() {
         big.innerHTML = '—';
         sub.textContent = `Within the noise floor of the model — small input changes flip the verdict`;
       } else {
-        const signedAmt = fmtMoney(totalAbs);
-        const sign = verdictState === 'buy' ? '+' : '−';
-        big.textContent = sign + signedAmt;
+        // Always render as a positive advantage for the winner. The eyebrow
+        // tells you WHO wins; this number is HOW MUCH the winner is ahead.
+        big.textContent = '+' + fmtMoney(totalAbs);
         const monthlyEqStr = fmtMoneyExact(monthlyEq);
         sub.textContent = `after ${yrs} years — that's about ${monthlyEqStr}/month more in your pocket`;
       }
