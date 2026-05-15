@@ -1201,6 +1201,80 @@ footer.method {
 }
 footer.method b { color: var(--text-2); font-weight: 500; }
 
+/* ===========================================================================
+   Mobile polish — tightens spacing, padding and type below 480px without
+   removing any features. Layered after all base rules so it always wins.
+   =========================================================================== */
+@media (max-width: 480px) {
+  /* Main container: reclaim vertical whitespace on small screens */
+  main { padding: var(--s-4) var(--s-4) var(--s-6); }
+  .intro { margin-bottom: var(--s-5); }
+
+  /* Verdict meta detail: 4-col is too cramped at this width */
+  body .verdict-meta-detail { grid-template-columns: 1fr 1fr; padding: var(--s-3) var(--s-4); gap: var(--s-3); }
+  .verdict-meta-detail .vmd .value { font-size: 15px; }
+
+  /* Regime map: let it fill the column instead of clamping to 320px */
+  .v6-regime-map { max-width: 100%; }
+  .v6-grid { gap: 16px; }
+  .v6-card { padding: 24px 18px 0; }
+  .v6-crossover { font-size: 16px; }
+  .v6-framing { font-size: 15px; }
+
+  /* Battle bar labels — drop one size to avoid wrap on long captions */
+  .v5-battle-labels, .v6-battle .v5-battle-labels { font-size: 12px; }
+  .v6-battle .v5-battle-labels { font-size: 14px; }
+
+  /* Drawer tabs — tighter padding so all three fit at 360-400px */
+  .drawer-tab { padding: var(--s-3) var(--s-3); font-size: 12px; }
+  .drawer-pane { padding: var(--s-4) var(--s-3); }
+
+  /* Footer methodology — slightly smaller, less line-break churn */
+  footer.method { font-size: 11px; gap: var(--s-1); line-height: 1.5; }
+
+  /* Chart SVG axis text — 11px is unreadable on narrow charts */
+  .chart-svg text { font-size: 12px; }
+  .chart-svg { height: 240px; }
+
+  /* Archetype cards — single column already; tighten padding */
+  .archetype-card { padding: 12px 14px; }
+  .archetype-card .ac-pct { font-size: 20px; }
+}
+
+@media (max-width: 400px) {
+  /* Header — shrink padding so brand + pill + share + theme all fit */
+  .header-inner { padding: var(--s-2) var(--s-3); }
+  .header-actions { gap: 4px; }
+  .btn-icon { width: 32px; height: 32px; }
+
+  /* Intro headline — one more step down for the smallest phones */
+  .intro h1 { font-size: 26px; line-height: 1.1; }
+
+  /* Verdict meta: drop to single column so values don't truncate */
+  body .verdict-meta-detail { grid-template-columns: 1fr; gap: var(--s-2); }
+  .verdict-meta-detail .vmd { flex-direction: row; justify-content: space-between; align-items: baseline; }
+  .verdict-meta-detail .vmd .label { font-size: 11px; }
+
+  /* Disclaimer — stack icon/body/dismiss vertically so text breathes */
+  .disclaimer { flex-wrap: wrap; padding: 8px 12px; border-radius: var(--r-2); }
+  .disclaimer .body { flex-basis: 100%; order: 2; }
+
+  /* Verdict cards — squeeze a bit more padding out at this width */
+  .verdict-v5, .v6-card { padding: 20px 16px 0; }
+  .v5-big { font-size: 56px; }
+  .v6-big { font-size: 44px; }
+
+  /* Tier-1 input grid: smaller internal padding */
+  .tier1 { padding: var(--s-4); }
+}
+
+@media (max-width: 360px) {
+  /* Chips: lock min-height so they stay tappable when squeezed */
+  .chip { min-height: 40px; font-size: 12px; padding: 0 var(--s-1); }
+  .v5-big { font-size: 48px; }
+  .v6-big { font-size: 40px; }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
