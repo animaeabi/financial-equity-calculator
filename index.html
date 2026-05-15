@@ -1788,7 +1788,7 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
 
     <div class="context-row">
       <div class="field">
-        <label for="grossIncomeTier1">Household take-home pay</label>
+        <label for="grossIncomeTier1">Household gross income</label>
         <div class="input-affix">
           <span class="affix">$</span>
           <input type="number" id="grossIncomeTier1" inputmode="numeric" min="0" step="500" placeholder="0 = skip" />
@@ -1996,7 +1996,7 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
             <input type="number" id="stateIncomeTax-input" min="0" max="30000" step="500" />
           </div>
         </div>
-        <div class="cite">State income tax already fills part of the $10K SALT cap before property tax can be credited. For CA/NY HCOL: $14-18K. Without this, the model over-credits MID+SALT by $25-60K (CPA Round 4 SALT-stacking fix). <button class="snap-default" data-default="stateIncomeTax" data-value="0">TX/FL ($0)</button> <button class="snap-default" data-default="stateIncomeTax" data-value="14000">NY (~$14K)</button> <button class="snap-default" data-default="stateIncomeTax" data-value="18000">CA (~$18K)</button></div>
+        <div class="cite">State income tax fills the SALT bucket before property tax can be credited. Current 2026 law starts from a $40.4K cap with high-income phaseout; legacy stress modes differ. <button class="snap-default" data-default="stateIncomeTax" data-value="0">TX/FL ($0)</button> <button class="snap-default" data-default="stateIncomeTax" data-value="14000">NY (~$14K)</button> <button class="snap-default" data-default="stateIncomeTax" data-value="18000">CA (~$18K)</button></div>
       </div>
 
       <div class="field">
@@ -2135,15 +2135,16 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
         </div>
       </div>
 
-      <div class="drawer-section-title">Tax law assumptions (TCJA sunset)</div>
+      <div class="drawer-section-title">Tax law assumptions</div>
 
       <div class="field" style="grid-column: 1 / -1">
         <label>Tax-law mode</label>
         <div class="chips" id="tcjaMode-chips" role="radiogroup">
-          <button class="chip" type="button" data-tcja="sunset">Current law (sunsets 2026)</button>
-          <button class="chip" type="button" data-tcja="extended">TCJA permanently extended</button>
+          <button class="chip" type="button" data-tcja="current">Current 2026 law</button>
+          <button class="chip" type="button" data-tcja="legacySunset">Legacy sunset stress</button>
+          <button class="chip" type="button" data-tcja="extended">Old TCJA stress</button>
         </div>
-        <div class="cite">TCJA caps (MID $750k, SALT $10k, doubled std deduction) sunset 12/31/2025 absent Congressional action. Sunset reverts to $1M MID + uncapped SALT + ~$16k MFJ std deduction. AMT not modeled — see Assumptions.</div>
+        <div class="cite">Current law uses 2026 IRS values: $750K MID cap for post-2017 acquisition debt, $40.4K SALT cap with phaseout, and $32.2K MFJ standard deduction. Stress modes are historical hypotheticals, not the default forecast.</div>
       </div>
 
       <div class="field">
@@ -2151,7 +2152,7 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
         <div class="input-affix">
           <input type="number" id="currentYear" min="2024" max="2050" step="1" />
         </div>
-        <div class="cite">Anchors when TCJA sunset bites in your projection.</div>
+        <div class="cite">Anchors indexed tax thresholds and temporary SALT-cap years.</div>
       </div>
 
       <div class="field" style="grid-column: 1 / -1">
@@ -2185,7 +2186,7 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
         <div class="input-affix">
           <input type="number" id="loanOriginationYear" min="1990" max="2050" step="1" />
         </div>
-        <div class="cite">Loans originated on/before 12/15/2017 grandfathered at $1M MID cap (vs. TCJA $750k).</div>
+        <div class="cite">Loans originated on/before 12/15/2017 are grandfathered at the $1M MID cap; newer acquisition debt generally uses the $750K cap.</div>
       </div>
 
       <div class="field">
@@ -2276,8 +2277,8 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
 
       <div class="toggle-row">
         <div>
-          <span class="label">Stochastic tax regime (TCJA extended? per trial)</span>
-          <span class="sub">Treat tax law as uncertain. Each trial draws TCJA-extended vs sunset with the chosen probability.</span>
+          <span class="label">Stochastic tax-law stress</span>
+          <span class="sub">Treat tax law as uncertain. Each trial draws current-law vs legacy-sunset stress using the probability slider.</span>
         </div>
         <button class="toggle" id="stochasticTaxRegime" type="button" aria-pressed="false"></button>
       </div>
@@ -2376,7 +2377,7 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
         <li><b>HOA special assessments.</b> 5-figure surprises are routine in condos post-Surfside. Not modeled.</li>
         <li><b>Single-home idiosyncratic risk.</b> Foundation failure, neighborhood decline, climate event. Even with the toggle, distribution is Gaussian — real failures are bimodal.</li>
         <li><b>Life events.</b> Divorce (~40% lifetime probability), job relocation, parent moving in, fertility decisions changing space needs. Any of these can force an early sale (see strip above).</li>
-        <li><b>Tax law changes.</b> The TCJA toggle lets you model the 2026 sunset, but 30 years is enough time for additional structural changes. Treat tax math as illustrative.</li>
+        <li><b>Tax law changes.</b> Current-law constants are updated for 2026, but 30 years is enough time for additional structural changes. Treat tax math as illustrative.</li>
         <li><b>Behavioral discipline.</b> The model assumes you contribute the discipline-rate × monthly gap consistently. In real drawdowns most people stop contributing — exactly when expected returns are highest.</li>
       </ul>
       <p class="acc-fine">Built on Himmelberg-Mayer-Sinai (2005), Beracha & Johnson (2012), Sinai & Souleles (2005), Jordà et al (2019), Goodman & Mayer (2018). Not financial advice. For decisions of this size, also consult a fee-only fiduciary.</p>
@@ -2396,9 +2397,9 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
     </div>
     <div><b>What this model does NOT do</b> (acknowledged limits):
       <ul style="margin: 4px 0 0 16px; padding: 0; line-height: 18px">
-        <li>No Monte Carlo / uncertainty bands — point estimates only. Real outcomes vary widely; treat the headline as a median, not a forecast.</li>
-        <li>No single-home idiosyncratic risk — Case-Shiller index variance is ~10–15%/yr; a single home runs ~25–35%. Index returns flatter ownership.</li>
-        <li>No AMT, no TCJA-sunset modeling (current TCJA rules assumed throughout). Buyer benefit may be larger from 2026 if TCJA expires (CPA &amp; Bloomberg Tax Planner).</li>
+        <li>Monte Carlo is optional and still illustrative. Real outcomes vary widely; treat the headline as a scenario result, not a forecast.</li>
+        <li>Single-home idiosyncratic risk is approximate — the toggle adds dispersion, but real home-specific failures are lumpy and local.</li>
+        <li>AMT-lite applies only in the legacy sunset stress mode. Current-law AMT is not tax-prep grade and is intentionally omitted.</li>
         <li>No emergency-fund / retirement-contribution displacement check (CFP critique). Buying with thin reserves or by cutting 401(k) can destroy the verdict's premise.</li>
         <li>No metro-conditioned defaults; no rent-risk hedging value (Sinai-Souleles 2005); no leverage / risk-adjusted (CRRA) comparison.</li>
       </ul>
@@ -2438,14 +2439,14 @@ const DEFAULTS = {
   renterMonthlyContribution: 0,   // override: explicit $/mo (today's dollars) the renter invests into stocks. 0 = auto-compute from gap × discipline. >0 = bypass gap × discipline and use this directly.
   taxAdvantagedPct: 30,           // v6 Phase 2.1: % of renter's monthly contributions going to tax-advantaged accounts (Roth IRA, 401(k)). Default 30% reflects typical W-2 employee with 401(k) match + Roth space. Sheltered fraction pays $0 LTCG at exit. CPA Round 4: closes the $100-300K under-credited-investor gap.
   stateCapGainsRate: 0,           // additional state LTCG % (CA 13.3, NY 10.9, WA 7, TX/FL 0)
-  stateIncomeTax: 0,              // v6 Phase 2.2: state income tax that already fills SALT bucket. Default 0 (TX/FL). For CA/NY this is non-trivial. Subtracted from $10K SALT cap BEFORE crediting property tax. Closes the SALT-stacking bug ($25-60K phantom MID benefit per CPA Round 4).
+  stateIncomeTax: 0,              // v6 Phase 2.2: state income tax that already fills SALT bucket. Default 0 (TX/FL). For CA/NY this is non-trivial. Subtracted from the applicable SALT cap BEFORE crediting property tax. Closes the SALT-stacking bug ($25-60K phantom MID benefit per CPA Round 4).
   useMonteCarlo: false,           // run N=2000 stochastic trials for uncertainty bands
   idiosyncraticRisk: true,        // add single-home σ overlay when MC is on (Goetzmann; counters buy-bias)
   mcSeed: 42,                     // PRNG seed for reproducibility
   // §121 partial-exclusion (CPA Q9)
   partialExclusionReason: 'none', // 'none' | 'job' | 'health' | 'unforeseen'
-  // TCJA sunset modeling (CPA Q4 / Quant Q4)
-  tcjaMode: 'sunset',             // 'sunset' | 'extended'
+  // Tax-law scenario modeling (CPA Q4 / Quant Q4). 'sunset' URLs map to 'legacySunset'.
+  tcjaMode: 'current',            // 'current' | 'legacySunset' | 'extended'
   currentYear: 2026,
   // ===== v3 council items (16-feature batch) =====
   // CPA Q8: pre-2018 mortgages grandfathered at $1M cap
@@ -2467,9 +2468,9 @@ const DEFAULTS = {
   homeIdioTailMagnitude: -0.30,
   // Quant Q1: behavioral discipline overlay (drawdown-conditional, MC only)
   behavioralDiscipline: false,    // when ON in MC, contributions halve after stock < -10% yr
-  // Quant Q4 + CPA Q4: stochastic tax regime in MC (per-trial sunset/extended draw)
+  // Quant Q4 + CPA Q4: stochastic tax regime in MC (per-trial current/legacy draw)
   stochasticTaxRegime: false,
-  pTcjaExtended: 0.5,             // user-set probability TCJA gets extended
+  pTcjaExtended: 0.5,             // backward-compatible key: probability a trial uses current law
   // Quant Q3: stochastic rent growth correlated with home in MC
   stochasticRent: false,
   sigmaRentReal: 0.04,            // log-return σ
@@ -2486,17 +2487,77 @@ const DEFAULTS = {
   weibullShape: 1.5,              // Weibull k parameter
 };
 
+const TAX_MODE_CURRENT = 'current';
+const TAX_MODE_LEGACY_SUNSET = 'legacySunset';
+const TAX_MODE_EXTENDED = 'extended';
+
 const CAP_GAINS_BRACKETS = {
-  // 2025 long-term capital gains brackets
-  married: { b0: 96700, b15: 600050 },
-  single:  { b0: 48350, b15: 533400 },
+  // 2026 long-term capital-gains thresholds, held in real dollars.
+  married: { b0: 98900, b15: 613700 },
+  single:  { b0: 49450, b15: 545500 },
 };
 const NIIT_THRESHOLD = { married: 250000, single: 200000 }; // MAGI threshold for 3.8% NIIT
 const NIIT_RATE = 0.038;
-const STD_DEDUCTION_BASE = { married: 30000, single: 15000 }; // 2025
-const SALT_CAP = 10000;
+const STD_DEDUCTION_CURRENT = { married: 32200, single: 16100 }; // 2026 current law
+const STD_DEDUCTION_LEGACY_TCJA = { married: 30000, single: 15000 }; // pre-OBBB TCJA stress
+const STD_DEDUCTION_LEGACY_SUNSET = { married: 16000, single: 8300 };
+const SALT_CAP_LEGACY_TCJA = 10000;
+const SALT_CAP_2025_CURRENT = 40000;
+const SALT_CAP_2026_CURRENT = 40400;
+const SALT_PHASEOUT_2026 = 505000;
+const SALT_PHASEOUT_RATE = 0.30;
 const MID_LOAN_CAP = 750000;
+const LEGACY_MID_LOAN_CAP = 1000000;
 const SECTION_121 = { married: 500000, single: 250000 };
+const AMT_LEGACY_SUNSET = {
+  married: { exemption: 89500, phaseout: 212000 },
+  single:  { exemption: 57500, phaseout: 174000 },
+};
+
+function normalizeTaxMode(mode) {
+  if (mode === TAX_MODE_CURRENT || mode === TAX_MODE_LEGACY_SUNSET || mode === TAX_MODE_EXTENDED) return mode;
+  if (mode === 'sunset') return TAX_MODE_LEGACY_SUNSET;
+  return TAX_MODE_CURRENT;
+}
+
+function standardDeductionReal(taxMode, filing) {
+  if (taxMode === TAX_MODE_LEGACY_SUNSET) return STD_DEDUCTION_LEGACY_SUNSET[filing];
+  if (taxMode === TAX_MODE_EXTENDED) return STD_DEDUCTION_LEGACY_TCJA[filing];
+  return STD_DEDUCTION_CURRENT[filing];
+}
+
+function saltCapNominal(taxMode, taxYear, filing, grossIncome) {
+  if (taxMode === TAX_MODE_LEGACY_SUNSET) return Infinity;
+  if (taxMode === TAX_MODE_EXTENDED || taxYear < 2025) return SALT_CAP_LEGACY_TCJA;
+
+  let cap = SALT_CAP_LEGACY_TCJA;
+  let phaseoutStart = Infinity;
+  if (taxYear === 2025) {
+    cap = SALT_CAP_2025_CURRENT;
+    phaseoutStart = 500000;
+  } else if (taxYear >= 2026 && taxYear <= 2029) {
+    const indexedYears = taxYear - 2026;
+    cap = SALT_CAP_2026_CURRENT * Math.pow(1.01, indexedYears);
+    phaseoutStart = SALT_PHASEOUT_2026 * Math.pow(1.01, indexedYears);
+  }
+
+  const income = Math.max(0, grossIncome || 0);
+  if (income > phaseoutStart) {
+    cap = Math.max(SALT_CAP_LEGACY_TCJA, cap - (income - phaseoutStart) * SALT_PHASEOUT_RATE);
+  }
+  return cap;
+}
+
+function estimateOrdinaryTaxableIncomeReal(inp, filing, stdDeductionReal) {
+  if (inp.grossIncome > 0) return Math.max(0, inp.grossIncome - stdDeductionReal);
+  const impliedGross = Math.max(50000, Math.min(1500000, (inp.marginalTaxRate / 32) * 200000));
+  return Math.max(0, impliedGross - stdDeductionReal);
+}
+
+function estimateAGIReal(inp, ordinaryTaxableIncomeReal, stdDeductionReal) {
+  if (inp.grossIncome > 0) return Math.max(0, inp.grossIncome);
+  return Math.max(0, ordinaryTaxableIncomeReal + stdDeductionReal);
+}
 
 function pmt(principal, monthlyRate, nMonths) {
   if (principal <= 0) return 0;
@@ -2505,20 +2566,21 @@ function pmt(principal, monthlyRate, nMonths) {
          (Math.pow(1 + monthlyRate, nMonths) - 1);
 }
 
-// Compute long-term capital gains tax with tiered brackets + NIIT + state
+// Compute long-term capital gains tax with income-aware tiered brackets + NIIT + state
 // stateRate: additional flat % applied to gain (e.g., CA 13.3, NY 10.9, WA 7)
-function ltcgTax(gain, filing, stateRate) {
+function ltcgTax(gain, filing, stateRate, ordinaryTaxableIncomeReal = 0, agiBeforeGainReal = 0) {
   if (gain <= 0) return 0;
   const b = CAP_GAINS_BRACKETS[filing];
   let tax = 0;
   let rem = gain;
-  const at0 = Math.min(rem, b.b0); rem -= at0;
-  const at15 = Math.min(rem, b.b15 - b.b0); rem -= at15;
+  const ordinary = Math.max(0, ordinaryTaxableIncomeReal || 0);
+  const at0 = Math.min(rem, Math.max(0, b.b0 - ordinary)); rem -= at0;
+  const at15 = Math.min(rem, Math.max(0, b.b15 - Math.max(ordinary, b.b0))); rem -= at15;
   const at20 = rem;
   tax = at15 * 0.15 + at20 * 0.20;
-  // NIIT: 3.8% on investment income above the MAGI threshold.
-  // Conservative simplification: apply NIIT to gain above the threshold.
-  const niitable = Math.max(0, gain - NIIT_THRESHOLD[filing]);
+  // NIIT: 3.8% on the lesser of investment income or MAGI above the threshold.
+  const magiWithGain = Math.max(0, agiBeforeGainReal || ordinary) + gain;
+  const niitable = Math.min(gain, Math.max(0, magiWithGain - NIIT_THRESHOLD[filing]));
   tax += niitable * NIIT_RATE;
   // State cap gains (most states tax LTCG as ordinary income; calculator uses a flat user-supplied rate)
   if (stateRate && stateRate > 0) tax += gain * (stateRate / 100);
@@ -2565,8 +2627,6 @@ function simulate(inp) {
   const isConverted = convertYr > 0 && convertYr < inp.yearsStay;
   const annualDepreciationReal = isConverted ? (inp.homePrice * (1 - (inp.landValuePct || 15) / 100)) / 27.5 : 0;
   let cumDepreciationReal = 0;
-  // Mortgage points: year-1 deduction
-  const pointsTaxSavingReal = (inp.pointsPaid || 0) * (inp.marginalTaxRate / 100);
   // MID grandfathering: pre-Dec-15-2017 loans keep $1M cap forever (CPA Q8)
   const isGrandfathered = (inp.loanOriginationYear || 2026) <= 2017;
   // Property tax regime
@@ -2587,13 +2647,7 @@ function simulate(inp) {
   let cumPrincipalReal = 0;
   let cumTaxSavingsReal = 0;
 
-  // Standard deduction is indexed to inflation -> stays constant in real terms (TCJA-era)
-  // Pre-TCJA standard deduction was roughly half (~$16k MFJ in 2026 dollars).
-  const stdDeductionTCJA = STD_DEDUCTION_BASE[filing];
-  const stdDeductionPreTCJA = filing === 'married' ? 16000 : 8300;
-  // TCJA sunset year: rules switch on Jan 1 of this year onwards
-  const TCJA_SUNSET_YEAR = 2026;
-  const tcjaExtended = inp.tcjaMode === 'extended';
+  const baseTaxMode = normalizeTaxMode(inp.tcjaMode);
   const baseYear = inp.currentYear || 2026;
 
   const yearly = [];
@@ -2648,23 +2702,21 @@ function simulate(inp) {
     const isRental = isConverted && year > convertYr;
     if (isRental) cumDepreciationReal += annualDepreciationReal;
 
-    // Mortgage interest deduction + SALT (real, year-aware for TCJA sunset)
+    // Mortgage interest deduction + SALT (real, year-aware current-law/stress mode)
     const taxYear = baseYear + year - 1;
     // Per-year tax regime override (Quant Q4 stochastic regime)
-    const tcjaExtThisYear = (yearReturns && yearReturns[year - 1].tcjaExtended !== undefined)
-      ? yearReturns[year - 1].tcjaExtended
-      : tcjaExtended;
-    const useTCJA = tcjaExtThisYear || taxYear < TCJA_SUNSET_YEAR;
+    const taxModeThisYear = (yearReturns && yearReturns[year - 1].taxMode)
+      ? normalizeTaxMode(yearReturns[year - 1].taxMode)
+      : baseTaxMode;
     // Per-year marginal-rate override (CPA Q5 / Quant Q5 stochastic walk)
     const marginalRateThisYear = (yearReturns && yearReturns[year - 1].marginalRate !== undefined)
       ? yearReturns[year - 1].marginalRate
       : inp.marginalTaxRate;
-    // MID cap: grandfathered pre-2018 loans keep $1M; sunset gives everyone $1M
-    const midCap = (useTCJA && !isGrandfathered) ? MID_LOAN_CAP : 1000000;
-    const saltCapNom = useTCJA ? SALT_CAP : Infinity;
-    const stdDeductionReal = useTCJA
-      ? STD_DEDUCTION_BASE[effFiling]
-      : (effFiling === 'married' ? 16000 : 8300);
+    const midCap = (isGrandfathered || taxModeThisYear === TAX_MODE_LEGACY_SUNSET) ? LEGACY_MID_LOAN_CAP : MID_LOAN_CAP;
+    const saltCapNom = saltCapNominal(taxModeThisYear, taxYear, effFiling, inp.grossIncome);
+    const stdDeductionReal = standardDeductionReal(taxModeThisYear, effFiling);
+    const ordinaryTaxableIncomeReal = estimateOrdinaryTaxableIncomeReal(inp, effFiling, stdDeductionReal);
+    const agiBeforeGainReal = estimateAGIReal(inp, ordinaryTaxableIncomeReal, stdDeductionReal);
 
     let yearTaxSavingReal = 0;
     let amtBiteReal = 0;
@@ -2675,9 +2727,8 @@ function simulate(inp) {
       const deductibleInterestReal = yearInterestReal * cappedRatio;
       const saltCapReal = saltCapNom === Infinity ? Infinity : saltCapNom / deflator;
       // v6 Phase 2.2: SALT-stacking fix. State income tax already fills part of the
-      // $10K SALT bucket BEFORE we can credit property tax. For CA/NY HCOL households
-      // this often makes the property-tax deduction effectively $0. Previously the code
-      // credited up to the full $10K cap to property tax, producing $25-60K of phantom
+      // applicable SALT bucket BEFORE we can credit property tax. Previously the code
+      // credited up to the full cap to property tax, producing $25-60K of phantom
       // MID+SALT benefit flattering the buyer side (CPA Round 4).
       const stateIncomeTaxReal = (inp.stateIncomeTax || 0) / deflator; // approximate; held nominal-fixed by user input
       const saltBucketRemaining = Math.max(0, saltCapReal - stateIncomeTaxReal);
@@ -2689,24 +2740,22 @@ function simulate(inp) {
       // Mortgage points (year 1 only — CPA Q7)
       if (year === 1) yearTaxSavingReal += (inp.pointsPaid || 0) * (marginalRateThisYear / 100);
 
-      // AMT-lite (CPA Q6): post-2026 sunset only, when AMTI > exemption
-      if (!useTCJA) {
-        const interestAbove1MReal = avgBalanceNom > 1000000
-          ? yearInterestReal * (1 - 1000000 / avgBalanceNom)
+      // AMT-lite (CPA Q6): only used in legacy sunset stress. Current-law AMT is
+      // deliberately not approximated here; a rough bite can be more misleading
+      // than omitting it for a planning calculator.
+      if (taxModeThisYear === TAX_MODE_LEGACY_SUNSET) {
+        const interestAboveCapReal = avgBalanceNom > midCap
+          ? yearInterestReal * (1 - midCap / avgBalanceNom)
           : 0;
-        const taxableIncomeEst = inp.grossIncome > 0
-          ? Math.max(0, inp.grossIncome - stdDeductionReal - 4500 * (effFiling === 'married' ? 2 : 1))
-          : Math.max(50000, Math.min(1500000, (inp.marginalTaxRate / 32) * 200000));
-        const amti = taxableIncomeEst + saltDeductReal + interestAbove1MReal;
-        const amtExemption = effFiling === 'married' ? 89500 : 57500;
-        const phaseoutThreshold = effFiling === 'married' ? 212000 : 174000;
-        const exemptionNet = Math.max(0, amtExemption - 0.25 * Math.max(0, amti - phaseoutThreshold));
+        const amti = ordinaryTaxableIncomeReal + saltDeductReal + interestAboveCapReal;
+        const amt = AMT_LEGACY_SUNSET[effFiling];
+        const exemptionNet = Math.max(0, amt.exemption - 0.25 * Math.max(0, amti - amt.phaseout));
         const amtBreakpoint = 253000;
         const T = Math.max(0, amti - exemptionNet);
         const tentativeAMT = 0.26 * Math.min(T, amtBreakpoint) + 0.28 * Math.max(0, T - amtBreakpoint);
         // Regular fed-only tax ≈ taxable_income × (marginal × 0.78); back out state portion via stateCG as proxy
         const fedRate = Math.max(0.10, (inp.marginalTaxRate - (inp.stateCapGainsRate || 0)) / 100 * 0.78);
-        const regularFed = Math.max(0, taxableIncomeEst - (yearTaxSavingReal / Math.max(0.01, inp.marginalTaxRate / 100))) * fedRate;
+        const regularFed = Math.max(0, ordinaryTaxableIncomeReal - (yearTaxSavingReal / Math.max(0.01, inp.marginalTaxRate / 100))) * fedRate;
         amtBiteReal = Math.max(0, tentativeAMT - regularFed);
         yearTaxSavingReal = Math.max(0, yearTaxSavingReal - amtBiteReal);
       }
@@ -2800,7 +2849,7 @@ function simulate(inp) {
     const excludedGainReal = Math.min(effectiveExclusionReal, remainingGainReal);
     const ltcgTaxableGainReal = remainingGainReal - excludedGainReal;
     const recaptureTaxReal = recaptureGainReal * 0.25;
-    const homeLTCGReal = ltcgTax(ltcgTaxableGainReal, effFiling, exitStateCG);
+    const homeLTCGReal = ltcgTax(ltcgTaxableGainReal, effFiling, exitStateCG, ordinaryTaxableIncomeReal, agiBeforeGainReal);
     const homeCapGainsTaxReal = recaptureTaxReal + homeLTCGReal;
     // Backward-compat exposed field
     const homeGainReal = Math.max(0, homeValueReal - inp.homePrice);
@@ -2815,7 +2864,7 @@ function simulate(inp) {
     // under-credits renter by $100-300K for HCOL W-2 tech professional.
     const taxAdvPct = Math.max(0, Math.min(100, inp.taxAdvantagedPct || 0)) / 100;
     const taxableInvestGainReal = investGainReal * (1 - taxAdvPct);
-    const investCapGainsTaxReal = ltcgTax(taxableInvestGainReal, effFiling, exitStateCG);
+    const investCapGainsTaxReal = ltcgTax(taxableInvestGainReal, effFiling, exitStateCG, ordinaryTaxableIncomeReal, agiBeforeGainReal);
     const renterNetWorthReal = portfolio - investCapGainsTaxReal;
 
     yearly.push({
@@ -2841,6 +2890,7 @@ function simulate(inp) {
       recaptureTaxReal,
       amtBiteReal,
       effFiling,
+      taxMode: taxModeThisYear,
     });
   }
 
@@ -3009,7 +3059,8 @@ function monteCarlo(inp, n) {
 
   // Stochastic tax regime per trial (Quant Q4)
   const stochTax = !!inp.stochasticTaxRegime;
-  const pExt = inp.pTcjaExtended || 0.5;
+  const pCurrentLaw = inp.pTcjaExtended || 0.5;
+  const baseTaxMode = normalizeTaxMode(inp.tcjaMode);
 
   // Stochastic marginal-rate walk (CPA Q5 / Quant Q5)
   const useMargWalk = !!inp.marginalRateWalk;
@@ -3050,7 +3101,9 @@ function monteCarlo(inp, n) {
   for (let trial = 0; trial < n; trial++) {
     // Per-trial: Weibull horizon, tax regime
     const trialHorizon = useWeibull ? Math.min(weibullDraw(), 60) : horizonNominal;
-    const trialTcjaExt = stochTax ? (rng() < pExt) : (inp.tcjaMode === 'extended');
+    const trialTaxMode = stochTax
+      ? ((rng() < pCurrentLaw) ? TAX_MODE_CURRENT : TAX_MODE_LEGACY_SUNSET)
+      : baseTaxMode;
 
     // Behavioral discipline panic state for this trial
     let panicState = false;
@@ -3111,12 +3164,12 @@ function monteCarlo(inp, n) {
         rent: rentReturn,
         discipline,
         marginalRate: useMargWalk ? curMargRate : undefined,
-        tcjaExtended: stochTax ? trialTcjaExt : undefined,
+        taxMode: stochTax ? trialTaxMode : undefined,
       });
     }
     // Run simulate with the trial-specific horizon and overrides
     const r = simulate({ ...inp, yearsStay: trialHorizon, _yearReturns: yearReturns,
-      tcjaMode: trialTcjaExt ? 'extended' : 'sunset' });
+      tcjaMode: trialTaxMode });
     if (trial === 0) firstTrialYearly = r.yearly;
     let trialBE = null;
     const yObsLen = Math.min(trialHorizon, horizonMax);
@@ -3201,16 +3254,25 @@ function monteCarlo(inp, n) {
 
 // Solve for the rent at which buyer NW == renter NW at horizon (equivalent rent)
 function equivalentRent(inp) {
+  if (inp.renterMonthlyContribution > 0) return null;
   let lo = 100, hi = inp.homePrice * 0.02; // up to 2% of home/mo (way above market)
   // f(rent) = buyer_NW - renter_NW at horizon. At low rent, renter wins easily (negative).
   // Wait: low rent -> renter pays little -> renter has MORE money to invest? no, owner-cost
   // determines contribution. Lower rent => renter saves more by renting, so renter NW higher.
   // Increase rent -> renter NW decreases, buyer unchanged. So f is monotonic increasing in rent.
+  const fAt = (monthlyRent) => {
+    const r = simulate({ ...inp, monthlyRent });
+    const last = r.yearly[r.yearly.length - 1];
+    return last.buyerNetWorthReal - last.renterNetWorthReal;
+  };
+  const fLo = fAt(lo);
+  const fHi = fAt(hi);
+  if (!Number.isFinite(fLo) || !Number.isFinite(fHi)) return null;
+  if (fLo >= 0) return lo;
+  if (fHi < 0) return null;
   for (let i = 0; i < 40; i++) {
     const mid = (lo + hi) / 2;
-    const r = simulate({ ...inp, monthlyRent: mid });
-    const last = r.yearly[r.yearly.length - 1];
-    const f = last.buyerNetWorthReal - last.renterNetWorthReal;
+    const f = fAt(mid);
     if (f >= 0) hi = mid; else lo = mid;
     if (hi - lo < 1) break;
   }
@@ -3266,6 +3328,7 @@ function loadFromURL() {
       else state[k] = v;
     }
   }
+  state.tcjaMode = normalizeTaxMode(state.tcjaMode);
   if (p.has('mode')) state.displayMode = p.get('mode');
 }
 
@@ -3385,7 +3448,7 @@ function renderRegimeMap(inp, result) {
   // that don't move the contour shape (we don't include homePrice/monthlyRent themselves
   // because we vary P/R via monthlyRent in the sample probe; everything else is held).
   // Use a fast deterministic probe (no MC) to keep render() responsive.
-  const cacheKey = `${inp.mortgageRate}|${inp.downPaymentPct}|${inp.stockReturnReal}|${inp.homeAppreciationReal}|${inp.disciplineRate}|${inp.taxAdvantagedPct}|${inp.stateCapGainsRate}|${inp.stateIncomeTax}|${inp.marginalTaxRate}|${inp.propertyTaxRate}|${inp.maintenancePct}|${inp.tcjaMode}`;
+  const cacheKey = `${inp.mortgageRate}|${inp.downPaymentPct}|${inp.stockReturnReal}|${inp.homeAppreciationReal}|${inp.disciplineRate}|${inp.renterMonthlyContribution}|${inp.taxAdvantagedPct}|${inp.stateCapGainsRate}|${inp.stateIncomeTax}|${inp.grossIncome}|${inp.marginalTaxRate}|${inp.propertyTaxRate}|${inp.maintenancePct}|${inp.tcjaMode}|${inp.currentYear}|${inp.loanOriginationYear}`;
   let grid;
   if (_regimeMapCache && _regimeMapCache.key === cacheKey) {
     grid = _regimeMapCache.grid;
@@ -3647,7 +3710,7 @@ function computeReserveGate(inp, result) {
       gate: 'dti',
       banner: {
         tier: 'danger',
-        title: `Affordability red flag: ${Math.round(dti)}% of take-home pay.`,
+        title: `Affordability red flag: ${Math.round(dti)}% of gross income.`,
         body: 'At >43% DTI, lenders generally won\'t approve the loan and a forced sale in a downturn becomes the dominant risk. Address the affordability question before the buy-vs-invest math.',
       },
     };
@@ -3679,7 +3742,7 @@ function computeReserveGate(inp, result) {
       gate: 'none',
       banner: {
         tier: 'warn',
-        title: `Housing eats ${Math.round(dti)}% of take-home.`,
+        title: `Housing eats ${Math.round(dti)}% of gross income.`,
         body: 'Above 35% DTI, you have less margin for property tax shocks, special assessments, and "we need a new roof" surprises. The verdict still holds, but stress-test the income-loss scenario.',
       },
     };
@@ -3693,6 +3756,8 @@ function render() {
   const result = simulate(inp);
   renderPathSummary(inp, result);
   const equivRent = equivalentRent(inp);
+  const hasCustomRenterContribution = inp.renterMonthlyContribution > 0;
+  const equivRentText = equivRent === null ? null : fmtMoneyExact(equivRent);
   // Optional Monte Carlo (default N=2000 with 95% CI; per Quant Q7)
   const mc = inp.useMonteCarlo ? monteCarlo(inp) : null;
 
@@ -3796,6 +3861,19 @@ function render() {
 
   const rationale = document.getElementById('verdict-rationale');
   const whyBody = document.getElementById('why-body');
+  const rentSensitivityLine = (() => {
+    if (equivRentText) {
+      return buyerWins
+        ? `Buying stops being worth it if rent for an equivalent home drops below <b>${equivRentText}/mo</b>.`
+        : `Buying would beat investing only if you'd otherwise pay more than <b>${equivRentText}/mo</b> in rent for a similar home.`;
+    }
+    if (hasCustomRenterContribution) {
+      return `Break-even rent is disabled because the renter side is using your custom <b>${fmtMoneyExact(inp.renterMonthlyContribution)}/mo</b> stock investment instead of auto-investing the rent/owning gap.`;
+    }
+    return buyerWins
+      ? `Buying remains ahead across the tested rent range.`
+      : `Buying does not overtake investing within the tested rent range.`;
+  })();
   if (mc) {
     const winPct = Math.round(mc.pBuyWins * 100);
     let beNarrative = '';
@@ -3804,15 +3882,15 @@ function render() {
     else beNarrative = `Of trials where buying does break even, typical year is <b>${mc.breakEvenMedianYear}</b> (worst case: year ${mc.breakEvenP90Year}). <b>${Math.round(mc.pNeverBreakEven*100)}%</b> of trials never break even.`;
     rationale.innerHTML = isSimple
       ? `In <b>${winPct}% of ${mc.n.toLocaleString()} simulated futures</b>, buying comes out ahead. ${beNarrative}`
-      : `Across <b>${mc.n.toLocaleString()} stochastic trials</b> (S&amp;P 500 σ ≈ 17%, home σ ≈ ${(MC_PARAMS.sigmaHomeIndex*100).toFixed(0)}% index${inp.idiosyncraticRisk ? ` + ${(MC_PARAMS.sigmaIdiosyncratic*100).toFixed(0)}% single-home` : ''}, jump-diffusion, log-return sampling), buying wins in <b>${winPct}%</b> of paths (95% CI: ${Math.round(mc.pBuyWinsCI.low*100)}–${Math.round(mc.pBuyWinsCI.high*100)}%). ${beNarrative} Break-even rent (deterministic): <b>${fmtMoneyExact(equivRent)}/mo</b>.`;
+      : `Across <b>${mc.n.toLocaleString()} stochastic trials</b> (S&amp;P 500 σ ≈ 17%, home σ ≈ ${(MC_PARAMS.sigmaHomeIndex*100).toFixed(0)}% index${inp.idiosyncraticRisk ? ` + ${(MC_PARAMS.sigmaIdiosyncratic*100).toFixed(0)}% single-home` : ''}, jump-diffusion, log-return sampling), buying wins in <b>${winPct}%</b> of paths (95% CI: ${Math.round(mc.pBuyWinsCI.low*100)}–${Math.round(mc.pBuyWinsCI.high*100)}%). ${beNarrative} ${rentSensitivityLine}`;
   } else if (isSimple) {
     rationale.innerHTML = buyerWins
       ? `If you stay <b>${yrs} years</b>, the equity you'd build (after selling costs and taxes) outpaces what you'd accumulate by renting and putting the down payment + monthly cost difference into stocks.`
       : `If you stay <b>${yrs} years</b>, putting the down payment + monthly cost difference into a diversified stock portfolio likely beats the equity you'd build by buying — once selling costs and taxes are counted.`;
   } else if (buyerWins) {
-    rationale.innerHTML = `After paying selling costs, capital gains tax (with the §${inp.married ? '500k' : '250k'} exclusion), and accounting for tax-deductible mortgage interest, buying comes out ahead — under your assumptions. Buying stops being worth it if rent for an equivalent home drops below <b>${fmtMoneyExact(equivRent)}/mo</b>. Toggle "Show uncertainty bands" in the drawer to see how robust this is.`;
+    rationale.innerHTML = `After paying selling costs, capital gains tax (with the §${inp.married ? '500k' : '250k'} exclusion), and accounting for tax-deductible mortgage interest, buying comes out ahead — under your assumptions. ${rentSensitivityLine} Toggle "Show uncertainty bands" in the drawer to see how robust this is.`;
   } else {
-    rationale.innerHTML = `After-tax, after-fees, investing the down payment + monthly cost gap (at ${inp.disciplineRate}% discipline) into a diversified stock portfolio ends up ahead. Buying would beat investing only if you'd otherwise pay more than <b>${fmtMoneyExact(equivRent)}/mo</b> in rent for a similar home. Toggle "Show uncertainty bands" in the drawer to see how robust this is.`;
+    rationale.innerHTML = `After-tax, after-fees, investing the down payment + monthly cost gap (at ${inp.disciplineRate}% discipline) into a diversified stock portfolio ends up ahead. ${rentSensitivityLine} Toggle "Show uncertainty bands" in the drawer to see how robust this is.`;
   }
 
   // Populate "Why?" body — plain English, 3 bullets, novice-safe
@@ -3986,7 +4064,19 @@ function render() {
   }
 
   // Meta cells
-  document.getElementById('meta-equivrent').textContent = fmtMoneyExact(equivRent) + '/mo';
+  const equivElem = document.getElementById('meta-equivrent');
+  if (equivElem) {
+    if (equivRentText) {
+      equivElem.textContent = equivRentText + '/mo';
+      equivElem.title = 'Rent where buyer and renter end with the same after-tax net worth.';
+    } else if (hasCustomRenterContribution) {
+      equivElem.textContent = 'Custom $/mo';
+      equivElem.title = 'Not meaningful when the renter uses a fixed monthly stock contribution.';
+    } else {
+      equivElem.textContent = 'No flip';
+      equivElem.title = 'No rent break-even found inside the tested rent range.';
+    }
+  }
   // Break-even meta cell: in MC mode, show median + worst-case from per-trial; else deterministic
   const beElem = document.getElementById('meta-breakeven');
   if (mc) {
@@ -4110,7 +4200,7 @@ function renderAffordability(inp, result) {
   const dtiHint = document.getElementById('dti-hint');
   if (!inp.grossIncome || inp.grossIncome <= 0) {
     if (wrap) wrap.innerHTML = '';
-    if (dtiHint) dtiHint.innerHTML = `Optional. We'll show how much of your paycheck this home eats.`;
+    if (dtiHint) dtiHint.innerHTML = `Optional. We'll show PITI as a share of gross income.`;
     return;
   }
   const monthlyGross = inp.grossIncome / 12;
@@ -4125,7 +4215,7 @@ function renderAffordability(inp, result) {
       : ratio < 0.36
       ? `above the 28% guideline — stretching`
       : `above the 36% lender ceiling — most won't approve`;
-    dtiHint.innerHTML = `<span class="dti-chip ${status === 'bad' ? 'bad' : status === 'warn' ? 'warn' : ''}"><svg width="12" height="12" style="vertical-align:-2px"><use href="#${status === 'pos' ? 'i-check' : 'i-alert'}"/></svg> This home eats <b>${pct}%</b> of your take-home — ${verdict}.</span>`;
+    dtiHint.innerHTML = `<span class="dti-chip ${status === 'bad' ? 'bad' : status === 'warn' ? 'warn' : ''}"><svg width="12" height="12" style="vertical-align:-2px"><use href="#${status === 'pos' ? 'i-check' : 'i-alert'}"/></svg> This home is <b>${pct}%</b> of gross income — ${verdict}.</span>`;
   }
   // Banner (only shown in advanced mode now)
   const word = ratio < 0.28 ? 'Within the 28% guideline' : ratio < 0.36 ? 'Stretching your budget (above 28%)' : 'Above the 36% lender ceiling';
@@ -4135,7 +4225,7 @@ function renderAffordability(inp, result) {
       <span class="afford-icon"><svg width="20" height="20"><use href="#${icon}"/></svg></span>
       <div class="afford-body">
         <div class="h">${word}</div>
-        <div class="b">PITI of <b>${fmtMoneyExact(piti)}/mo</b> is <b>${pct}%</b> of your <b>${fmtMoneyExact(monthlyGross)}/mo</b> take-home. The "28/36 rule" caps housing at 28% of take-home; lenders typically allow up to 36%.</div>
+        <div class="b">PITI of <b>${fmtMoneyExact(piti)}/mo</b> is <b>${pct}%</b> of your <b>${fmtMoneyExact(monthlyGross)}/mo</b> gross income. The "28/36 rule" usually measures housing against gross income; lenders typically allow up to 36%.</div>
       </div>
     </div>`;
 }

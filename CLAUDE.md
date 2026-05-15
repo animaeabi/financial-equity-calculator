@@ -37,6 +37,9 @@ The model uses Himmelberg-Mayer-Sinai 2005 *user cost*: owner mortgage **princip
 
 Look at `index.html` around the `monthlyDiffReal` assignment to see the branch.
 
+### Tax model is current-law first, stress-mode second
+Default tax mode is `tcjaMode: 'current'`, using 2026 current-law assumptions: 2026 standard deduction, current-law SALT cap/phaseout, $750K post-2017 MID cap, and 2026 LTCG brackets. Old URLs with `tcjaMode=sunset` are normalized to `legacySunset`. The other modes are stress tests, not the default forecast. `ltcgTax()` is income-aware: pass estimated ordinary taxable income and AGI before the gain so NIIT and bracket capacity are not computed from the gain alone.
+
 ### Versioned visual layers
 The verdict region has historical layers: `.verdict` (v3, hidden via CSS), `.verdict-v5`, `.v6-card`. Some legacy IDs are kept on hidden `<span>` elements at the bottom of the verdict section because old render functions still reference them — don't delete those without auditing `render()`.
 
