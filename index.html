@@ -1340,6 +1340,30 @@ body.simple-mode .show-advanced-cta button:hover { color: var(--text-1); border-
   grid-template-columns: 1fr 1fr;
 }
 @media (max-width: 720px) { .drawer-grid { grid-template-columns: 1fr; } }
+
+/* Buyer + Renter sit side-by-side; each column stacks its fields vertically.
+   Stacks vertically on narrow screens. */
+.drawer-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-6);
+  margin-bottom: var(--s-6);
+}
+@media (max-width: 760px) {
+  .drawer-two-col { grid-template-columns: 1fr; gap: var(--s-5); }
+}
+.drawer-col {
+  display: flex; flex-direction: column;
+  gap: var(--s-4);
+  min-width: 0;
+}
+.drawer-col .drawer-umbrella-title { margin-top: 0; }
+.drawer-col .drawer-section-title { margin: var(--s-3) 0 0; }
+.drawer-col .field { width: 100%; }
+.drawer-col-buyer { border-right: 1px solid var(--border-1); padding-right: var(--s-5); }
+@media (max-width: 760px) {
+  .drawer-col-buyer { border-right: none; padding-right: 0; padding-bottom: var(--s-5); border-bottom: 1px solid var(--border-1); }
+}
 .drawer-section-title {
   font-size: 11px; font-weight: 600; color: var(--text-3); letter-spacing: 0.06em;
   text-transform: uppercase; margin: var(--s-3) 0 var(--s-3);
@@ -2130,7 +2154,8 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
   </button>
 
   <div class="drawer-body" id="drawer" hidden>
-    <div class="drawer-grid">
+    <div class="drawer-two-col">
+      <section class="drawer-col drawer-col-buyer">
 
       <!-- ============================================================== -->
       <!-- BUYER CONTROLS — affects the home-ownership path               -->
@@ -2295,6 +2320,9 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
         <div class="cite">IRC §121(c) safe harbor. With reason: pro-rata exclusion = months_held / 24 × $250k/$500k. Without: $0 if held &lt;2 years.</div>
       </div>
 
+      </section><!-- /drawer-col-buyer -->
+
+      <section class="drawer-col drawer-col-renter">
       <!-- ============================================================== -->
       <!-- RENTER CONTROLS — affects the rent-and-invest path             -->
       <!-- ============================================================== -->
@@ -2356,6 +2384,10 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
         <div class="cite">CPI-Rent typically tracks inflation; ≈ 0% real. <button class="snap-default" data-default="rentGrowthReal" data-value="0">Use 0%</button></div>
       </div>
 
+      </section><!-- /drawer-col-renter -->
+    </div><!-- /drawer-two-col -->
+
+    <div class="drawer-grid drawer-shared">
       <!-- ============================================================== -->
       <!-- SHARED — applies to both paths or to lifecycle assumptions     -->
       <!-- ============================================================== -->
