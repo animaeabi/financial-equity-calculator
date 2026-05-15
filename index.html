@@ -100,7 +100,14 @@ header.app {
 }
 @media (max-width: 400px) {
   /* On the smallest phones, abbreviate so the mode pill + share + theme fit */
-  .brand-text { font-size: 12px; max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
+  .brand { gap: var(--s-2); }
+  .brand-text { font-size: 12px; max-width: 96px; overflow: hidden; text-overflow: ellipsis; }
+  #share { display: none; }
+}
+@media (max-width: 360px) {
+  #theme { display: none; }
+  .mode-pill { margin-right: 0; }
+  .mode-pill button { padding-inline: 9px; }
 }
 .header-actions { display: flex; align-items: center; gap: var(--s-2); }
 
@@ -143,7 +150,13 @@ main { max-width: 1120px; margin: 0 auto; padding: var(--s-6) var(--s-5) var(--s
 @media (max-width: 760px) { .intro h1 { font-size: 36px; } }
 @media (max-width: 480px) { .intro h1 { font-size: 30px; } }
 .intro h1 .muted { color: var(--text-3); font-weight: 600; }
-.intro p { display: none; }
+.intro p {
+  margin: var(--s-3) 0 0;
+  max-width: 58ch;
+  color: var(--text-2);
+  font-size: 16px;
+  line-height: 25px;
+}
 
 /* ---------- Tier-1 input row ---------- */
 .tier1 {
@@ -184,6 +197,189 @@ main { max-width: 1120px; margin: 0 auto; padding: var(--s-6) var(--s-5) var(--s
 .input-affix input::-webkit-inner-spin-button,
 .input-affix input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 .input-affix input { -moz-appearance: textfield; }
+.select {
+  width: 100%;
+  height: 44px;
+  padding: 0 36px 0 var(--s-3);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-1);
+  background: var(--bg);
+  color: var(--text-1);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.select:focus-visible { outline: none; border-color: var(--brand-500); box-shadow: 0 0 0 3px var(--ring); }
+
+/* ---------- Buyer/Renter path builder ---------- */
+.path-builder {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  margin-bottom: var(--s-5);
+}
+.scenario-strip {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(220px, 320px);
+  gap: var(--s-3);
+  align-items: end;
+}
+.path-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 132px minmax(0, 1fr);
+  gap: var(--s-4);
+  align-items: stretch;
+}
+.path-card {
+  background: var(--surface);
+  border: 1px solid var(--border-1);
+  border-radius: 8px;
+  padding: var(--s-5);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  min-width: 0;
+}
+.buyer-path { border-top: 3px solid var(--brand-500); }
+.renter-path { border-top: 3px solid var(--info-500); }
+.path-card-head {
+  display: flex;
+  gap: var(--s-3);
+  align-items: flex-start;
+}
+.path-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  color: var(--surface);
+}
+.buyer-path .path-icon { background: var(--brand-500); }
+.renter-path .path-icon { background: var(--info-500); }
+.path-card h2 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: -0.01em;
+}
+.path-card p {
+  margin: 2px 0 0;
+  color: var(--text-2);
+  font-size: 13px;
+  line-height: 19px;
+}
+.path-fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-3);
+}
+@media (min-width: 761px) {
+  .path-card .path-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .buyer-path .path-fields .field:first-child { grid-column: 1 / -1; }
+}
+@media (min-width: 400px) and (max-width: 760px) {
+  .path-card .path-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .buyer-path .path-fields .field:first-child { grid-column: 1 / -1; }
+}
+.path-metric {
+  margin-top: auto;
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--border-1);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.path-metric span {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.path-metric strong {
+  color: var(--text-1);
+  font-size: 28px;
+  line-height: 34px;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+.path-metric small {
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 18px;
+}
+.path-bridge {
+  align-self: center;
+  min-height: 112px;
+  padding: var(--s-4) var(--s-3);
+  border: 1px dashed var(--border-2);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  text-align: center;
+  background: var(--surface-sunken);
+}
+.path-bridge span {
+  color: var(--text-3);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.path-bridge strong {
+  color: var(--text-1);
+  font-size: 16px;
+  line-height: 22px;
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+.context-row {
+  max-width: 360px;
+}
+.path-card .archetype-field {
+  margin-top: 0;
+  padding: var(--s-3);
+  border-color: var(--border-1);
+  box-shadow: none;
+}
+.path-card .archetype-heading { margin-bottom: var(--s-2); }
+.path-card .archetype-label { font-size: 13px; }
+.path-card .archetype-pick {
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: var(--s-2);
+}
+.path-card .archetype-card {
+  border-radius: 8px;
+  padding: 10px;
+}
+.path-card .archetype-card .ac-desc,
+.path-card .archetype-card .ac-sub { font-size: 10px; line-height: 14px; }
+.path-card .archetype-card .ac-pct { font-size: 18px; }
+
+@media (max-width: 760px) {
+  .scenario-strip { grid-template-columns: 1fr; }
+  .path-grid { grid-template-columns: 1fr; }
+  .path-bridge {
+    min-height: 0;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .context-row { max-width: none; }
+}
+@media (max-width: 540px) {
+  .path-card .archetype-pick { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .path-card { padding: var(--s-4); }
+  .path-metric strong { font-size: 24px; line-height: 30px; }
+}
 
 /* Length-of-stay chips */
 .chips { display: flex; flex-wrap: wrap; gap: var(--s-1); }
@@ -438,8 +634,15 @@ body.simple-mode footer.method,
 body.simple-mode .verdict-meta-item.advanced-only {
   display: none !important;
 }
-body.simple-mode .intro h1 { font-size: 22px; line-height: 28px; }
-body.simple-mode .intro p { display: none; }
+body.simple-mode .path-card .archetype-field,
+body.simple-mode .context-row,
+body.simple-mode #disclaimer {
+  display: none !important;
+}
+body.simple-mode .intro h1 { font-size: 42px; line-height: 1.06; }
+body.simple-mode .intro p { display: block; }
+@media (max-width: 760px) { body.simple-mode .intro h1 { font-size: 34px; } }
+@media (max-width: 480px) { body.simple-mode .intro h1 { font-size: 28px; } }
 body.simple-mode #afford-banner { display: none; } /* novice doesn't enter income */
 body.simple-mode .verdict { padding: var(--s-6); }
 body.simple-mode .verdict h2 { font-size: 24px; line-height: 32px; }
@@ -1438,118 +1641,160 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
 
 <main>
   <div class="intro">
-    <h1>Where does your equity grow faster —<br><span class="muted">in a home, or in the market?</span></h1>
+    <h1>Put the same cash in a home or the market.</h1>
+    <p>Buyer owns the house. Renter owns stocks. Compare where the same starting money lands after your timeline.</p>
   </div>
 
-  <!-- Tier-1: Primary inputs (always visible) -->
-  <section class="tier1" aria-label="Primary inputs">
-    <div class="field">
-      <label for="homePrice">The home you'd buy costs</label>
-      <div class="input-affix">
-        <span class="affix">$</span>
-        <input type="number" id="homePrice" inputmode="numeric" min="50000" step="10000" />
-      </div>
-      <div class="hint">Total purchase price you'd pay</div>
-    </div>
-    <div class="field">
-      <label for="monthlyRent">A similar place to rent costs</label>
-      <div class="input-affix">
-        <span class="affix">$</span>
-        <input type="number" id="monthlyRent" inputmode="numeric" min="200" step="50" />
-        <span class="affix right">/mo</span>
-      </div>
-      <div class="hint">You have to live somewhere — this is the alternative</div>
-    </div>
-    <div class="field">
-      <label>How long would you stay?</label>
-      <div class="chips" role="radiogroup" aria-label="Years you plan to stay">
-        <button class="chip" type="button" data-stay="3">3 yr</button>
-        <button class="chip" type="button" data-stay="5">5 yr</button>
-        <button class="chip" type="button" data-stay="7">7 yr</button>
-        <button class="chip" type="button" data-stay="10">10 yr</button>
-        <button class="chip" type="button" data-stay="30">30 yr</button>
-      </div>
-      <div class="hint">By far the biggest variable in the answer</div>
-    </div>
-    <div class="field">
-      <label for="mortgageRate">Mortgage interest rate</label>
-      <div class="input-affix">
-        <input type="number" id="mortgageRate" inputmode="decimal" min="0" max="20" step="0.05" />
-        <span class="affix right">%</span>
-      </div>
-      <div class="hint">Today's avg ~6.7%. Yours depends on credit + down payment — a lender quote is the only way to know.</div>
-    </div>
-    <div class="field">
-      <label for="downPaymentPctTier1">Cash you'd put down</label>
-      <div class="input-affix">
-        <input type="number" id="downPaymentPctTier1" inputmode="decimal" min="0" max="100" step="1" />
-        <span class="affix right">% down</span>
-      </div>
-      <div class="hint">Median first-time buyer: ~8%. Below 20% adds PMI of ~0.5% of loan/yr.</div>
-    </div>
-    <div class="field">
-      <label for="grossIncomeTier1">Your household take-home pay</label>
-      <div class="input-affix">
-        <span class="affix">$</span>
-        <input type="number" id="grossIncomeTier1" inputmode="numeric" min="0" step="500" placeholder="0 = skip" />
-        <span class="affix right">/mo</span>
-      </div>
-      <div class="hint" id="dti-hint">Optional. We'll show how much of your paycheck this home eats.</div>
-    </div>
-    <div class="field">
-      <label for="stateTier1">Where (state)</label>
-      <select id="stateTier1" class="select">
-        <option value="other">No state income tax (TX, FL, NV, WA, TN)</option>
-        <option value="ca">California</option>
-        <option value="ny">New York</option>
-        <option value="nj">New Jersey</option>
-        <option value="ma">Massachusetts</option>
-        <option value="il">Illinois</option>
-        <option value="generic">Generic (5% state, 5% LTCG)</option>
-      </select>
-      <div class="hint">State swings the verdict ~$300–500K over a 25-year hold. CA's 13.3% LTCG + 9-13.3% income tax compound through both sides.</div>
-    </div>
-    <!-- v6 Phase 4: Discipline archetype cards (CFP Round 4 + UX Round 4).
-         Replaces the silent 40% disciplineRate slider in the drawer. Surfaces
-         the single most-impactful assumption as a Tier-1 self-categorization.
-         Maps: Automated=90, Mixed=50 (default), Spender=20. -->
-    <div class="field full-row archetype-field">
-      <div class="archetype-heading">
-        <span class="archetype-eyebrow">The single biggest lever in this model</span>
-        <label class="archetype-label">What kind of investor are you, really?</label>
-      </div>
-      <div class="archetype-pick" role="radiogroup" aria-label="Investing discipline archetype">
-        <button type="button" class="archetype-card" data-archetype="automated" data-disc="90" role="radio" aria-checked="false">
-          <div class="ac-title">Automated</div>
-          <div class="ac-desc">401(k)/Roth on payday, automatic transfers</div>
-          <div class="ac-pct">90%</div>
-          <div class="ac-sub">of rent savings invested</div>
-        </button>
-        <button type="button" class="archetype-card" data-archetype="mixed" data-disc="50" role="radio" aria-checked="true">
-          <div class="ac-title">Mixed</div>
-          <div class="ac-desc">Some auto, some drift — bonuses get invested, monthly drips don't always</div>
-          <div class="ac-pct">50%</div>
-          <div class="ac-sub">of rent savings invested</div>
-        </button>
-        <button type="button" class="archetype-card" data-archetype="spender" data-disc="20" role="radio" aria-checked="false">
-          <div class="ac-title">Spender</div>
-          <div class="ac-desc">Money in checking = money spent. Honest answer.</div>
-          <div class="ac-pct">20%</div>
-          <div class="ac-sub">of rent savings invested</div>
-        </button>
-      </div>
-      <div class="hint">Most renters say 100% but invest 20–35% (Goodman-Mayer 2018, Dalbar QAIB). Be honest — the model adjusts everything from this single answer.</div>
-
-      <!-- Explicit override: skip the archetype % and set an exact monthly stock contribution -->
-      <div class="renter-override">
-        <div class="renter-override-or"><span>or be exact</span></div>
-        <label for="renterMonthlyContribution" class="renter-override-label">If you already know what you'd invest to stocks each month while renting</label>
-        <div class="input-affix renter-override-input">
-          <span class="affix">$</span>
-          <input type="number" id="renterMonthlyContribution" inputmode="numeric" min="0" step="50" placeholder="0 = use the % above" />
-          <span class="affix right">/mo to stocks</span>
+  <!-- Primary journey: two capital paths, same starting cash -->
+  <section class="path-builder" aria-label="Buyer and renter comparison">
+    <div class="scenario-strip">
+      <div class="field stay-field">
+        <label>Compare over</label>
+        <div class="chips" role="radiogroup" aria-label="Years you plan to stay">
+          <button class="chip" type="button" data-stay="3">3 yr</button>
+          <button class="chip" type="button" data-stay="5">5 yr</button>
+          <button class="chip" type="button" data-stay="7">7 yr</button>
+          <button class="chip" type="button" data-stay="10">10 yr</button>
+          <button class="chip" type="button" data-stay="30">30 yr</button>
         </div>
-        <div class="hint">Overrides the archetype %. Treated as a flat amount in today's dollars (doesn't grow with rent or inflation).</div>
+      </div>
+
+      <div class="field state-field">
+        <label for="stateTier1">State</label>
+        <select id="stateTier1" class="select">
+          <option value="other">No state income tax</option>
+          <option value="ca">California</option>
+          <option value="ny">New York</option>
+          <option value="nj">New Jersey</option>
+          <option value="ma">Massachusetts</option>
+          <option value="il">Illinois</option>
+          <option value="generic">Generic state tax</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="path-grid">
+      <article class="path-card buyer-path">
+        <div class="path-card-head">
+          <span class="path-icon"><svg width="18" height="18"><use href="#i-home"/></svg></span>
+          <div>
+            <h2>Buyer</h2>
+            <p>Owns the house and builds home equity.</p>
+          </div>
+        </div>
+
+        <div class="path-fields">
+          <div class="field">
+            <label for="homePrice">Home price</label>
+            <div class="input-affix">
+              <span class="affix">$</span>
+              <input type="number" id="homePrice" inputmode="numeric" min="50000" step="10000" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="downPaymentPctTier1">Down payment</label>
+            <div class="input-affix">
+              <input type="number" id="downPaymentPctTier1" inputmode="decimal" min="0" max="100" step="1" />
+              <span class="affix right">% down</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="mortgageRate">Mortgage rate</label>
+            <div class="input-affix">
+              <input type="number" id="mortgageRate" inputmode="decimal" min="0" max="20" step="0.05" />
+              <span class="affix right">%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="path-metric">
+          <span>Cash committed on day 1</span>
+          <strong id="buyer-start-cash">—</strong>
+          <small id="buyer-start-note">—</small>
+        </div>
+      </article>
+
+      <div class="path-bridge" aria-label="Both paths start with the same cash">
+        <span>Same starting cash</span>
+        <strong id="shared-start-cash">—</strong>
+      </div>
+
+      <article class="path-card renter-path">
+        <div class="path-card-head">
+          <span class="path-icon"><svg width="18" height="18"><use href="#i-trend"/></svg></span>
+          <div>
+            <h2>Renter</h2>
+            <p>Rents the home and owns a stock portfolio.</p>
+          </div>
+        </div>
+
+        <div class="path-fields">
+          <div class="field">
+            <label for="monthlyRent">Rent for a similar home</label>
+            <div class="input-affix">
+              <span class="affix">$</span>
+              <input type="number" id="monthlyRent" inputmode="numeric" min="200" step="50" />
+              <span class="affix right">/mo</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="renterMonthlyContribution">Monthly stock investment</label>
+            <div class="input-affix">
+              <span class="affix">$</span>
+              <input type="number" id="renterMonthlyContribution" inputmode="numeric" min="0" step="50" placeholder="0 = auto" />
+              <span class="affix right">/mo</span>
+            </div>
+            <div class="hint" id="renter-monthly-plan">Leave blank to auto-invest the cost gap.</div>
+          </div>
+        </div>
+
+        <div class="path-metric">
+          <span>Starting stock portfolio</span>
+          <strong id="renter-start-cash">—</strong>
+          <small id="renter-start-note">—</small>
+        </div>
+
+        <!-- If the renter does not set an exact monthly contribution, use the existing discipline path. -->
+        <div class="field archetype-field">
+          <div class="archetype-heading">
+            <label class="archetype-label">If monthly investment is blank</label>
+          </div>
+          <div class="archetype-pick" role="radiogroup" aria-label="Investing discipline archetype">
+            <button type="button" class="archetype-card" data-archetype="automated" data-disc="90" role="radio" aria-checked="false">
+              <div class="ac-title">Automated</div>
+              <div class="ac-desc">Payday transfers</div>
+              <div class="ac-pct">90%</div>
+              <div class="ac-sub">of gap invested</div>
+            </button>
+            <button type="button" class="archetype-card" data-archetype="mixed" data-disc="50" role="radio" aria-checked="true">
+              <div class="ac-title">Mixed</div>
+              <div class="ac-desc">Some drift</div>
+              <div class="ac-pct">50%</div>
+              <div class="ac-sub">of gap invested</div>
+            </button>
+            <button type="button" class="archetype-card" data-archetype="spender" data-disc="20" role="radio" aria-checked="false">
+              <div class="ac-title">Spender</div>
+              <div class="ac-desc">Cash gets spent</div>
+              <div class="ac-pct">20%</div>
+              <div class="ac-sub">of gap invested</div>
+            </button>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="context-row">
+      <div class="field">
+        <label for="grossIncomeTier1">Household take-home pay</label>
+        <div class="input-affix">
+          <span class="affix">$</span>
+          <input type="number" id="grossIncomeTier1" inputmode="numeric" min="0" step="500" placeholder="0 = skip" />
+          <span class="affix right">/mo</span>
+        </div>
+        <div class="hint" id="dti-hint">Optional affordability check.</div>
       </div>
     </div>
   </section>
@@ -1573,8 +1818,8 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
 
   <!-- Verdict section title — anchors the user: "this is the answer" -->
   <div class="verdict-heading">
-    <div class="section-title"><svg width="14" height="14"><use href="#i-trend"/></svg> Your answer</div>
-    <p class="section-sub">Based on your inputs above. Scroll down for the year-by-year trajectory.</p>
+    <div class="section-title"><svg width="14" height="14"><use href="#i-trend"/></svg> Outcome</div>
+    <p class="section-sub">Same starting cash, two assets, one timeline.</p>
   </div>
 
   <!-- v5 Verdict — visual designer redesign -->
@@ -2085,8 +2330,8 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
 
   <!-- Net-worth chart — the trajectory chart that actually answers the question -->
   <section class="chart-card" id="trajectory-card">
-    <div class="section-title"><svg width="14" height="14"><use href="#i-trend"/></svg> The two trajectories, side by side</div>
-    <p class="section-sub">Same starting capital, year by year. Both lines include transaction costs and capital-gains taxes at exit. Buy side = down payment + closing → home equity. Rent + invest side = same dollars invested up front, plus a monthly contribution into stocks (set explicitly above, or auto-computed from the cost gap × your discipline rate).</p>
+    <div class="section-title"><svg width="14" height="14"><use href="#i-trend"/></svg> How each asset grows</div>
+    <p class="section-sub">Buyer: home equity after sale. Renter: stock portfolio after tax, starting with the same cash.</p>
     <div class="chart-legend">
       <div class="legend-item"><span class="legend-dot" style="background: var(--brand-500)"></span>Buy: home equity at sale</div>
       <div class="legend-item"><span class="legend-dot" style="background: var(--info-500)"></span>Rent + invest: portfolio after tax</div>
@@ -3051,6 +3296,45 @@ function fmtMoneyExact(n) {
 function fmtPct(n) { return n.toFixed(1) + '%'; }
 function fmtYears(n) { return n.toFixed(1) + ' yr'; }
 
+function renderPathSummary(inp, result) {
+  const setText = (id, text) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  };
+  const closingCosts = inp.homePrice * (inp.closingCostPct / 100);
+  const upfront = result.upfront || 0;
+  const downPayment = result.downPayment || 0;
+  const firstYear = result.yearly && result.yearly[0] ? result.yearly[0] : null;
+  const autoMonthly = firstYear && typeof firstYear.monthlyDiffReal === 'number'
+    ? Math.round(firstYear.monthlyDiffReal)
+    : 0;
+
+  setText('buyer-start-cash', fmtMoneyExact(upfront));
+  setText('buyer-start-note', `${fmtMoneyExact(downPayment)} down + ${fmtMoneyExact(closingCosts)} closing`);
+  setText('shared-start-cash', fmtMoneyExact(upfront));
+  setText('renter-start-cash', fmtMoneyExact(upfront));
+  setText('renter-start-note', `Matches the buyer's day-1 cash, invested in stocks.`);
+
+  const plan = document.getElementById('renter-monthly-plan');
+  if (plan) {
+    if (inp.renterMonthlyContribution > 0) {
+      plan.textContent = `Using your custom ${fmtMoneyExact(inp.renterMonthlyContribution)}/mo stock investment.`;
+    } else if (autoMonthly > 0) {
+      plan.textContent = `Auto: ${fmtMoneyExact(autoMonthly)}/mo from the ownership cost gap × ${Math.round(inp.disciplineRate)}%.`;
+    } else {
+      plan.textContent = `Auto: no monthly stock add because the rent path is not cheaper on user-cost basis.`;
+    }
+  }
+
+  const dp1 = document.getElementById('downPaymentPctTier1');
+  if (dp1 && document.activeElement !== dp1) dp1.value = inp.downPaymentPct;
+
+  const gi1 = document.getElementById('grossIncomeTier1');
+  if (gi1 && document.activeElement !== gi1) {
+    gi1.value = inp.grossIncome > 0 ? Math.round(inp.grossIncome / 12) : '';
+  }
+}
+
 // v6: crossover sentence — the single most useful sentence in the app.
 // Templates: far / near / already-won / never. Uses breakEven + breakEvenPersistent.
 // Brand-aligned framing: home equity vs market equity. "Overtakes" is the verb
@@ -3407,6 +3691,7 @@ function render() {
   // Derive display values based on mode
   const inp = currentInputs();
   const result = simulate(inp);
+  renderPathSummary(inp, result);
   const equivRent = equivalentRent(inp);
   // Optional Monte Carlo (default N=2000 with 95% CI; per Quant Q7)
   const mc = inp.useMonteCarlo ? monteCarlo(inp) : null;
@@ -3610,9 +3895,9 @@ function render() {
       if (sub) sub.textContent = `Address DTI > 43% before the math matters.`;
     } else {
       if (regimeLabelEl) {
-        regimeLabelEl.textContent = verdictState === 'buy' ? 'HOME EQUITY WINS'
-                                  : verdictState === 'invest' ? 'MARKET EQUITY WINS'
-                                  : 'TOO CLOSE TO CALL';
+        regimeLabelEl.textContent = verdictState === 'buy' ? 'Home equity ahead'
+                                  : verdictState === 'invest' ? 'Stock portfolio ahead'
+                                  : 'Too close to call';
       }
       if (crossoverEl) {
         crossoverEl.textContent = buildCrossoverSentence(result, inp, verdictState);
@@ -3672,9 +3957,9 @@ function render() {
     if (verdictState === 'close') {
       deltaEl.innerHTML = `Within ${fmtMoneyExact(closeThreshold)} of break-even`;
     } else if (verdictState === 'buy') {
-      deltaEl.innerHTML = `<span class="arr">◀</span> +${fmtMoney(totalAbs)} MORE IN HOME EQUITY`;
+      deltaEl.innerHTML = `<span class="arr">◀</span> +${fmtMoney(totalAbs)} more in home equity`;
     } else {
-      deltaEl.innerHTML = `+${fmtMoney(totalAbs)} MORE IN MARKET EQUITY <span class="arr">▶</span>`;
+      deltaEl.innerHTML = `+${fmtMoney(totalAbs)} more in stocks <span class="arr">▶</span>`;
     }
 
     // 3 factor pills (compact, replaces wall-of-text "why")

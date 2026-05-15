@@ -16,6 +16,7 @@ This calculator surfaces that regime visually instead of collapsing it to a sing
 
 ## What's inside
 
+- **Buyer vs. Renter setup** — the first screen is split into two plain paths. Buyer owns the home; Renter owns stocks. The renter's starting portfolio is automatically matched to the buyer's day-1 cash.
 - **2D regime map** as the verdict's headline. The map is the answer; the dollar number is the caption. A brand-tinted "YOU" dot shows where your specific scenario sits relative to the buy/invest crossover.
 - **Crossover sentence** — the single most useful line: *"Buy takes over at year 9 — your 5-year stay is 4 years short."*
 - **Trajectory chart** with explicit endpoint captions — *"Started with $80k down + closing → $312k home equity at year 10"* vs *"Started with the same $80k in stocks + $620/mo → $234k portfolio after tax."* Same starting capital, two paths, side by side.
