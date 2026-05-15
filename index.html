@@ -1175,10 +1175,20 @@ body.untouched .v6-contingency { opacity: 0.85; transition: opacity var(--dur-ba
   color: var(--text-2);
   transition: border-color var(--dur-base) var(--ease), background-color var(--dur-base) var(--ease);
 }
-.archetype-card:hover { border-color: var(--border-2); }
+.archetype-card:hover {
+  border-color: var(--brand-500);
+  background: var(--surface-sunken);
+  color: var(--text-1);
+}
+.archetype-card:focus-visible {
+  outline: none;
+  border-color: var(--brand-500);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+.archetype-card:active { background: var(--bg); }
 .archetype-card[aria-checked="true"] {
   border-color: var(--brand-500);
-  background: var(--surface);
+  background: var(--brand-50);
   box-shadow: inset 0 0 0 1px var(--brand-500);
   color: var(--text-1);
 }
