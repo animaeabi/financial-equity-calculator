@@ -1,5 +1,6 @@
-# Council docs — local research artifacts, not part of the public deploy
-CLAUDE.md
+# Council docs — local research artifacts, not part of the public deploy.
+# CLAUDE.md is committed (agent context file, used by AI assistants working
+# on this repo). Other research artifacts stay local.
 CHANGELOG.md
 COUNCIL.md
 COUNCIL_QA.md

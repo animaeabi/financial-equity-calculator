@@ -18,8 +18,11 @@ This calculator surfaces that regime visually instead of collapsing it to a sing
 
 - **2D regime map** as the verdict's headline. The map is the answer; the dollar number is the caption. A brand-tinted "YOU" dot shows where your specific scenario sits relative to the buy/invest crossover.
 - **Crossover sentence** — the single most useful line: *"Buy takes over at year 9 — your 5-year stay is 4 years short."*
+- **Trajectory chart** with explicit endpoint captions — *"Started with $80k down + closing → $312k home equity at year 10"* vs *"Started with the same $80k in stocks + $620/mo → $234k portfolio after tax."* Same starting capital, two paths, side by side.
 - **Discipline archetype** — three Tier-1 cards (Automated / Mixed / Spender) replace the silent default everyone gets wrong. Based on Goodman-Mayer 2018 + Dalbar QAIB realized-investor-return data.
+- **Explicit monthly contribution override** — if "rent − own × discipline" doesn't match how you actually budget, set a flat `$/mo to stocks` directly. The simulator uses your number instead.
 - **Flip-bar** — two click-to-preview counterfactuals show exactly what would flip your verdict.
+- **Simple vs Advanced** — Simple mode strips the verdict down to map + headline + footnote and hides all the levers; Advanced surfaces the drawer, sensitivity strip, stress test, and full assumptions accordion.
 - **Refusal-to-verdict** — for sub-3-year stays, DTI > 43%, or thin post-purchase reserves, the model redirects instead of producing a confident dollar number.
 - **Monte Carlo** at N=2,000 trials with log-normal sampling, t-copula tail dependence, single-home idiosyncratic σ, and a jump-diffusion stock tail.
 - **Tax model**: §121 with partial-exclusion gates, IRC §163(h)(3) avg-balance MID, SALT cap with state-income-tax stacking, §1250 unrecapture for converted rentals, AMT-lite for post-2026 sunset, tax-advantaged-account shelter on the renter side.
