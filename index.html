@@ -1201,6 +1201,168 @@ footer.method {
 }
 footer.method b { color: var(--text-2); font-weight: 500; }
 
+/* ===========================================================================
+   Hierarchy polish — labels the verdict, promotes the trajectory chart, and
+   makes Simple mode actually simpler. No features removed.
+   =========================================================================== */
+
+/* Verdict heading — eyebrow + subtitle above the verdict card */
+.verdict-heading { max-width: 720px; margin: 0 auto var(--s-3); }
+.verdict-heading .section-title { margin-bottom: 4px; }
+.verdict-heading .section-sub { margin-bottom: 0; color: var(--text-3); font-size: 12px; }
+
+/* Archetype picker — promote from "just another field" to a callout */
+.archetype-field {
+  background: var(--surface);
+  border: 1px solid var(--brand-500);
+  border-radius: var(--r-3);
+  padding: var(--s-4) var(--s-4) var(--s-3);
+  margin-top: var(--s-2);
+  box-shadow: inset 0 0 0 1px var(--brand-50);
+}
+[data-theme="dark"] .archetype-field { box-shadow: inset 0 0 0 1px rgba(111,135,255,0.15); }
+.archetype-heading {
+  display: flex; flex-direction: column; gap: 2px;
+  margin-bottom: var(--s-3);
+}
+.archetype-eyebrow {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--brand-500);
+}
+.archetype-label {
+  font-size: 16px; font-weight: 600; color: var(--text-1);
+  letter-spacing: -0.005em;
+}
+
+/* "Show all the levers" CTA — promote to a real button, not a link */
+body.simple-mode .show-advanced-cta button {
+  height: 44px; padding: 0 var(--s-5);
+  background: var(--brand-500); color: white;
+  border: none; border-radius: var(--r-2);
+  font-weight: 600; font-size: 14px;
+  box-shadow: var(--shadow-card);
+  transition: background var(--dur-instant) var(--ease);
+}
+body.simple-mode .show-advanced-cta button:hover {
+  background: var(--brand-700); color: white; border-color: transparent;
+}
+
+/* Simple mode: actually simplify the verdict card itself, not just hide the
+   stuff around it. The user's complaint: "I don't see a difference between
+   Simple and Advanced." Fix: drop the battle bar, pills, and flip bar from
+   the verdict in Simple mode. Keep regime map + big number + framing. */
+body.simple-mode .verdict-v5 .v5-battle,
+body.simple-mode .verdict-v5 .v6-battle,
+body.simple-mode .verdict-v5 .v5-pills,
+body.simple-mode .verdict-v5 .v6-flip-bar,
+body.simple-mode .verdict-meta-detail { display: none; }
+body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
+
+/* Chart endpoints caption — explicit "$X → $Y" labels under the trajectory chart */
+.chart-endpoints {
+  display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3);
+  margin-top: var(--s-3); padding-top: var(--s-3);
+  border-top: 1px solid var(--border-1);
+}
+.chart-endpoints .ep {
+  display: flex; flex-direction: column; gap: 2px;
+  min-width: 0;
+}
+.chart-endpoints .ep .ep-label {
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--text-3);
+}
+.chart-endpoints .ep .ep-value {
+  font-size: 15px; font-weight: 600;
+  color: var(--text-1);
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+.chart-endpoints .ep .ep-arc {
+  font-size: 12px; color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+.chart-endpoints .ep.buy .ep-value { color: var(--brand-500); }
+.chart-endpoints .ep.invest .ep-value { color: var(--info-500); }
+@media (max-width: 480px) {
+  .chart-endpoints { grid-template-columns: 1fr; gap: var(--s-2); }
+}
+
+/* ===========================================================================
+   Mobile polish — tightens spacing, padding and type below 480px without
+   removing any features. Layered after all base rules so it always wins.
+   =========================================================================== */
+@media (max-width: 480px) {
+  /* Main container: reclaim vertical whitespace on small screens */
+  main { padding: var(--s-4) var(--s-4) var(--s-6); }
+  .intro { margin-bottom: var(--s-5); }
+
+  /* Verdict meta detail: 4-col is too cramped at this width */
+  body .verdict-meta-detail { grid-template-columns: 1fr 1fr; padding: var(--s-3) var(--s-4); gap: var(--s-3); }
+  .verdict-meta-detail .vmd .value { font-size: 15px; }
+
+  /* Regime map: let it fill the column instead of clamping to 320px */
+  .v6-regime-map { max-width: 100%; }
+  .v6-grid { gap: 16px; }
+  .v6-card { padding: 24px 18px 0; }
+  .v6-crossover { font-size: 16px; }
+  .v6-framing { font-size: 15px; }
+
+  /* Battle bar labels — drop one size to avoid wrap on long captions */
+  .v5-battle-labels, .v6-battle .v5-battle-labels { font-size: 12px; }
+  .v6-battle .v5-battle-labels { font-size: 14px; }
+
+  /* Drawer tabs — tighter padding so all three fit at 360-400px */
+  .drawer-tab { padding: var(--s-3) var(--s-3); font-size: 12px; }
+  .drawer-pane { padding: var(--s-4) var(--s-3); }
+
+  /* Footer methodology — slightly smaller, less line-break churn */
+  footer.method { font-size: 11px; gap: var(--s-1); line-height: 1.5; }
+
+  /* Chart SVG axis text — 11px is unreadable on narrow charts */
+  .chart-svg text { font-size: 12px; }
+  .chart-svg { height: 240px; }
+
+  /* Archetype cards — single column already; tighten padding */
+  .archetype-card { padding: 12px 14px; }
+  .archetype-card .ac-pct { font-size: 20px; }
+}
+
+@media (max-width: 400px) {
+  /* Header — shrink padding so brand + pill + share + theme all fit */
+  .header-inner { padding: var(--s-2) var(--s-3); }
+  .header-actions { gap: 4px; }
+  .btn-icon { width: 32px; height: 32px; }
+
+  /* Intro headline — one more step down for the smallest phones */
+  .intro h1 { font-size: 26px; line-height: 1.1; }
+
+  /* Verdict meta: drop to single column so values don't truncate */
+  body .verdict-meta-detail { grid-template-columns: 1fr; gap: var(--s-2); }
+  .verdict-meta-detail .vmd { flex-direction: row; justify-content: space-between; align-items: baseline; }
+  .verdict-meta-detail .vmd .label { font-size: 11px; }
+
+  /* Disclaimer — stack icon/body/dismiss vertically so text breathes */
+  .disclaimer { flex-wrap: wrap; padding: 8px 12px; border-radius: var(--r-2); }
+  .disclaimer .body { flex-basis: 100%; order: 2; }
+
+  /* Verdict cards — squeeze a bit more padding out at this width */
+  .verdict-v5, .v6-card { padding: 20px 16px 0; }
+  .v5-big { font-size: 56px; }
+  .v6-big { font-size: 44px; }
+
+  /* Tier-1 input grid: smaller internal padding */
+  .tier1 { padding: var(--s-4); }
+}
+
+@media (max-width: 360px) {
+  /* Chips: lock min-height so they stay tappable when squeezed */
+  .chip { min-height: 40px; font-size: 12px; padding: 0 var(--s-1); }
+  .v5-big { font-size: 48px; }
+  .v6-big { font-size: 40px; }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
@@ -1327,7 +1489,10 @@ footer.method b { color: var(--text-2); font-weight: 500; }
          the single most-impactful assumption as a Tier-1 self-categorization.
          Maps: Automated=90, Mixed=50 (default), Spender=20. -->
     <div class="field full-row archetype-field">
-      <label>What kind of investor are you, really?</label>
+      <div class="archetype-heading">
+        <span class="archetype-eyebrow">The single biggest lever in this model</span>
+        <label class="archetype-label">What kind of investor are you, really?</label>
+      </div>
       <div class="archetype-pick" role="radiogroup" aria-label="Investing discipline archetype">
         <button type="button" class="archetype-card" data-archetype="automated" data-disc="90" role="radio" aria-checked="false">
           <div class="ac-title">Automated</div>
@@ -1368,6 +1533,12 @@ footer.method b { color: var(--text-2); font-weight: 500; }
 
   <!-- Untouched-state prompt (shown only when v5 is hidden) -->
   <div class="untouched-prompt">Add your numbers above to see where your equity grows faster.</div>
+
+  <!-- Verdict section title — anchors the user: "this is the answer" -->
+  <div class="verdict-heading">
+    <div class="section-title"><svg width="14" height="14"><use href="#i-trend"/></svg> Your answer</div>
+    <p class="section-sub">Based on your inputs above. Scroll down for the year-by-year trajectory.</p>
+  </div>
 
   <!-- v5 Verdict — visual designer redesign -->
   <section class="verdict-v5 v6-card" id="verdict-v5" aria-live="polite">
@@ -1412,13 +1583,8 @@ footer.method b { color: var(--text-2); font-weight: 500; }
       <button type="button" id="v6-math-link-btn">See the math behind this <span class="chev">›</span></button>
     </div>
 
-    <!-- v6: sentence-case footnote (replaces v5 all-caps tracked hedge band) -->
-    <div class="v6-footnote">This is an estimate. Your rate, taxes, insurance, and home-specific maintenance will differ — get a lender quote and a CPA's read before deciding.</div>
-
-    <div class="v5-hedge">
-      <svg><use href="#i-info"/></svg>
-      <span>Estimates · your result will differ — talk to a lender</span>
-    </div>
+    <!-- v6: sentence-case footnote (single hedge — v5-hedge band removed for redundancy) -->
+    <div class="v6-footnote">Estimate only. Your rate, taxes, insurance, and home-specific maintenance will differ — get a lender quote and a CPA's read before deciding.</div>
   </section>
 
   <!-- Detail meta grid (4 cells, hidden in simple by per-cell class) -->
@@ -1438,7 +1604,7 @@ footer.method b { color: var(--text-2); font-weight: 500; }
 
   <!-- "Show advanced" CTA visible only in simple mode -->
   <div class="show-advanced-cta">
-    <button type="button" id="show-advanced">See the full breakdown →</button>
+    <button type="button" id="show-advanced">Show all the levers and details →</button>
   </div>
 
   <!-- P/R gauge -->
@@ -1880,15 +2046,16 @@ footer.method b { color: var(--text-2); font-weight: 500; }
     </div>
   </div>
 
-  <!-- Net-worth chart -->
-  <section class="chart-card">
-    <div class="section-title"><svg width="14" height="14"><use href="#i-trend"/></svg> Net worth over time</div>
-    <p class="section-sub">Both lines include all transaction costs and capital-gains taxes at exit. Same numbers used in the headline above.</p>
+  <!-- Net-worth chart — the trajectory chart that actually answers the question -->
+  <section class="chart-card" id="trajectory-card">
+    <div class="section-title"><svg width="14" height="14"><use href="#i-trend"/></svg> The two trajectories, side by side</div>
+    <p class="section-sub">Same starting capital, year by year. Both lines include transaction costs and capital-gains taxes at exit. Buy side = down payment + closing → home equity. Rent + invest side = same dollars invested up front, plus the monthly cost difference (× your discipline rate) added every month.</p>
     <div class="chart-legend">
-      <div class="legend-item"><span class="legend-dot" style="background: var(--brand-500)"></span>Home equity (sell at year)</div>
-      <div class="legend-item"><span class="legend-dot" style="background: var(--info-500)"></span>Market equity (rent meanwhile)</div>
+      <div class="legend-item"><span class="legend-dot" style="background: var(--brand-500)"></span>Buy: home equity at sale</div>
+      <div class="legend-item"><span class="legend-dot" style="background: var(--info-500)"></span>Rent + invest: portfolio after tax</div>
     </div>
     <svg class="chart-svg" id="chart" viewBox="0 0 800 280" preserveAspectRatio="none"></svg>
+    <div class="chart-endpoints" id="chart-endpoints" aria-live="polite"></div>
   </section>
 
   <!-- Forced-sale stress test (CFP Q8 / Quant Q2 — horizon endogeneity) -->
@@ -3537,7 +3704,7 @@ function render() {
   renderAffordability(inp, result);
 
   // Chart
-  renderChart(result.yearly, mc);
+  renderChart(result.yearly, mc, result);
 
   // Forced-sale stress strip + recession scenario card
   renderStressTest(inp);
@@ -3646,7 +3813,28 @@ function renderAffordability(inp, result) {
     </div>`;
 }
 
-function renderChart(yearly, mc) {
+function renderChart(yearly, mc, result) {
+  // Endpoint caption: starting capital → final values on each side
+  const endpoints = document.getElementById('chart-endpoints');
+  if (endpoints && yearly.length >= 2) {
+    const last = yearly[yearly.length - 1];
+    const startCap = result && result.upfront ? result.upfront : 0;
+    const buyEnd = mc ? mc.agg[mc.agg.length - 1].buyerMedian : last.buyerNetWorthReal;
+    const investEnd = mc ? mc.agg[mc.agg.length - 1].investorMedian : last.renterNetWorthReal;
+    const yrs = last.year;
+    endpoints.innerHTML = `
+      <div class="ep buy">
+        <span class="ep-label">Buy: home equity at year ${yrs}</span>
+        <span class="ep-value">${fmtMoneyExact(buyEnd)}</span>
+        <span class="ep-arc">Started with ${fmtMoneyExact(startCap)} down + closing</span>
+      </div>
+      <div class="ep invest">
+        <span class="ep-label">Rent + invest: portfolio at year ${yrs}</span>
+        <span class="ep-value">${fmtMoneyExact(investEnd)}</span>
+        <span class="ep-arc">Started with the same ${fmtMoneyExact(startCap)} in stocks</span>
+      </div>`;
+  }
+
   const svg = document.getElementById('chart');
   const W = 800, H = 280;
   const PAD_L = 60, PAD_R = 20, PAD_T = 20, PAD_B = 32;
