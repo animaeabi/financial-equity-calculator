@@ -26,11 +26,11 @@ This calculator surfaces that regime visually instead of collapsing it to a sing
 - **Simple vs Advanced** — Simple mode strips the verdict down to map + headline + footnote and hides all the levers; Advanced surfaces the drawer, sensitivity strip, stress test, and full assumptions accordion.
 - **Refusal-to-verdict** — for sub-3-year stays, DTI > 43%, or thin post-purchase reserves, the model redirects instead of producing a confident dollar number.
 - **Monte Carlo** at N=2,000 trials with log-normal sampling, t-copula tail dependence, single-home idiosyncratic σ, and a jump-diffusion stock tail.
-- **Tax model**: §121 with partial-exclusion gates, IRC §163(h)(3) avg-balance MID, SALT cap with state-income-tax stacking, §1250 unrecapture for converted rentals, AMT-lite for post-2026 sunset, tax-advantaged-account shelter on the renter side.
+- **Tax model**: §121 with partial-exclusion gates, IRC §163(h)(3) avg-balance MID, 2026 current-law SALT cap/phaseout with state-income-tax stacking, income-aware LTCG + NIIT, §1250 unrecapture for converted rentals, legacy-sunset AMT-lite, and tax-advantaged-account shelter on the renter side.
 
 ## Methodology, in one paragraph
 
-The decision-relevant comparison is *buy* vs *rent + invest the difference*, never *buy vs free housing*. The owner's "cost" excludes mortgage principal (it's savings, not consumption — Himmelberg-Mayer-Sinai 2005 user cost). The investor's portfolio includes a tax-advantaged-account shelter and pays LTCG + NIIT + state at exit. The buyer's exit subtracts selling costs, §121-eligible gain, and depreciation recapture if converted. Headline number equals the detailed exit number — no bait and switch.
+The decision-relevant comparison is *buy* vs *rent + invest the difference*, never *buy vs free housing*. The owner's "cost" excludes mortgage principal (it's savings, not consumption — Himmelberg-Mayer-Sinai 2005 user cost). The investor's portfolio includes a tax-advantaged-account shelter and pays income-aware LTCG + NIIT + state at exit. The buyer's exit subtracts selling costs, §121-eligible gain, and depreciation recapture if converted. Headline number equals the detailed exit number — no bait and switch.
 
 Default scenario at honest assumptions: MC P(buy wins) ≈ 50%, median delta ≈ $0 — a genuine coin flip at the median, matching Beracha-Johnson 2012 empirical for 8-year rolling windows.
 
