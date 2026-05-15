@@ -159,6 +159,198 @@ main { max-width: 1120px; margin: 0 auto; padding: var(--s-6) var(--s-5) var(--s
   line-height: 25px;
 }
 
+/* ---------- Landing hero (editorial frame) ---------- */
+.landing-hero {
+  text-align: center;
+  padding: 72px 0 56px;
+  border-bottom: 1px solid var(--border-1);
+  margin-bottom: var(--s-7);
+}
+@media (max-width: 760px) { .landing-hero { padding: 48px 0 40px; } }
+@media (max-width: 480px) { .landing-hero { padding: 32px 0 28px; } }
+
+.hero-eyebrow {
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: var(--s-4);
+}
+
+.hero-headline {
+  font-size: 88px; line-height: 0.98; font-weight: 700;
+  letter-spacing: -0.045em;
+  color: var(--text-1);
+  margin: 0 auto var(--s-4);
+  max-width: 22ch;
+}
+@media (max-width: 1024px) { .hero-headline { font-size: 72px; } }
+@media (max-width: 760px) { .hero-headline { font-size: 52px; } }
+@media (max-width: 480px) { .hero-headline { font-size: 40px; letter-spacing: -0.035em; } }
+
+.hero-headline-accent { color: var(--brand-500); }
+
+.hero-subtitle {
+  font-size: 19px; line-height: 1.55; font-weight: 400;
+  color: var(--text-2);
+  max-width: 56ch;
+  margin: 0 auto var(--s-6);
+}
+@media (max-width: 480px) { .hero-subtitle { font-size: 16px; } }
+
+.hero-cta-row {
+  display: flex; gap: var(--s-3);
+  justify-content: center;
+  margin-bottom: var(--s-7);
+}
+.hero-cta { padding: 0 var(--s-6); }
+.hero-cta-secondary { padding: 0 var(--s-5); }
+@media (max-width: 480px) { .hero-cta-row { flex-direction: column; gap: var(--s-2); padding: 0 var(--s-5); } }
+
+.trust-strip {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  align-items: baseline; gap: var(--s-1) var(--s-4);
+  padding: 0 var(--s-5);
+}
+.trust-label {
+  font-size: 11px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin-right: var(--s-2);
+}
+.trust-item {
+  font-size: 12px; font-weight: 500;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+.trust-item + .trust-item::before {
+  content: "·";
+  margin-right: var(--s-4);
+  color: var(--text-3);
+}
+
+/* ---------- Chapter markers (numbered narrative dividers) ---------- */
+.chapter-marker {
+  display: flex; align-items: center;
+  gap: var(--s-4);
+  margin: var(--s-7) 0 var(--s-5);
+  max-width: 1120px;
+  scroll-margin-top: 76px;
+}
+.chapter-num {
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+.chapter-rule {
+  height: 1px; flex: 1;
+  background: var(--border-1);
+}
+.chapter-title {
+  font-size: 14px; font-weight: 600;
+  letter-spacing: 0.02em; text-transform: uppercase;
+  color: var(--text-2);
+  flex-shrink: 0;
+}
+@media (max-width: 760px) {
+  .chapter-marker { gap: var(--s-3); margin: var(--s-6) 0 var(--s-4); }
+  .chapter-title { font-size: 12px; }
+}
+body.simple-mode .chapter-marker.adv-only { display: none; }
+
+/* ---------- Editorial footer (typeset citations) ---------- */
+footer.method {
+  margin-top: var(--s-8);
+  padding: var(--s-7) var(--s-5) var(--s-5);
+  border-top: 1px solid var(--border-1);
+  background: var(--surface-sunken);
+}
+.footer-grid {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--s-7);
+}
+@media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr; gap: var(--s-5); } }
+
+.footer-col-title {
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 var(--s-3);
+}
+.footer-col-body {
+  font-size: 13px; line-height: 1.65;
+  color: var(--text-2);
+  margin: 0;
+}
+.footer-citations {
+  margin: 0; padding: 0;
+  list-style: none;
+}
+.footer-citations li {
+  font-size: 12px; line-height: 1.55;
+  color: var(--text-2);
+  padding-left: var(--s-3);
+  position: relative;
+  margin-bottom: var(--s-2);
+}
+.footer-citations li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--text-3);
+}
+.footer-citations em { color: var(--text-2); font-style: italic; }
+.footer-fineprint {
+  max-width: 1120px;
+  margin: var(--s-6) auto 0;
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--border-1);
+  font-size: 11px; line-height: 1.6;
+  color: var(--text-3);
+  text-align: center;
+}
+
+/* ---------- Simple mode: hero verdict scale + softer card ---------- */
+body.simple-mode .v6-big { font-size: 88px; letter-spacing: -0.045em; }
+@media (max-width: 760px) { body.simple-mode .v6-big { font-size: 64px; } }
+@media (max-width: 480px) { body.simple-mode .v6-big { font-size: 52px; } }
+
+body.simple-mode .v6-card {
+  padding: 48px 40px 0;
+  box-shadow: 0 2px 12px rgba(11,13,18,0.04), 0 1px 2px rgba(11,13,18,0.03);
+}
+@media (max-width: 760px) {
+  body.simple-mode .v6-card { padding: 32px 24px 0; }
+}
+
+/* ---------- Generous whitespace between top-level sections ---------- */
+.chart-card, #amort-table-card, #cost-composition-card, #scenarios-card,
+#sensitivity-card, #pr-gauge-card, #stress-test-card, #assumptions-acc {
+  margin-top: var(--s-7);
+}
+
+/* ---------- Scroll-fade reveal (Apple-style) ---------- */
+.chapter-marker, .v6-card, .chart-card, #amort-table-card,
+#cost-composition-card, #scenarios-card {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 600ms var(--ease), transform 600ms var(--ease);
+}
+.chapter-marker.in-view, .v6-card.in-view, .chart-card.in-view,
+#amort-table-card.in-view, #cost-composition-card.in-view, #scenarios-card.in-view {
+  opacity: 1; transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .chapter-marker, .v6-card, .chart-card, #amort-table-card,
+  #cost-composition-card, #scenarios-card {
+    opacity: 1; transform: none;
+  }
+}
+
 /* ---------- Tier-1 input row ---------- */
 .tier1 {
   display: grid; gap: var(--s-3);
@@ -1958,9 +2150,35 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
 </header>
 
 <main>
-  <div class="intro">
-    <h1>Put the same cash in a home or the market.</h1>
-    <p>Buyer owns the house. Renter owns stocks. Compare where the same starting money lands after your timeline.</p>
+  <section class="landing-hero">
+    <div class="hero-eyebrow">A research-backed calculator</div>
+    <h1 class="hero-headline">
+      Buy or invest the same money.<br/>
+      <span class="hero-headline-accent">Honestly.</span>
+    </h1>
+    <p class="hero-subtitle">
+      Compare home equity against a stock portfolio with the same starting cash — across length of stay, price-to-rent ratio, and what you'd actually invest.
+    </p>
+    <div class="hero-cta-row">
+      <button class="btn btn-primary hero-cta" id="hero-cta">Set your scenario</button>
+      <button class="btn btn-secondary hero-cta-secondary" id="hero-cta-2">See how it works</button>
+    </div>
+    <div class="trust-strip">
+      <span class="trust-label">Built on</span>
+      <span class="trust-item">Beracha-Johnson 2012</span>
+      <span class="trust-item">Himmelberg-Mayer-Sinai 2005</span>
+      <span class="trust-item">Sinai-Souleles 2005</span>
+      <span class="trust-item">Goodman-Mayer 2018</span>
+      <span class="trust-item">Jordà-Knoll-Kuvshinov-Schularick-Taylor 2019</span>
+      <span class="trust-item">IRC §121 · §163(h)(3) · §1411</span>
+    </div>
+  </section>
+
+  <!-- Chapter 01: Set your scenario -->
+  <div class="chapter-marker" id="chapter-setup">
+    <span class="chapter-num">01</span>
+    <span class="chapter-rule"></span>
+    <span class="chapter-title">Set your scenario</span>
   </div>
 
   <!-- Primary journey: two capital paths, same starting cash -->
@@ -2156,10 +2374,11 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
   <!-- Untouched-state prompt (shown only when v5 is hidden) -->
   <div class="untouched-prompt">Add your numbers above to see where your equity grows faster.</div>
 
-  <!-- Verdict section title — anchors the user: "this is the answer" -->
-  <div class="verdict-heading">
-    <div class="section-title"><svg width="14" height="14"><use href="#i-trend"/></svg> Outcome</div>
-    <p class="section-sub">Same starting cash, two assets, one timeline.</p>
+  <!-- Chapter 02: Your answer — anchors the user: "this is the answer" -->
+  <div class="chapter-marker" id="chapter-verdict">
+    <span class="chapter-num">02</span>
+    <span class="chapter-rule"></span>
+    <span class="chapter-title">Your answer</span>
   </div>
 
   <!-- v5 Verdict — visual designer redesign -->
@@ -2308,6 +2527,13 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
     <div class="scenarios-list" id="scenarios-list"></div>
     <div class="scenarios-compare" id="scenarios-compare"></div>
   </section>
+
+  <!-- Chapter 03: What would flip it? -->
+  <div class="chapter-marker adv-only">
+    <span class="chapter-num">03</span>
+    <span class="chapter-rule"></span>
+    <span class="chapter-title">What would flip it?</span>
+  </div>
 
   <!-- Sensitivity strip -->
   <section class="sensitivity" id="sensitivity-card">
@@ -2844,6 +3070,13 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
     </div>
   </div>
 
+  <!-- Chapter 04: Stress-test the answer -->
+  <div class="chapter-marker adv-only">
+    <span class="chapter-num">04</span>
+    <span class="chapter-rule"></span>
+    <span class="chapter-title">Stress-test the answer</span>
+  </div>
+
   <!-- Forced-sale stress test (CFP Q8 / Quant Q2 — horizon endogeneity) -->
   <section class="chart-card" id="stress-test-card">
     <div class="section-title"><svg width="14" height="14"><use href="#i-alert"/></svg> If life forces an early sale</div>
@@ -2861,6 +3094,13 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
   <!-- Footer link to assumptions (Simple mode only) -->
   <div class="footer-link">
     <button type="button" id="open-assumptions-from-simple">What this calculator can't see about your situation →</button>
+  </div>
+
+  <!-- Chapter 05: What the model can't see -->
+  <div class="chapter-marker adv-only">
+    <span class="chapter-num">05</span>
+    <span class="chapter-rule"></span>
+    <span class="chapter-title">What the model can't see</span>
   </div>
 
   <!-- Permanent assumptions accordion (CFP Q8) -->
@@ -2888,27 +3128,47 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
   </section>
 
   <footer class="method">
-    <div><b>Framing.</b> "Invest" here means: rent equivalent housing and put every dollar of the difference (down payment, closing costs, plus the monthly gap between owning and renting) into a diversified stock portfolio. You live somewhere either way — the question is where the capital goes.</div>
-    <div><b>Methodology.</b> All math is in real (inflation-adjusted) dollars internally. The headline uses the after-exit number on both sides:
-      <ul style="margin: 4px 0 0 16px; padding: 0; line-height: 18px">
-        <li><b>Buyer side</b>: equity = home value − remaining loan; subtract selling costs (default 6%) and home capital-gains tax (Section 121 exclusion of $250k single / $500k married, with the 2-of-5-year holding rule assumed). Add cumulative tax savings from itemized mortgage interest + SALT deduction (compared against the inflation-indexed standard deduction).</li>
-        <li><b>Mortgage interest deduction</b> uses the IRC §163(h)(3) post-TCJA $750k principal cap, applied year-by-year via the average outstanding balance method (correct as the loan amortizes below the cap).</li>
-        <li><b>Investor side</b>: starts with down payment + closing costs in stocks; contributes the monthly differential × your "discipline rate" (Goodman-Mayer 2018: most renters don't invest 100%; 50% is a more honest default). Applies LTCG (0/15/20%) + 3.8% NIIT (IRC §1411) + your state capital-gains rate at exit. Cost basis grows with each contribution.</li>
-        <li><b>Discount on dividend drag</b>: 0.3%/yr (~1.5% qualified dividend yield × ~18% effective tax rate).</li>
-        <li><b>Length of stay</b> drives the verdict more than any other variable (Beracha &amp; Johnson 2012). Below ~5 years buying almost always loses.</li>
-      </ul>
+    <div class="footer-grid">
+      <section class="footer-col">
+        <h3 class="footer-col-title">Methodology</h3>
+        <p class="footer-col-body">
+          Internal math runs in real (inflation-adjusted) dollars. Owner cost follows
+          Himmelberg-Mayer-Sinai (2005) — mortgage principal is treated as forced
+          savings, not consumption. Mortgage interest deduction uses the IRC §163(h)(3)
+          average-balance method with the $750K post-2017 cap; SALT stacking subtracts
+          state income tax from the $40.4K bucket before crediting property tax.
+          Capital gains on sale use the tiered 0/15/20% federal brackets plus 3.8% NIIT
+          plus user-supplied state rate. §121 exclusion respects the 2-of-5-year
+          residence test.
+        </p>
+      </section>
+      <section class="footer-col">
+        <h3 class="footer-col-title">Sources</h3>
+        <ul class="footer-citations">
+          <li>Beracha &amp; Johnson (2012). <em>Real Estate Economics</em> 40(2). Empirical buy-vs-rent across 8 US metros, 1978-2009.</li>
+          <li>Himmelberg, Mayer &amp; Sinai (2005). <em>Journal of Economic Perspectives</em> 19(4). User cost framework.</li>
+          <li>Sinai &amp; Souleles (2005). <em>Quarterly Journal of Economics</em>. Owner-occupied housing as a rent-risk hedge.</li>
+          <li>Goodman &amp; Mayer (2018). <em>Journal of Economic Perspectives</em> 32(1). Realized renter discipline, forced savings critique.</li>
+          <li>Jordà, Knoll, Kuvshinov, Schularick &amp; Taylor (2019). <em>Quarterly Journal of Economics</em>. Long-run total returns to equities and housing.</li>
+          <li>Dalbar QAIB. Annual. Realized investor returns vs. index.</li>
+          <li>IRC §121, §163(h)(3), §1250, §1411. Primary tax authority.</li>
+        </ul>
+      </section>
+      <section class="footer-col">
+        <h3 class="footer-col-title">What this is not</h3>
+        <p class="footer-col-body">
+          Not financial advice. Not a forecast. Not exhaustive. The Monte Carlo bands
+          are wide for a reason — the future is uncertain and the model says so. This
+          compares one buying scenario against one investing scenario under one set
+          of assumptions. It does not see your job stability, partner alignment,
+          climate risk, or whether the rental stock in your school district actually
+          exists. For decisions of this size, also consult a fee-only fiduciary.
+        </p>
+      </section>
     </div>
-    <div><b>What this model does NOT do</b> (acknowledged limits):
-      <ul style="margin: 4px 0 0 16px; padding: 0; line-height: 18px">
-        <li>Monte Carlo is optional and still illustrative. Real outcomes vary widely; treat the headline as a scenario result, not a forecast.</li>
-        <li>Single-home idiosyncratic risk is approximate — the toggle adds dispersion, but real home-specific failures are lumpy and local.</li>
-        <li>AMT-lite applies only in the legacy sunset stress mode. Current-law AMT is not tax-prep grade and is intentionally omitted.</li>
-        <li>No emergency-fund / retirement-contribution displacement check (CFP critique). Buying with thin reserves or by cutting 401(k) can destroy the verdict's premise.</li>
-        <li>No metro-conditioned defaults; no rent-risk hedging value (Sinai-Souleles 2005); no leverage / risk-adjusted (CRRA) comparison.</li>
-      </ul>
+    <div class="footer-fineprint">
+      Estimates only. Not financial advice. Talk to a fee-only fiduciary planner and a CPA before a decision this size.
     </div>
-    <div><b>Academic foundation.</b> Himmelberg, Mayer &amp; Sinai (2005) <i>JEP</i> — user cost framework. Beracha &amp; Johnson (2012) <i>Real Estate Economics</i> — empirical buy-vs-invest. Sinai &amp; Souleles (2005) <i>QJE</i> — rent-risk hedging. Jordà, Knoll, Kuvshinov, Schularick &amp; Taylor (2019) <i>QJE</i> — long-run total returns to equities and housing. Goodman &amp; Mayer (2018) <i>JEP</i> — homeownership wealth effects and the forced-savings critique. Shiller, <i>Irrational Exuberance</i> (3rd ed., 2015) — long-run real housing returns. Poterba (1984) <i>QJE</i> — tax-adjusted user cost.</div>
-    <div><b>Not financial advice.</b> This is a model that compares one buying scenario against one investing scenario under one set of assumptions. It does not assess your emergency reserves, retirement trajectory, job stability, concentration risk, or partner alignment — any of which can outweigh the math. For decisions of this size, also consult a fee-only fiduciary.</div>
   </footer>
 </main>
 
@@ -5990,6 +6250,35 @@ function init() {
       alert(location.href);
     }
   });
+
+  // Hero CTA: smooth scroll to the setup chapter
+  const heroCta = document.getElementById('hero-cta');
+  if (heroCta) {
+    heroCta.addEventListener('click', () => {
+      const target = document.getElementById('chapter-setup');
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+  const heroCta2 = document.getElementById('hero-cta-2');
+  if (heroCta2) {
+    heroCta2.addEventListener('click', () => {
+      const target = document.getElementById('chapter-verdict') || document.querySelector('.verdict-v5');
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  // Subtle fade-in on scroll (Apple-style)
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view');
+          io.unobserve(e.target);
+        }
+      }
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.chapter-marker, .v6-card, .chart-card, #amort-table-card, #cost-composition-card, #scenarios-card').forEach(el => io.observe(el));
+  }
 
   render();
 }
