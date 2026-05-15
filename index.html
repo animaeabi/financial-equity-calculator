@@ -570,6 +570,13 @@ main { max-width: 1120px; margin: 0 auto; padding: var(--s-6) var(--s-5) var(--s
   padding: 0; margin-bottom: var(--s-5);
   overflow: hidden;
 }
+/* v6.2: Quick-start row sits inside the drawer above the two-col grid */
+.drawer-quick-start {
+  padding: var(--s-4) var(--s-5);
+  border-bottom: 1px solid var(--border-1);
+  background: var(--surface);
+}
+.drawer-quick-start .drawer-section-title { margin-top: 0; }
 
 /* Drawer tabs */
 .drawer-tabs {
@@ -676,6 +683,9 @@ body.simple-mode #sensitivity-card,
 body.simple-mode #drawer-toggle,
 body.simple-mode #drawer,
 body.simple-mode #stress-test-card,
+body.simple-mode #amort-table-card,
+body.simple-mode #cost-composition-card,
+body.simple-mode #scenarios-card,
 body.simple-mode #assumptions-acc,
 body.simple-mode footer.method,
 body.simple-mode .verdict-meta-item.advanced-only {
@@ -1509,6 +1519,108 @@ body.simple-mode .show-advanced-cta button:hover { color: var(--text-1); border-
   background: var(--surface); border: 1px solid var(--border-1); border-radius: var(--r-3);
   padding: var(--s-5); margin-bottom: var(--s-5); box-shadow: var(--shadow-card);
 }
+/* v6.1 — Year-by-year amortization table (Advanced-only) */
+.amort-header { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--s-3); margin-bottom: var(--s-3); flex-wrap: wrap; }
+.amort-table-wrap { overflow-x: auto; }
+.amort-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 12px; font-variant-numeric: tabular-nums;
+  color: var(--text-1);
+}
+.amort-table th, .amort-table td {
+  border: 1px solid var(--border-1);
+  padding: 6px 10px; text-align: right;
+  white-space: nowrap;
+}
+.amort-table th {
+  background: var(--bg); color: var(--text-2);
+  font-weight: 600; text-align: right;
+}
+.amort-table th:first-child, .amort-table td:first-child { text-align: left; }
+.amort-table tbody tr:nth-child(even) { background: var(--bg); }
+.amort-table .gap-pos { color: var(--pos-500); }
+.amort-table .gap-neg { color: var(--neg-500); }
+
+/* v6.2 — Cost composition stacked bar */
+.cost-comp-bar {
+  display: flex; width: 100%; height: 28px;
+  border-radius: var(--r-1); overflow: hidden;
+  border: 1px solid var(--border-1);
+  margin-top: var(--s-3); margin-bottom: var(--s-3);
+}
+.cost-comp-bar .seg {
+  height: 100%; min-width: 1px;
+  transition: opacity var(--dur-instant) var(--ease);
+}
+.cost-comp-bar .seg:hover { opacity: 0.85; }
+.cost-comp-legend {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--s-2) var(--s-4); margin-bottom: var(--s-3);
+}
+.cost-comp-legend .row {
+  display: grid; grid-template-columns: 12px 1fr auto auto;
+  align-items: center; gap: var(--s-2);
+  font-size: 12px; color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+.cost-comp-legend .row .dot { width: 10px; height: 10px; border-radius: 2px; }
+.cost-comp-legend .row .name { color: var(--text-1); font-weight: 500; }
+.cost-comp-legend .row .amt { color: var(--text-1); font-weight: 600; }
+.cost-comp-legend .row .pct { color: var(--text-3); min-width: 44px; text-align: right; }
+.cost-comp-total {
+  font-size: 13px; color: var(--text-2);
+  text-align: right; padding-top: var(--s-3);
+  border-top: 1px dashed var(--border-1);
+}
+.cost-comp-total b { color: var(--text-1); font-variant-numeric: tabular-nums; }
+
+/* v6.2 — Saved scenarios */
+.scenarios-save-row {
+  display: flex; gap: var(--s-3);
+  margin-top: var(--s-3); margin-bottom: var(--s-4);
+  flex-wrap: wrap;
+}
+.scenario-name-input {
+  flex: 1 1 220px; min-width: 0;
+  padding: var(--s-3); border: 1px solid var(--border-1); border-radius: var(--r-1);
+  background: var(--surface); color: var(--text-1);
+  font-family: inherit; font-size: 14px;
+}
+.scenario-name-input:focus { outline: none; box-shadow: 0 0 0 2px var(--ring); border-color: var(--brand-500); }
+.scenarios-list { display: flex; flex-direction: column; gap: var(--s-2); }
+.scenario-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--s-3); align-items: center;
+  padding: var(--s-3); background: var(--bg);
+  border: 1px solid var(--border-1); border-radius: var(--r-1);
+}
+.scenario-row .meta { min-width: 0; }
+.scenario-row .meta .name { font-size: 14px; font-weight: 600; color: var(--text-1); }
+.scenario-row .meta .saved { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+.scenario-row .meta .verdict { font-size: 12px; color: var(--text-2); margin-top: 4px; font-variant-numeric: tabular-nums; }
+.scenario-row .verdict .delta-pos { color: var(--pos-500); font-weight: 600; }
+.scenario-row .verdict .delta-neg { color: var(--info-500); font-weight: 600; }
+.scenarios-empty {
+  padding: var(--s-3); border: 1px dashed var(--border-1); border-radius: var(--r-1);
+  font-size: 13px; color: var(--text-3); text-align: center;
+}
+.scenarios-compare {
+  margin-top: var(--s-4);
+  overflow-x: auto;
+}
+.scenarios-compare table {
+  width: 100%; border-collapse: collapse;
+  font-size: 12px; font-variant-numeric: tabular-nums; color: var(--text-1);
+}
+.scenarios-compare th, .scenarios-compare td {
+  border: 1px solid var(--border-1);
+  padding: 6px 10px; text-align: right; white-space: nowrap;
+}
+.scenarios-compare th { background: var(--bg); color: var(--text-2); font-weight: 600; }
+.scenarios-compare th:first-child, .scenarios-compare td:first-child { text-align: left; }
+.scenarios-compare .delta-pos { color: var(--pos-500); font-weight: 600; }
+.scenarios-compare .delta-neg { color: var(--info-500); font-weight: 600; }
 .chart-legend { display: flex; gap: var(--s-4); margin-bottom: var(--s-4); flex-wrap: wrap; }
 .legend-item { display: flex; align-items: center; gap: var(--s-2); font-size: 12px; color: var(--text-2); }
 .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
@@ -2149,6 +2261,54 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
     </div>
   </section>
 
+  <!-- v6.2: Cost composition (Advanced-only) — where the buyer's money went -->
+  <section class="chart-card" id="cost-composition-card">
+    <div class="section-title"><svg width="14" height="14"><use href="#i-info"/></svg> Where the buyer's money went</div>
+    <p class="section-sub">Gross consumption costs over the holding period. Principal payments are wealth transfers, not consumption — excluded per Himmelberg-Mayer-Sinai user cost.</p>
+    <div class="cost-comp-bar" id="cost-comp-bar" aria-label="Stacked cost composition"></div>
+    <div class="cost-comp-legend" id="cost-comp-legend"></div>
+    <div class="cost-comp-total" id="cost-comp-total"></div>
+  </section>
+
+  <!-- Year-by-year amortization detail (Advanced mode only — power-user transparency) -->
+  <section class="chart-card" id="amort-table-card">
+    <div class="amort-header">
+      <div>
+        <div class="section-title"><svg width="14" height="14"><use href="#i-info"/></svg> Year-by-year detail</div>
+        <p class="section-sub">Mortgage balance, equity, portfolio — every year.</p>
+      </div>
+      <button class="btn btn-secondary" id="amort-csv-btn" type="button">Download CSV</button>
+    </div>
+    <div class="amort-table-wrap">
+      <table class="amort-table" id="amort-table">
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>Mortgage balance</th>
+            <th>Interest paid (year)</th>
+            <th>Principal paid (year)</th>
+            <th>Home equity</th>
+            <th>Portfolio value</th>
+            <th>Net worth gap</th>
+          </tr>
+        </thead>
+        <tbody id="amort-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- v6.2: Saved scenarios (Advanced-only) -->
+  <section class="chart-card" id="scenarios-card">
+    <div class="section-title"><svg width="14" height="14"><use href="#i-info"/></svg> Saved scenarios</div>
+    <p class="section-sub">Save up to 5 named scenarios and compare verdicts.</p>
+    <div class="scenarios-save-row">
+      <input type="text" id="scenario-name-input" class="scenario-name-input" placeholder="Name this scenario" maxlength="30" />
+      <button class="btn btn-secondary" id="scenario-save-btn" type="button">Save current</button>
+    </div>
+    <div class="scenarios-list" id="scenarios-list"></div>
+    <div class="scenarios-compare" id="scenarios-compare"></div>
+  </section>
+
   <!-- Sensitivity strip -->
   <section class="sensitivity" id="sensitivity-card">
     <div class="section-title"><svg width="14" height="14"><use href="#i-trend"/></svg> What changes the verdict?</div>
@@ -2169,6 +2329,21 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
   </button>
 
   <div class="drawer-body" id="drawer" hidden>
+
+    <!-- ============================================================== -->
+    <!-- v6.2: QUICK-START PRESETS — one-click scenario seeds            -->
+    <!-- ============================================================== -->
+    <div class="drawer-quick-start" id="presets-row">
+      <div class="drawer-section-title">Quick start</div>
+      <p class="section-sub" style="margin: 0 0 var(--s-2)">Seed the inputs for a typical scenario. Tweak from there.</p>
+      <div class="chips" role="group" aria-label="Quick-start scenarios">
+        <button class="chip" type="button" data-preset="starter">Starter ($300K home)</button>
+        <button class="chip" type="button" data-preset="median">Median ($500K home)</button>
+        <button class="chip" type="button" data-preset="luxury">Luxury ($1.5M home)</button>
+        <button class="chip" type="button" data-preset="custom">Custom (reset to defaults)</button>
+      </div>
+    </div>
+
     <div class="drawer-two-col">
       <section class="drawer-col drawer-col-buyer">
 
@@ -2202,6 +2377,30 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
           <button class="chip" type="button" data-loan="30">30 yr</button>
         </div>
         <div class="cite">15-yr saves interest; 30-yr lowers monthly payment.</div>
+      </div>
+
+      <div class="field" id="extraPaymentsPerYear-field">
+        <label for="extraPaymentsPerYear">Extra payments / year <span class="num" id="extraPaymentsPerYear-display"></span></label>
+        <div class="slider-row">
+          <input type="range" class="slider-track" id="extraPaymentsPerYear" min="0" max="12" step="0.1" />
+          <div class="input-affix">
+            <input type="number" id="extraPaymentsPerYear-input" min="0" max="12" step="0.1" />
+            <span class="affix right">/ yr</span>
+          </div>
+        </div>
+        <div class="cite">Each = one extra month's payment, all to principal. 1 ≈ pay off in ~26 years instead of 30.</div>
+      </div>
+
+      <div class="field" id="pmiRate-field">
+        <label for="pmiRate">PMI rate <span class="num" id="pmiRate-display"></span></label>
+        <div class="slider-row">
+          <input type="range" class="slider-track" id="pmiRate" min="0" max="2" step="0.1" />
+          <div class="input-affix">
+            <input type="number" id="pmiRate-input" min="0" max="2" step="0.1" />
+            <span class="affix right">% of loan</span>
+          </div>
+        </div>
+        <div class="cite">Required when down payment &lt; 20%; auto-drops at 78% LTV (Homeowners Protection Act).</div>
       </div>
 
       <div class="drawer-section-title">Home appreciation</div>
@@ -2399,6 +2598,16 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
         <div class="cite">CPI-Rent typically tracks inflation; ≈ 0% real. <button class="snap-default" data-default="rentGrowthReal" data-value="0">Use 0%</button></div>
       </div>
 
+      <div class="drawer-section-title">Withdrawals</div>
+
+      <div class="field">
+        <label for="payRentFromInvestmentsAtYear">Withdraw rent from portfolio starting year</label>
+        <div class="input-affix">
+          <input type="number" id="payRentFromInvestmentsAtYear" min="0" max="30" step="1" />
+        </div>
+        <div class="cite">0 = pay rent from salary throughout. Otherwise: starting this year, monthly rent is withdrawn from the stock portfolio (gross of LTCG tax).</div>
+      </div>
+
       </section><!-- /drawer-col-renter -->
     </div><!-- /drawer-two-col -->
 
@@ -2493,6 +2702,14 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
           <input type="number" id="currentYear" min="2024" max="2050" step="1" />
         </div>
         <div class="cite">Anchors indexed tax thresholds and temporary SALT-cap years.</div>
+      </div>
+
+      <div class="toggle-row">
+        <div>
+          <span class="label">Show in nominal dollars</span>
+          <span class="sub">Default: real (inflation-adjusted) dollars. Toggle on to show future values in then-current dollars instead.</span>
+        </div>
+        <button class="toggle" id="showNominalDollars" type="button" aria-pressed="false"></button>
       </div>
 
       <div class="drawer-section-title">Filing status &amp; life events</div>
@@ -2613,6 +2830,16 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
           <span class="affix right">/yr</span>
         </div>
         <div class="cite">Industry "28% rule": PITI ≤ 28% of gross. Leave 0 to skip.</div>
+      </div>
+
+      <div class="field">
+        <label for="monthlyLivingExpenses">Monthly living expenses</label>
+        <div class="input-affix">
+          <span class="affix">$</span>
+          <input type="text" id="monthlyLivingExpenses" inputmode="numeric" autocomplete="off" />
+          <span class="affix right">/mo</span>
+        </div>
+        <div class="cite">Optional. Groceries, utilities, transport, subscriptions — everything except housing/rent.</div>
       </div>
     </div>
   </div>
@@ -2761,6 +2988,49 @@ const DEFAULTS = {
   useWeibullHorizon: false,
   weibullMedian: 9,               // median exit year per Vanguard tenure data
   weibullShape: 1.5,              // Weibull k parameter
+  // v6.1: PMI when down payment < 20%. Premium on original loan, auto-drops at 78% LTV (Homeowners Protection Act).
+  pmiRate: 0.5,                   // %/yr of original loan amount; typical mid-range 0.3–1.5%
+  // v6.1: Extra mortgage payments per year (each = one extra monthly payment, all to principal).
+  extraPaymentsPerYear: 0,        // 0 = off; 1.0 ≈ pay off ~26yr instead of 30
+  // v6.1: Pay rent from portfolio (retirement / live-off-stocks scenario). 0 = off; >0 = year withdrawals start.
+  payRentFromInvestmentsAtYear: 0,
+  // v6.1: Monthly non-housing expenses (display only — used in affordability banner).
+  monthlyLivingExpenses: 0,
+  // v6.2: Display future values in nominal (then-current) dollars instead of real.
+  // Simulation always runs in real; this is a display-only transform.
+  showNominalDollars: false,
+};
+
+// ============================================================================
+// v6.2: PRESETS — one-click scenario starters
+// Each preset is a subset of DEFAULTS keys. "Custom" is handled separately
+// (reset to DEFAULTS).
+// ============================================================================
+const PRESETS = {
+  starter: {
+    homePrice: 300000,
+    downPaymentPct: 5,
+    monthlyRent: 1200,
+    grossIncome: 66000,
+    yearsStay: 7,
+    disciplineRate: 50,
+  },
+  median: {
+    homePrice: 500000,
+    downPaymentPct: 10,
+    monthlyRent: 2000,
+    grossIncome: 132000,
+    yearsStay: 7,
+    disciplineRate: 50,
+  },
+  luxury: {
+    homePrice: 1500000,
+    downPaymentPct: 20,
+    monthlyRent: 5000,
+    grossIncome: 336000,
+    yearsStay: 7,
+    disciplineRate: 50,
+  },
 };
 
 const TAX_MODE_CURRENT = 'current';
@@ -2928,9 +3198,18 @@ function simulate(inp) {
 
   const yearly = [];
 
+  // v6.1: PMI — required when down payment < 20%; drops automatically at 78% LTV (HPA).
+  // Premium is a % of the ORIGINAL loan amount (industry convention), not current balance.
+  const needsPMI = inp.downPaymentPct < 20 && (inp.pmiRate || 0) > 0;
+  const monthlyPMINominalBase = needsPMI ? (loanAmount * (inp.pmiRate / 100)) / 12 : 0;
+  // v6.1: Extra payments per year — each is one extra monthly-payment-sized amount to principal.
+  // "1 extra/yr" spread monthly = (monthlyPaymentNominal * 1/12) extra to principal per month.
+  const extraPerMonthNomBase = monthlyPaymentNominal * (Math.max(0, inp.extraPaymentsPerYear || 0) / 12);
+
   for (let year = 1; year <= inp.yearsStay; year++) {
     let yearInterestNominal = 0;
     let yearPrincipalNominal = 0;
+    let yearPMINominal = 0;
     let yearPropTaxReal = 0;
 
     // This year's returns (deterministic, or overridden by Monte Carlo trial)
@@ -2944,15 +3223,31 @@ function simulate(inp) {
       const interestNom = remainingLoanNominal * monthlyNominalRate;
       const principalNom = Math.min(monthlyPaymentNominal - interestNom, remainingLoanNominal);
       remainingLoanNominal -= principalNom;
+      // v6.1: Extra principal payment (all to principal, capped at remaining balance).
+      let extraPrincipalNom = 0;
+      if (extraPerMonthNomBase > 0 && remainingLoanNominal > 0) {
+        extraPrincipalNom = Math.min(extraPerMonthNomBase, remainingLoanNominal);
+        remainingLoanNominal -= extraPrincipalNom;
+      }
       if (remainingLoanNominal < 0.01) remainingLoanNominal = 0;
       yearInterestNominal += interestNom;
-      yearPrincipalNominal += principalNom;
+      yearPrincipalNominal += principalNom + extraPrincipalNom;
+      // v6.1: PMI — premium on original loan, only while LTV > 78% of original purchase price.
+      // LTV(purchase) = currentBalance / homePrice; equivalently currentBalance / loanAmount > 78/(100-dp%) once
+      // mapped through original LTV. Industry rule (HPA): drops at 78% of ORIGINAL purchase price.
+      if (needsPMI && remainingLoanNominal > 0) {
+        const ltvOnPurchase = remainingLoanNominal / inp.homePrice;
+        if (ltvOnPurchase > 0.78) {
+          yearPMINominal += monthlyPMINominalBase;
+        }
+      }
     }
 
     // Convert this year's nominal interest/principal to real (deflate by year midpoint)
     const deflator = Math.pow(1 + inflAnnual, year - 0.5);
     const yearInterestReal = yearInterestNominal / deflator;
     const yearPrincipalReal = yearPrincipalNominal / deflator;
+    const yearPMIReal = yearPMINominal / deflator;
     const yearPaymentReal = yearInterestReal + yearPrincipalReal;
 
     cumInterestReal += yearInterestReal;
@@ -2969,7 +3264,7 @@ function simulate(inp) {
     const yearHoaReal = hoaReal * 12;
 
     const yearOwnerCostReal =
-      yearPaymentReal + yearPropTaxReal + yearMaintReal + yearInsuranceReal + yearHoaReal;
+      yearPaymentReal + yearPropTaxReal + yearMaintReal + yearInsuranceReal + yearHoaReal + yearPMIReal;
 
     // Effective filing status this year (CPA Q2): marriage/divorce events override base filing
     let effFiling = filing;
@@ -3061,11 +3356,33 @@ function simulate(inp) {
       ? inp.renterMonthlyContribution
       : monthlyGapReal * disciplineThisYear;
 
-    // Compound portfolio monthly + add monthly contribution
+    // v6.1: Pay rent from portfolio after year N (retirement / live-off-stocks scenario).
+    // Withdrawal grosses up for LTCG so the net after tax covers rent. Uses an effective
+    // bracketed LTCG rate (fed + state + NIIT) derived from a $1-gain probe of ltcgTax().
+    const withdrawStart = inp.payRentFromInvestmentsAtYear || 0;
+    const withdrawingThisYear = withdrawStart > 0 && year >= withdrawStart;
+    let effLTCGRate = 0;
+    if (withdrawingThisYear) {
+      const exitStateCGForRate = (inp.stateAtSaleCapGainsRate >= 0) ? inp.stateAtSaleCapGainsRate : inp.stateCapGainsRate;
+      effLTCGRate = ltcgTax(1, effFiling, exitStateCGForRate, ordinaryTaxableIncomeReal, agiBeforeGainReal);
+      if (effLTCGRate < 0) effLTCGRate = 0;
+      if (effLTCGRate >= 0.99) effLTCGRate = 0.99;
+    }
+
+    // Compound portfolio monthly + add monthly contribution (+ optional rent withdrawal)
     for (let m = 0; m < 12; m++) {
       portfolio = portfolio * (1 + monthlyStockReal);
       portfolio += monthlyDiffReal;
       costBasis += monthlyDiffReal;
+      if (withdrawingThisYear && portfolio > 0) {
+        const gainPct = Math.max(0, (portfolio - costBasis) / portfolio);
+        const taxDragRate = gainPct * effLTCGRate;
+        const grossWithdraw = Math.min(portfolio, monthlyRentForYearReal / Math.max(0.01, 1 - taxDragRate));
+        portfolio -= grossWithdraw;
+        costBasis -= grossWithdraw * (1 - gainPct);
+        if (portfolio < 0) portfolio = 0;
+        if (costBasis < 0) costBasis = 0;
+      }
     }
     // Floor portfolio at 0 (extreme tail draws)
     if (portfolio < 0) portfolio = 0;
@@ -3155,11 +3472,21 @@ function simulate(inp) {
       homeGainReal,
       homeCapGainsTaxReal,
       portfolio,
+      costBasis,
       investGainReal,
       investCapGainsTaxReal,
       buyerNetWorthReal,
       renterNetWorthReal,
       cumTaxSavingsReal,
+      // v6.1: expose annual interest/principal/PMI for the year-by-year table
+      yearInterestReal,
+      yearPrincipalReal,
+      yearPMIReal,
+      // v6.2: expose remaining ownership-cost line items for cost-composition bar
+      yearPropTaxReal,
+      yearMaintReal,
+      yearInsuranceReal,
+      yearHoaReal,
       // v3 additions
       isRental,
       cumDepreciationReal,
@@ -3634,6 +3961,18 @@ function fmtMoneyExact(n) {
 }
 function fmtPct(n) { return n.toFixed(1) + '%'; }
 function fmtYears(n) { return n.toFixed(1) + ' yr'; }
+
+// v6.2: Nominal-dollar display transform. The simulation always runs in real (today's)
+// dollars; this helper applies the optional inflation grossup when the user wants to
+// see future values in then-current dollars. `year` is years from today (0 = today).
+function displayValue(realValue, year) {
+  if (!state.showNominalDollars) return realValue;
+  const infl = (state.inflation || 0) / 100;
+  return realValue * Math.pow(1 + infl, year || 0);
+}
+// Format helper that applies the nominal grossup before formatting.
+function fmtMoneyDisp(realValue, year, opts) { return fmtMoney(displayValue(realValue, year), opts); }
+function fmtMoneyExactDisp(realValue, year) { return fmtMoneyExact(displayValue(realValue, year)); }
 
 function renderPathSummary(inp, result) {
   const setText = (id, text) => {
@@ -4337,9 +4676,11 @@ function render() {
       } else {
         // Always render as a positive advantage for the winner. The eyebrow
         // tells you WHO wins; this number is HOW MUCH the winner is ahead.
-        big.textContent = '+' + fmtMoney(totalAbs);
-        const monthlyEqStr = fmtMoneyExact(monthlyEq);
-        sub.textContent = `after ${yrs} years — that's about ${monthlyEqStr}/month more in your pocket`;
+        // v6.2: apply nominal-dollar grossup if toggled (display only).
+        big.textContent = '+' + fmtMoneyDisp(totalAbs, yrs);
+        const monthlyEqStr = fmtMoneyExactDisp(monthlyEq, yrs);
+        const nominalNote = state.showNominalDollars ? ' (nominal)' : '';
+        sub.textContent = `after ${yrs} years — that's about ${monthlyEqStr}/month more in your pocket${nominalNote}`;
       }
     }
 
@@ -4380,15 +4721,16 @@ function render() {
     capInv.classList.toggle('win', verdictState === 'invest');
     fill.style.width = buyPct.toFixed(1) + '%';
     tick.style.left = buyPct.toFixed(1) + '%';
-    document.getElementById('v5-label-buy').textContent = fmtMoney(last.buyerNetWorthReal);
-    document.getElementById('v5-label-invest').textContent = fmtMoney(last.renterNetWorthReal);
+    // v6.2: apply nominal-dollar display when toggled
+    document.getElementById('v5-label-buy').textContent = fmtMoneyDisp(last.buyerNetWorthReal, yrs);
+    document.getElementById('v5-label-invest').textContent = fmtMoneyDisp(last.renterNetWorthReal, yrs);
     const deltaEl = document.getElementById('v5-delta');
     if (verdictState === 'close') {
-      deltaEl.innerHTML = `Within ${fmtMoneyExact(closeThreshold)} of break-even`;
+      deltaEl.innerHTML = `Within ${fmtMoneyExactDisp(closeThreshold, yrs)} of break-even`;
     } else if (verdictState === 'buy') {
-      deltaEl.innerHTML = `<span class="arr">◀</span> +${fmtMoney(totalAbs)} more in home equity`;
+      deltaEl.innerHTML = `<span class="arr">◀</span> +${fmtMoneyDisp(totalAbs, yrs)} more in home equity`;
     } else {
-      deltaEl.innerHTML = `+${fmtMoney(totalAbs)} more in stocks <span class="arr">▶</span>`;
+      deltaEl.innerHTML = `+${fmtMoneyDisp(totalAbs, yrs)} more in stocks <span class="arr">▶</span>`;
     }
 
     // 3 factor pills (compact, replaces wall-of-text "why")
@@ -4478,14 +4820,25 @@ function render() {
   renderStressTest(inp);
   renderRecessionScenario(inp, result);
 
+  // v6.1: Year-by-year detail table + PMI field visibility
+  renderAmortTable(result);
+  syncPMIFieldVisibility();
+
+  // v6.2: cost composition + saved scenarios
+  renderCostComposition(inp, result);
+  renderScenarios();
+
   // Update displayed slider values
-  for (const k of ['downPaymentPct','stockReturnReal','homeAppreciationReal','rentGrowthReal','inflation','propertyTaxRate','maintenancePct','marginalTaxRate','closingCostPct','sellingCostPct','disciplineRate','stateCapGainsRate','taxAdvantagedPct']) {
+  for (const k of ['downPaymentPct','stockReturnReal','homeAppreciationReal','rentGrowthReal','inflation','propertyTaxRate','maintenancePct','marginalTaxRate','closingCostPct','sellingCostPct','disciplineRate','stateCapGainsRate','taxAdvantagedPct','pmiRate']) {
     const el = document.getElementById(k + '-display');
     if (el) el.textContent = state[k].toFixed(state[k] % 1 === 0 ? 0 : 1) + '%';
   }
   // stateIncomeTax is dollars, not %
   const stateIncEl = document.getElementById('stateIncomeTax-display');
   if (stateIncEl) stateIncEl.textContent = '$' + (state.stateIncomeTax || 0).toLocaleString();
+  // v6.1: extra payments is /yr (not %)
+  const extraEl = document.getElementById('extraPaymentsPerYear-display');
+  if (extraEl) extraEl.textContent = state.extraPaymentsPerYear.toFixed(state.extraPaymentsPerYear % 1 === 0 ? 0 : 1) + ' / yr';
 
   syncURL();
 }
@@ -4571,14 +4924,340 @@ function renderAffordability(inp, result) {
   // Banner (only shown in advanced mode now)
   const word = ratio < 0.28 ? 'Within the 28% guideline' : ratio < 0.36 ? 'Stretching your budget (above 28%)' : 'Above the 36% lender ceiling';
   const icon = status === 'pos' ? 'i-check' : 'i-alert';
+  // v6.1: optional living-expenses leftover lines
+  let leftoverHTML = '';
+  const expenses = Math.max(0, inp.monthlyLivingExpenses || 0);
+  if (expenses > 0) {
+    const buyLeftover = monthlyGross - piti - expenses;
+    const rentLeftover = monthlyGross - inp.monthlyRent - expenses;
+    leftoverHTML = `<div class="b" style="margin-top:6px">Buying leaves <b>${fmtMoneyExact(buyLeftover)}/mo</b> after expenses. Renting leaves <b>${fmtMoneyExact(rentLeftover)}/mo</b>.</div>`;
+  }
   if (wrap) wrap.innerHTML = `
     <div class="afford ${status === 'bad' ? 'neg' : status}">
       <span class="afford-icon"><svg width="20" height="20"><use href="#${icon}"/></svg></span>
       <div class="afford-body">
         <div class="h">${word}</div>
         <div class="b">PITI of <b>${fmtMoneyExact(piti)}/mo</b> is <b>${pct}%</b> of your <b>${fmtMoneyExact(monthlyGross)}/mo</b> gross income. The "28/36 rule" usually measures housing against gross income; lenders typically allow up to 36%.</div>
+        ${leftoverHTML}
       </div>
     </div>`;
+}
+
+// v6.1: Year-by-year amortization detail table (Advanced mode only).
+function renderAmortTable(result) {
+  const tbody = document.getElementById('amort-tbody');
+  if (!tbody || !result || !Array.isArray(result.yearly)) return;
+  let html = '';
+  for (const y of result.yearly) {
+    const gap = y.buyerNetWorthReal - y.renterNetWorthReal;
+    const gapClass = gap >= 0 ? 'gap-pos' : 'gap-neg';
+    const gapPrefix = gap > 0 ? '+' : '';
+    // v6.2: optional nominal-dollar display, applied per row at row's year
+    html += `<tr>
+      <td>${y.year}</td>
+      <td>${fmtMoneyExactDisp(y.remainingLoanReal, y.year)}</td>
+      <td>${fmtMoneyExactDisp(y.yearInterestReal || 0, y.year)}</td>
+      <td>${fmtMoneyExactDisp(y.yearPrincipalReal || 0, y.year)}</td>
+      <td>${fmtMoneyExactDisp(y.equityReal, y.year)}</td>
+      <td>${fmtMoneyExactDisp(y.portfolio, y.year)}</td>
+      <td class="${gapClass}">${gapPrefix}${fmtMoneyExactDisp(gap, y.year)}</td>
+    </tr>`;
+  }
+  tbody.innerHTML = html;
+}
+
+// v6.1: PMI field is only meaningful when down payment is under 20%.
+function syncPMIFieldVisibility() {
+  const field = document.getElementById('pmiRate-field');
+  if (!field) return;
+  field.style.display = (state.downPaymentPct < 20) ? '' : 'none';
+}
+
+// v6.1: CSV export of result.yearly[].
+function downloadAmortCSV(result) {
+  if (!result || !Array.isArray(result.yearly)) return;
+  const headers = ['year','remainingLoan','yearInterest','yearPrincipal','homeValue','equity','portfolio','costBasis','buyerNetWorth','renterNetWorth','cumTaxSavings'];
+  const round = (n) => (typeof n === 'number' && isFinite(n)) ? Math.round(n) : 0;
+  const rows = [headers.join(',')];
+  for (const y of result.yearly) {
+    rows.push([
+      y.year,
+      round(y.remainingLoanReal),
+      round(y.yearInterestReal || 0),
+      round(y.yearPrincipalReal || 0),
+      round(y.homeValueReal),
+      round(y.equityReal),
+      round(y.portfolio),
+      round(y.costBasis || 0),
+      round(y.buyerNetWorthReal),
+      round(y.renterNetWorthReal),
+      round(y.cumTaxSavingsReal || 0),
+    ].join(','));
+  }
+  const csv = rows.join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `buy-vs-rent-${Date.now()}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+// ============================================================================
+// v6.2: COST COMPOSITION — gross consumption costs over the holding period
+// Excludes mortgage principal (wealth transfer, not consumption — HMS user cost).
+// ============================================================================
+function renderCostComposition(inp, result) {
+  const bar = document.getElementById('cost-comp-bar');
+  const legend = document.getElementById('cost-comp-legend');
+  const totalEl = document.getElementById('cost-comp-total');
+  if (!bar || !legend || !totalEl || !result || !Array.isArray(result.yearly)) return;
+
+  const yrs = inp.yearsStay || result.yearly.length;
+  const slice = result.yearly.slice(0, yrs);
+  const sum = (key) => slice.reduce((s, y) => s + (y[key] || 0), 0);
+
+  const interest   = sum('yearInterestReal');
+  const propTax    = sum('yearPropTaxReal');
+  const insurance  = (inp.homeInsurance || 0) * yrs;
+  const hoa        = (inp.monthlyHOA || 0) * 12 * yrs;
+  const maint      = sum('yearMaintReal');
+  const pmi        = sum('yearPMIReal');
+  // Exit costs come from the final year row
+  const last = slice[slice.length - 1] || result.yearly[result.yearly.length - 1];
+  const sellCost   = last ? (last.sellingCostReal || 0) : (inp.homePrice * inp.sellingCostPct / 100);
+  const capGainTax = last ? (last.homeCapGainsTaxReal || 0) : 0;
+
+  // Categories with our existing tokens — no new colors introduced.
+  const cats = [
+    { key: 'interest',  label: 'Mortgage interest', amount: interest,   color: 'var(--brand-500)' },
+    { key: 'propTax',   label: 'Property tax',      amount: propTax,    color: 'var(--info-500)' },
+    { key: 'insurance', label: 'Insurance',         amount: insurance,  color: 'var(--warn-500)' },
+    { key: 'hoa',       label: 'HOA',               amount: hoa,        color: 'var(--text-3)' },
+    { key: 'maint',     label: 'Maintenance',       amount: maint,      color: 'var(--pos-500)' },
+    { key: 'pmi',       label: 'PMI',               amount: pmi,        color: 'var(--neg-500)' },
+    { key: 'sell',      label: 'Selling costs',     amount: sellCost,   color: 'var(--text-2)' },
+    { key: 'capGain',   label: 'Capital gains tax', amount: capGainTax, color: 'var(--brand-700, var(--brand-500))' },
+  ].filter(c => c.amount > 0);
+
+  const total = cats.reduce((s, c) => s + c.amount, 0);
+  if (total <= 0) {
+    bar.innerHTML = '';
+    legend.innerHTML = '<div class="scenarios-empty">No costs computed yet.</div>';
+    totalEl.innerHTML = '';
+    return;
+  }
+
+  // Stacked bar segments
+  bar.innerHTML = cats.map(c => {
+    const pct = (c.amount / total) * 100;
+    return `<div class="seg" style="width:${pct.toFixed(2)}%; background:${c.color}" title="${c.label}: ${fmtMoneyExactDisp(c.amount, yrs)} (${pct.toFixed(1)}%)"></div>`;
+  }).join('');
+
+  // Legend rows
+  legend.innerHTML = cats.map(c => {
+    const pct = (c.amount / total) * 100;
+    return `<div class="row">
+      <span class="dot" style="background:${c.color}"></span>
+      <span class="name">${c.label}</span>
+      <span class="amt">${fmtMoneyExactDisp(c.amount, yrs)}</span>
+      <span class="pct">${pct.toFixed(1)}%</span>
+    </div>`;
+  }).join('');
+
+  totalEl.innerHTML = `Total spent over ${yrs} years: <b>${fmtMoneyExactDisp(total, yrs)}</b>${state.showNominalDollars ? ' (nominal)' : ''}`;
+}
+
+// ============================================================================
+// v6.2: SAVED SCENARIOS — localStorage-backed save / load / compare
+// Storage: bvi-scenarios = [{ name, inputs, savedAt }, ...] (max 5)
+// ============================================================================
+const SCENARIOS_KEY = 'bvi-scenarios';
+const SCENARIOS_MAX = 5;
+
+function loadScenarios() {
+  try {
+    const raw = localStorage.getItem(SCENARIOS_KEY);
+    if (!raw) return [];
+    const arr = JSON.parse(raw);
+    return Array.isArray(arr) ? arr.slice(0, SCENARIOS_MAX) : [];
+  } catch (e) { return []; }
+}
+function saveScenarios(list) {
+  try { localStorage.setItem(SCENARIOS_KEY, JSON.stringify(list.slice(0, SCENARIOS_MAX))); }
+  catch (e) {}
+}
+function addScenario(rawName) {
+  const list = loadScenarios();
+  if (list.length >= SCENARIOS_MAX) return { ok: false, reason: `Max ${SCENARIOS_MAX} scenarios saved. Delete one to add another.` };
+  const name = (rawName || '').trim().slice(0, 30) || `Scenario ${list.length + 1}`;
+  list.push({ name, inputs: currentInputs(), savedAt: Date.now() });
+  saveScenarios(list);
+  return { ok: true };
+}
+function deleteScenario(idx) {
+  const list = loadScenarios();
+  list.splice(idx, 1);
+  saveScenarios(list);
+}
+function loadScenarioInto(idx) {
+  const list = loadScenarios();
+  const s = list[idx];
+  if (!s || !s.inputs) return;
+  for (const k of Object.keys(DEFAULTS)) {
+    if (k in s.inputs) state[k] = s.inputs[k];
+  }
+  // After loading, sync every visible input element to the new state
+  syncAllInputsFromState();
+  render();
+}
+
+// v6.2: Push state back into every DOM input/slider/toggle/chip. Used by presets + scenario load.
+function syncAllInputsFromState() {
+  // Sliders + their number twins + their %-displays
+  const sliderKeys = ['downPaymentPct','stockReturnReal','homeAppreciationReal','rentGrowthReal','inflation','propertyTaxRate','maintenancePct','marginalTaxRate','closingCostPct','sellingCostPct','disciplineRate','stateCapGainsRate','taxAdvantagedPct','stateIncomeTax','pmiRate','extraPaymentsPerYear'];
+  for (const k of sliderKeys) {
+    const slider = document.getElementById(k);
+    const num = document.getElementById(k + '-input');
+    if (slider) slider.value = state[k];
+    if (num) num.value = state[k];
+  }
+  // Currency-number inputs (homePrice, monthlyRent, grossIncome, monthlyLivingExpenses)
+  const fmtCurr = (n) => (n > 0 ? Number(n).toLocaleString('en-US') : '');
+  const cKeys = ['homePrice','monthlyRent','grossIncome','monthlyLivingExpenses'];
+  for (const k of cKeys) {
+    const el = document.getElementById(k);
+    if (el) el.value = fmtCurr(state[k]);
+  }
+  // Plain number inputs
+  const nKeys = ['mortgageRate','homeInsurance','monthlyHOA','currentYear','loanOriginationYear','pointsPaid','convertToRentalAtYear','marriageYear','divorceYear','stateAtSaleCapGainsRate','payRentFromInvestmentsAtYear'];
+  for (const k of nKeys) {
+    const el = document.getElementById(k);
+    if (el) el.value = state[k];
+  }
+  // Renter override empty-means-zero special case
+  const rcEl = document.getElementById('renterMonthlyContribution');
+  if (rcEl) rcEl.value = state.renterMonthlyContribution > 0 ? state.renterMonthlyContribution : '';
+  // Tier-1 mirrors
+  const dp1 = document.getElementById('downPaymentPctTier1');
+  if (dp1) dp1.value = state.downPaymentPct;
+  const gi1 = document.getElementById('grossIncomeTier1');
+  if (gi1) gi1.value = state.grossIncome > 0 ? Math.round(state.grossIncome / 12).toLocaleString('en-US') : '';
+  // Toggles
+  const toggleKeys = ['married','itemize','useMonteCarlo','idiosyncraticRisk','behavioralDiscipline','useTCopula','stochasticTaxRegime','stochasticRent','marginalRateWalk','useWeibullHorizon','showNominalDollars'];
+  for (const k of toggleKeys) {
+    const t = document.getElementById(k);
+    if (t) { t.classList.toggle('on', !!state[k]); t.setAttribute('aria-pressed', String(!!state[k])); }
+  }
+  // Number chip groups (yearsStay, loanTerm)
+  document.querySelectorAll('[data-stay]').forEach(c => c.classList.toggle('active', parseInt(c.getAttribute('data-stay'),10) === state.yearsStay));
+  document.querySelectorAll('[data-loan]').forEach(c => c.classList.toggle('active', parseInt(c.getAttribute('data-loan'),10) === state.loanTerm));
+  // Home-price quick chips
+  document.querySelectorAll('#homePrice-chips [data-home]').forEach(c => c.classList.toggle('active', parseInt(c.getAttribute('data-home'),10) === state.homePrice));
+  // String chip groups
+  document.querySelectorAll('#tcjaMode-chips [data-tcja]').forEach(c => c.classList.toggle('active', c.getAttribute('data-tcja') === state.tcjaMode));
+  document.querySelectorAll('#partialExclusionReason-chips [data-pe]').forEach(c => c.classList.toggle('active', c.getAttribute('data-pe') === state.partialExclusionReason));
+  document.querySelectorAll('#propertyTaxRegime-chips [data-ptr]').forEach(c => c.classList.toggle('active', c.getAttribute('data-ptr') === state.propertyTaxRegime));
+  // Archetype cards (mirror disciplineRate)
+  const disc = state.disciplineRate;
+  let active = 'mixed';
+  if (disc >= 75) active = 'automated';
+  else if (disc < 35) active = 'spender';
+  document.querySelectorAll('.archetype-card').forEach(c => {
+    c.setAttribute('aria-checked', c.getAttribute('data-archetype') === active);
+  });
+}
+
+// v6.2: Apply a preset by name. 'custom' = reset to defaults.
+function applyPreset(name) {
+  if (name === 'custom') {
+    for (const k of Object.keys(DEFAULTS)) state[k] = DEFAULTS[k];
+  } else {
+    const p = PRESETS[name];
+    if (!p) return;
+    for (const k of Object.keys(p)) state[k] = p[k];
+  }
+  syncAllInputsFromState();
+  render();
+}
+
+function renderScenarios() {
+  const listEl = document.getElementById('scenarios-list');
+  const cmpEl = document.getElementById('scenarios-compare');
+  if (!listEl || !cmpEl) return;
+  const list = loadScenarios();
+  if (!list.length) {
+    listEl.innerHTML = '<div class="scenarios-empty">No scenarios saved yet. Tweak the inputs and click Save current.</div>';
+    cmpEl.innerHTML = '';
+    return;
+  }
+  // Build rows
+  listEl.innerHTML = list.map((s, i) => {
+    let mini = '';
+    try {
+      const r = simulate(s.inputs);
+      const d = r.finalDelta;
+      const cls = d >= 0 ? 'delta-pos' : 'delta-neg';
+      const word = d >= 0 ? 'Buying wins' : 'Investing wins';
+      mini = `<span class="${cls}">${word} by ${fmtMoney(Math.abs(d))}</span> over ${s.inputs.yearsStay} yr`;
+    } catch (e) {
+      mini = '<span class="delta-neg">Could not simulate</span>';
+    }
+    const dateStr = new Date(s.savedAt).toLocaleDateString();
+    const safeName = String(s.name || '').replace(/[<>&"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+    return `<div class="scenario-row">
+      <div class="meta">
+        <div class="name">${safeName}</div>
+        <div class="saved">Saved ${dateStr}</div>
+        <div class="verdict">${mini}</div>
+      </div>
+      <button class="btn btn-secondary" type="button" data-scenario-load="${i}">Load</button>
+      <button class="btn btn-secondary" type="button" data-scenario-delete="${i}">Delete</button>
+    </div>`;
+  }).join('');
+
+  // Wire load/delete buttons
+  listEl.querySelectorAll('[data-scenario-load]').forEach(btn => {
+    btn.addEventListener('click', () => loadScenarioInto(parseInt(btn.getAttribute('data-scenario-load'), 10)));
+  });
+  listEl.querySelectorAll('[data-scenario-delete]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      deleteScenario(parseInt(btn.getAttribute('data-scenario-delete'), 10));
+      renderScenarios();
+    });
+  });
+
+  // Compare table when 2+ saved
+  if (list.length >= 2) {
+    const rows = list.map(s => {
+      let r;
+      try { r = simulate(s.inputs); } catch (e) { r = null; }
+      const delta = r ? r.finalDelta : 0;
+      const be = r ? (r.breakEvenPersistent || r.breakEven) : null;
+      const cls = delta >= 0 ? 'delta-pos' : 'delta-neg';
+      const pr = (s.inputs.homePrice && s.inputs.monthlyRent) ? (s.inputs.homePrice / (s.inputs.monthlyRent * 12)) : 0;
+      const safeName = String(s.name || '').replace(/[<>&"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+      return `<tr>
+        <td>${safeName}</td>
+        <td class="${cls}">${delta >= 0 ? '+' : '−'}${fmtMoney(Math.abs(delta))}</td>
+        <td>${be ? be + ' yr' : '—'}</td>
+        <td>${s.inputs.yearsStay} yr</td>
+        <td>${pr.toFixed(1)}×</td>
+        <td>${s.inputs.downPaymentPct}%</td>
+      </tr>`;
+    }).join('');
+    cmpEl.innerHTML = `<table>
+      <thead><tr>
+        <th>Scenario</th><th>Final delta</th><th>Break-even</th><th>Years stayed</th><th>Price/Rent</th><th>Down %</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  } else {
+    cmpEl.innerHTML = '';
+  }
 }
 
 function renderChart(yearly, mc, result) {
@@ -4603,15 +5282,17 @@ function renderChart(yearly, mc, result) {
     } else {
       monthlyLine = '';
     }
+    // v6.2: apply nominal-dollar grossup at horizon if toggled; startCap stays in today's dollars.
+    const nominalSuffix = state.showNominalDollars ? ' (nominal)' : '';
     endpoints.innerHTML = `
       <div class="ep buy">
-        <span class="ep-label">Buy: home equity at year ${yrs}</span>
-        <span class="ep-value">${fmtMoneyExact(buyEnd)}</span>
+        <span class="ep-label">Buy: home equity at year ${yrs}${nominalSuffix}</span>
+        <span class="ep-value">${fmtMoneyExactDisp(buyEnd, yrs)}</span>
         <span class="ep-arc">Started with ${fmtMoneyExact(startCap)} down + closing</span>
       </div>
       <div class="ep invest">
-        <span class="ep-label">Rent + invest: portfolio at year ${yrs}</span>
-        <span class="ep-value">${fmtMoneyExact(investEnd)}</span>
+        <span class="ep-label">Rent + invest: portfolio at year ${yrs}${nominalSuffix}</span>
+        <span class="ep-value">${fmtMoneyExactDisp(investEnd, yrs)}</span>
         <span class="ep-arc">Started with the same ${fmtMoneyExact(startCap)} in stocks · ${monthlyLine}</span>
       </div>`;
   }
@@ -4948,6 +5629,10 @@ function init() {
   bindNumber('marriageYear', 'marriageYear');
   bindNumber('divorceYear', 'divorceYear');
   bindNumber('stateAtSaleCapGainsRate', 'stateAtSaleCapGainsRate');
+  // v6.1: pay rent from portfolio, year trigger
+  bindNumber('payRentFromInvestmentsAtYear', 'payRentFromInvestmentsAtYear');
+  // v6.1: monthly living expenses for affordability display
+  bindCurrencyNumber('monthlyLivingExpenses', 'monthlyLivingExpenses');
 
   bindSlider('downPaymentPct', 'downPaymentPct');
   bindSlider('stockReturnReal', 'stockReturnReal');
@@ -4963,6 +5648,9 @@ function init() {
   bindSlider('stateCapGainsRate', 'stateCapGainsRate');
   bindSlider('taxAdvantagedPct', 'taxAdvantagedPct');
   bindSlider('stateIncomeTax', 'stateIncomeTax');
+  // v6.1
+  bindSlider('pmiRate', 'pmiRate');
+  bindSlider('extraPaymentsPerYear', 'extraPaymentsPerYear');
 
   bindToggle('married', 'married');
   bindToggle('itemize', 'itemize');
@@ -4974,6 +5662,8 @@ function init() {
   bindToggle('stochasticRent', 'stochasticRent');
   bindToggle('marginalRateWalk', 'marginalRateWalk');
   bindToggle('useWeibullHorizon', 'useWeibullHorizon');
+  // v6.2: nominal-dollar display toggle (real is the default, this is display-only)
+  bindToggle('showNominalDollars', 'showNominalDollars');
 
   bindChips('.chips [data-stay]', 'data-stay', 'yearsStay');
   bindChips('[data-loan]', 'data-loan', 'loanTerm');
@@ -5010,6 +5700,39 @@ function init() {
     drawerBtn.classList.toggle('open', !open);
     drawerBtn.setAttribute('aria-expanded', String(!open));
   });
+
+  // v6.1: CSV export of year-by-year detail
+  const csvBtn = document.getElementById('amort-csv-btn');
+  if (csvBtn) {
+    csvBtn.addEventListener('click', () => {
+      const inp = currentInputs();
+      const result = simulate(inp);
+      downloadAmortCSV(result);
+    });
+  }
+
+  // v6.2: Quick-start preset chips
+  document.querySelectorAll('#presets-row [data-preset]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      applyPreset(btn.getAttribute('data-preset'));
+    });
+  });
+
+  // v6.2: Scenarios save button
+  const scenarioSaveBtn = document.getElementById('scenario-save-btn');
+  const scenarioNameInp = document.getElementById('scenario-name-input');
+  if (scenarioSaveBtn && scenarioNameInp) {
+    const doSave = () => {
+      const res = addScenario(scenarioNameInp.value);
+      if (!res.ok) { alert(res.reason || 'Could not save scenario.'); return; }
+      scenarioNameInp.value = '';
+      renderScenarios();
+    };
+    scenarioSaveBtn.addEventListener('click', doSave);
+    scenarioNameInp.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); doSave(); }
+    });
+  }
 
   // Theme toggle
   // Mode toggle (Simple / Advanced) — novice-first default per council
