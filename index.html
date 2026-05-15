@@ -1347,6 +1347,36 @@ body.simple-mode .show-advanced-cta button:hover { color: var(--text-1); border-
 }
 .drawer-section-title:first-child { margin-top: 0; }
 
+/* Umbrella category headers (Buyer / Renter / Shared) inside the refine drawer. */
+.drawer-umbrella-title {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; gap: 10px;
+  margin: 32px 0 4px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-1);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-2);
+}
+.drawer-umbrella-title:first-child { margin-top: 0; }
+.drawer-umbrella-title .ut-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  background: var(--surface-sunken);
+  color: var(--text-2);
+}
+.drawer-umbrella-title .ut-icon svg { width: 13px; height: 13px; }
+.drawer-umbrella-title.ut-buyer  .ut-icon { color: var(--pos-700);  background: var(--pos-50); }
+.drawer-umbrella-title.ut-renter .ut-icon { color: var(--info-700); background: var(--info-50); }
+.drawer-umbrella-title.ut-shared .ut-icon { color: var(--text-2);   background: var(--surface-sunken); }
+.drawer-umbrella-title .ut-sub {
+  margin-left: auto;
+  font-size: 11px; font-weight: 400;
+  letter-spacing: 0.02em; text-transform: none;
+  color: var(--text-3);
+}
+
 /* Disclaimer — compact one-liner (was a brick) */
 .disclaimer {
   display: flex; gap: var(--s-2); align-items: center;
@@ -2101,6 +2131,16 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
 
   <div class="drawer-body" id="drawer" hidden>
     <div class="drawer-grid">
+
+      <!-- ============================================================== -->
+      <!-- BUYER CONTROLS — affects the home-ownership path               -->
+      <!-- ============================================================== -->
+      <div class="drawer-umbrella-title ut-buyer">
+        <span class="ut-icon"><svg><use href="#i-home"/></svg></span>
+        Buyer controls
+        <span class="ut-sub">affects the home side</span>
+      </div>
+
       <div class="drawer-section-title">Loan</div>
 
       <div class="field">
@@ -2124,55 +2164,7 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
         <div class="cite">15-yr saves interest; 30-yr lowers monthly payment.</div>
       </div>
 
-      <div class="drawer-section-title">Returns &amp; growth (real, after inflation)</div>
-
-      <div class="field">
-        <label for="stockReturnReal">Stock return <span class="num" id="stockReturnReal-display"></span></label>
-        <div class="slider-row">
-          <input type="range" class="slider-track" id="stockReturnReal" min="-2" max="15" step="0.1" />
-          <div class="input-affix">
-            <input type="number" id="stockReturnReal-input" min="-2" max="15" step="0.1" />
-            <span class="affix right">%</span>
-          </div>
-        </div>
-        <div class="cite">S&amp;P 500 historical real return ≈ 7%. <button class="snap-default" data-default="stockReturnReal" data-value="7">Use 7%</button></div>
-      </div>
-
-      <div class="field">
-        <label for="disciplineRate">Investing discipline <span class="num" id="disciplineRate-display"></span></label>
-        <div class="slider-row">
-          <input type="range" class="slider-track" id="disciplineRate" min="0" max="100" step="5" />
-          <div class="input-affix">
-            <input type="number" id="disciplineRate-input" min="0" max="100" step="5" />
-            <span class="affix right">%</span>
-          </div>
-        </div>
-        <div class="cite">% of the monthly cost difference you actually invest. Most renters say 100% but invest ~20–35% (Goodman-Mayer 2018). <button class="snap-default" data-default="disciplineRate" data-value="100">Disciplined (100%)</button> <button class="snap-default" data-default="disciplineRate" data-value="50">Realistic (50%)</button></div>
-      </div>
-
-      <div class="field">
-        <label for="taxAdvantagedPct">% of renter savings in Roth/401(k) <span class="num" id="taxAdvantagedPct-display"></span></label>
-        <div class="slider-row">
-          <input type="range" class="slider-track" id="taxAdvantagedPct" min="0" max="100" step="5" />
-          <div class="input-affix">
-            <input type="number" id="taxAdvantagedPct-input" min="0" max="100" step="5" />
-            <span class="affix right">%</span>
-          </div>
-        </div>
-        <div class="cite">Sheltered fraction pays $0 LTCG at exit. W-2 employees with 401(k) match + Roth typically shelter 30-50%. Without this, the model under-credits the renter by $100-300K for HCOL tech (CPA Round 4). <button class="snap-default" data-default="taxAdvantagedPct" data-value="0">All taxable</button> <button class="snap-default" data-default="taxAdvantagedPct" data-value="30">Typical W-2 (30%)</button> <button class="snap-default" data-default="taxAdvantagedPct" data-value="60">Max shelterer (60%)</button></div>
-      </div>
-
-      <div class="field">
-        <label for="stateIncomeTax">State income tax (filling SALT bucket) <span class="num" id="stateIncomeTax-display"></span></label>
-        <div class="slider-row">
-          <input type="range" class="slider-track" id="stateIncomeTax" min="0" max="30000" step="500" />
-          <div class="input-affix">
-            <span class="affix">$</span>
-            <input type="number" id="stateIncomeTax-input" min="0" max="30000" step="500" />
-          </div>
-        </div>
-        <div class="cite">State income tax fills the SALT bucket before property tax can be credited. Current 2026 law starts from a $40.4K cap with high-income phaseout; legacy stress modes differ. <button class="snap-default" data-default="stateIncomeTax" data-value="0">TX/FL ($0)</button> <button class="snap-default" data-default="stateIncomeTax" data-value="14000">NY (~$14K)</button> <button class="snap-default" data-default="stateIncomeTax" data-value="18000">CA (~$18K)</button></div>
-      </div>
+      <div class="drawer-section-title">Home appreciation</div>
 
       <div class="field">
         <label for="homeAppreciationReal">Home appreciation <span class="num" id="homeAppreciationReal-display"></span></label>
@@ -2184,30 +2176,6 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
           </div>
         </div>
         <div class="cite">Median expected real appreciation. Case-Shiller long-run ≈ 0.4%; JKST 1870–2015 (with rental yield to owner-occupant as imputed rent) ≈ 7% total real. 2.5% is a median between Shiller's index-only floor and a metro-tilted prior. <button class="snap-default" data-default="homeAppreciationReal" data-value="2.5">Use 2.5%</button> <button class="snap-default" data-default="homeAppreciationReal" data-value="0.4">Shiller</button></div>
-      </div>
-
-      <div class="field">
-        <label for="rentGrowthReal">Rent growth <span class="num" id="rentGrowthReal-display"></span></label>
-        <div class="slider-row">
-          <input type="range" class="slider-track" id="rentGrowthReal" min="-2" max="6" step="0.1" />
-          <div class="input-affix">
-            <input type="number" id="rentGrowthReal-input" min="-2" max="6" step="0.1" />
-            <span class="affix right">%</span>
-          </div>
-        </div>
-        <div class="cite">CPI-Rent typically tracks inflation; ≈ 0% real. <button class="snap-default" data-default="rentGrowthReal" data-value="0">Use 0%</button></div>
-      </div>
-
-      <div class="field">
-        <label for="inflation">Inflation (used for nominal display) <span class="num" id="inflation-display"></span></label>
-        <div class="slider-row">
-          <input type="range" class="slider-track" id="inflation" min="0" max="8" step="0.1" />
-          <div class="input-affix">
-            <input type="number" id="inflation-input" min="0" max="8" step="0.1" />
-            <span class="affix right">%</span>
-          </div>
-        </div>
-        <div class="cite">Long-run US average ≈ 3%. <button class="snap-default" data-default="inflation" data-value="3">Use 3%</button></div>
       </div>
 
       <div class="drawer-section-title">Ownership costs</div>
@@ -2256,22 +2224,10 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
         <div class="cite">$0 for most SFH. Grows with inflation.</div>
       </div>
 
-      <div class="drawer-section-title">Taxes &amp; closing</div>
+      <div class="drawer-section-title">Buy/sell costs</div>
 
       <div class="field">
-        <label for="marginalTaxRate">Marginal tax rate <span class="num" id="marginalTaxRate-display"></span></label>
-        <div class="slider-row">
-          <input type="range" class="slider-track" id="marginalTaxRate" min="0" max="50" step="1" />
-          <div class="input-affix">
-            <input type="number" id="marginalTaxRate-input" min="0" max="50" step="1" />
-            <span class="affix right">%</span>
-          </div>
-        </div>
-        <div class="cite">Federal + state combined. Typical: 22–37%.</div>
-      </div>
-
-      <div class="field">
-        <label for="closingCostPct">Closing costs (buy) <span class="num" id="closingCostPct-display"></span></label>
+        <label for="closingCostPct">Closing costs <span class="num" id="closingCostPct-display"></span></label>
         <div class="slider-row">
           <input type="range" class="slider-track" id="closingCostPct" min="0" max="6" step="0.1" />
           <div class="input-affix">
@@ -2292,53 +2248,6 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
           </div>
         </div>
         <div class="cite">Realtor + transfer + staging. Typically 5–7%.</div>
-      </div>
-
-      <div class="field">
-        <label for="stateCapGainsRate">State capital-gains rate <span class="num" id="stateCapGainsRate-display"></span></label>
-        <div class="slider-row">
-          <input type="range" class="slider-track" id="stateCapGainsRate" min="0" max="14" step="0.1" />
-          <div class="input-affix">
-            <input type="number" id="stateCapGainsRate-input" min="0" max="14" step="0.1" />
-            <span class="affix right">%</span>
-          </div>
-        </div>
-        <div class="cite">CA 13.3% · NY 10.9% · NJ 10.75% · WA 7% · TX/FL/NV/TN/SD/WY/AK 0%. Most states tax LTCG as ordinary income.
-          <button class="snap-default" data-default="stateCapGainsRate" data-value="13.3">CA</button>
-          <button class="snap-default" data-default="stateCapGainsRate" data-value="10.9">NY</button>
-          <button class="snap-default" data-default="stateCapGainsRate" data-value="0">TX/FL</button>
-        </div>
-      </div>
-
-      <div class="drawer-section-title">Tax law assumptions</div>
-
-      <div class="field" style="grid-column: 1 / -1">
-        <label>Tax-law mode</label>
-        <div class="chips" id="tcjaMode-chips" role="radiogroup">
-          <button class="chip" type="button" data-tcja="current">Current 2026 law</button>
-          <button class="chip" type="button" data-tcja="legacySunset">Legacy sunset stress</button>
-          <button class="chip" type="button" data-tcja="extended">Old TCJA stress</button>
-        </div>
-        <div class="cite">Current law uses 2026 IRS values: $750K MID cap for post-2017 acquisition debt, $40.4K SALT cap with phaseout, and $32.2K MFJ standard deduction. Stress modes are historical hypotheticals, not the default forecast.</div>
-      </div>
-
-      <div class="field">
-        <label for="currentYear">Calendar year sim starts</label>
-        <div class="input-affix">
-          <input type="number" id="currentYear" min="2024" max="2050" step="1" />
-        </div>
-        <div class="cite">Anchors indexed tax thresholds and temporary SALT-cap years.</div>
-      </div>
-
-      <div class="field" style="grid-column: 1 / -1">
-        <label>§121 partial-exclusion reason (only matters if you sell &lt;2yr)</label>
-        <div class="chips" id="partialExclusionReason-chips" role="radiogroup">
-          <button class="chip" type="button" data-pe="none">None</button>
-          <button class="chip" type="button" data-pe="job">Job change (50+mi)</button>
-          <button class="chip" type="button" data-pe="health">Health</button>
-          <button class="chip" type="button" data-pe="unforeseen">Unforeseen</button>
-        </div>
-        <div class="cite">IRC §121(c) safe harbor. With reason: pro-rata exclusion = months_held / 24 × $250k/$500k. Without: $0 if held &lt;2 years.</div>
       </div>
 
       <div class="drawer-section-title">Property tax regime (state-aware)</div>
@@ -2373,14 +2282,188 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
         <div class="cite">IRC §461(g)(2): purchase-money points fully deductible in year paid.</div>
       </div>
 
-      <div class="drawer-section-title">Lifecycle &amp; life events</div>
+      <div class="drawer-section-title">§121 partial-exclusion</div>
+
+      <div class="field" style="grid-column: 1 / -1">
+        <label>§121 partial-exclusion reason (only matters if you sell &lt;2yr)</label>
+        <div class="chips" id="partialExclusionReason-chips" role="radiogroup">
+          <button class="chip" type="button" data-pe="none">None</button>
+          <button class="chip" type="button" data-pe="job">Job change (50+mi)</button>
+          <button class="chip" type="button" data-pe="health">Health</button>
+          <button class="chip" type="button" data-pe="unforeseen">Unforeseen</button>
+        </div>
+        <div class="cite">IRC §121(c) safe harbor. With reason: pro-rata exclusion = months_held / 24 × $250k/$500k. Without: $0 if held &lt;2 years.</div>
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- RENTER CONTROLS — affects the rent-and-invest path             -->
+      <!-- ============================================================== -->
+      <div class="drawer-umbrella-title ut-renter">
+        <span class="ut-icon"><svg><use href="#i-trend"/></svg></span>
+        Renter controls
+        <span class="ut-sub">affects the stocks side</span>
+      </div>
+
+      <div class="drawer-section-title">Stocks</div>
 
       <div class="field">
-        <label for="convertToRentalAtYear">Convert to rental at year (0 = primary throughout)</label>
-        <div class="input-affix">
-          <input type="number" id="convertToRentalAtYear" min="0" max="29" step="1" />
+        <label for="stockReturnReal">Stock return <span class="num" id="stockReturnReal-display"></span></label>
+        <div class="slider-row">
+          <input type="range" class="slider-track" id="stockReturnReal" min="-2" max="15" step="0.1" />
+          <div class="input-affix">
+            <input type="number" id="stockReturnReal-input" min="-2" max="15" step="0.1" />
+            <span class="affix right">%</span>
+          </div>
         </div>
-        <div class="cite">If converted: §121 exclusion erodes by non-qualified-use proration; depreciation becomes §1250 unrecaptured gain at 25%.</div>
+        <div class="cite">S&amp;P 500 historical real return ≈ 7%. <button class="snap-default" data-default="stockReturnReal" data-value="7">Use 7%</button></div>
+      </div>
+
+      <div class="field">
+        <label for="disciplineRate">Investing discipline <span class="num" id="disciplineRate-display"></span></label>
+        <div class="slider-row">
+          <input type="range" class="slider-track" id="disciplineRate" min="0" max="100" step="5" />
+          <div class="input-affix">
+            <input type="number" id="disciplineRate-input" min="0" max="100" step="5" />
+            <span class="affix right">%</span>
+          </div>
+        </div>
+        <div class="cite">% of the monthly cost difference you actually invest. Most renters say 100% but invest ~20–35% (Goodman-Mayer 2018). <button class="snap-default" data-default="disciplineRate" data-value="100">Disciplined (100%)</button> <button class="snap-default" data-default="disciplineRate" data-value="50">Realistic (50%)</button></div>
+      </div>
+
+      <div class="field">
+        <label for="taxAdvantagedPct">% in Roth/401(k) <span class="num" id="taxAdvantagedPct-display"></span></label>
+        <div class="slider-row">
+          <input type="range" class="slider-track" id="taxAdvantagedPct" min="0" max="100" step="5" />
+          <div class="input-affix">
+            <input type="number" id="taxAdvantagedPct-input" min="0" max="100" step="5" />
+            <span class="affix right">%</span>
+          </div>
+        </div>
+        <div class="cite">Sheltered fraction pays $0 LTCG at exit. W-2 employees with 401(k) match + Roth typically shelter 30-50%. Without this, the model under-credits the renter by $100-300K for HCOL tech (CPA Round 4). <button class="snap-default" data-default="taxAdvantagedPct" data-value="0">All taxable</button> <button class="snap-default" data-default="taxAdvantagedPct" data-value="30">Typical W-2 (30%)</button> <button class="snap-default" data-default="taxAdvantagedPct" data-value="60">Max shelterer (60%)</button></div>
+      </div>
+
+      <div class="drawer-section-title">Rent</div>
+
+      <div class="field">
+        <label for="rentGrowthReal">Rent growth <span class="num" id="rentGrowthReal-display"></span></label>
+        <div class="slider-row">
+          <input type="range" class="slider-track" id="rentGrowthReal" min="-2" max="6" step="0.1" />
+          <div class="input-affix">
+            <input type="number" id="rentGrowthReal-input" min="-2" max="6" step="0.1" />
+            <span class="affix right">%</span>
+          </div>
+        </div>
+        <div class="cite">CPI-Rent typically tracks inflation; ≈ 0% real. <button class="snap-default" data-default="rentGrowthReal" data-value="0">Use 0%</button></div>
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- SHARED — applies to both paths or to lifecycle assumptions     -->
+      <!-- ============================================================== -->
+      <div class="drawer-umbrella-title ut-shared">
+        <span class="ut-icon"><svg><use href="#i-info"/></svg></span>
+        Shared
+        <span class="ut-sub">applies to both paths</span>
+      </div>
+
+      <div class="drawer-section-title">Inflation &amp; tax</div>
+
+      <div class="field">
+        <label for="inflation">Inflation (used for nominal display) <span class="num" id="inflation-display"></span></label>
+        <div class="slider-row">
+          <input type="range" class="slider-track" id="inflation" min="0" max="8" step="0.1" />
+          <div class="input-affix">
+            <input type="number" id="inflation-input" min="0" max="8" step="0.1" />
+            <span class="affix right">%</span>
+          </div>
+        </div>
+        <div class="cite">Long-run US average ≈ 3%. <button class="snap-default" data-default="inflation" data-value="3">Use 3%</button></div>
+      </div>
+
+      <div class="field">
+        <label for="marginalTaxRate">Marginal tax rate <span class="num" id="marginalTaxRate-display"></span></label>
+        <div class="slider-row">
+          <input type="range" class="slider-track" id="marginalTaxRate" min="0" max="50" step="1" />
+          <div class="input-affix">
+            <input type="number" id="marginalTaxRate-input" min="0" max="50" step="1" />
+            <span class="affix right">%</span>
+          </div>
+        </div>
+        <div class="cite">Federal + state combined. Typical: 22–37%.</div>
+      </div>
+
+      <div class="field">
+        <label for="stateIncomeTax">State income tax (filling SALT bucket) <span class="num" id="stateIncomeTax-display"></span></label>
+        <div class="slider-row">
+          <input type="range" class="slider-track" id="stateIncomeTax" min="0" max="30000" step="500" />
+          <div class="input-affix">
+            <span class="affix">$</span>
+            <input type="number" id="stateIncomeTax-input" min="0" max="30000" step="500" />
+          </div>
+        </div>
+        <div class="cite">State income tax fills the SALT bucket before property tax can be credited. Current 2026 law starts from a $40.4K cap with high-income phaseout; legacy stress modes differ. <button class="snap-default" data-default="stateIncomeTax" data-value="0">TX/FL ($0)</button> <button class="snap-default" data-default="stateIncomeTax" data-value="14000">NY (~$14K)</button> <button class="snap-default" data-default="stateIncomeTax" data-value="18000">CA (~$18K)</button></div>
+      </div>
+
+      <div class="field">
+        <label for="stateCapGainsRate">State capital-gains rate <span class="num" id="stateCapGainsRate-display"></span></label>
+        <div class="slider-row">
+          <input type="range" class="slider-track" id="stateCapGainsRate" min="0" max="14" step="0.1" />
+          <div class="input-affix">
+            <input type="number" id="stateCapGainsRate-input" min="0" max="14" step="0.1" />
+            <span class="affix right">%</span>
+          </div>
+        </div>
+        <div class="cite">CA 13.3% · NY 10.9% · NJ 10.75% · WA 7% · TX/FL/NV/TN/SD/WY/AK 0%. Most states tax LTCG as ordinary income.
+          <button class="snap-default" data-default="stateCapGainsRate" data-value="13.3">CA</button>
+          <button class="snap-default" data-default="stateCapGainsRate" data-value="10.9">NY</button>
+          <button class="snap-default" data-default="stateCapGainsRate" data-value="0">TX/FL</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="stateAtSaleCapGainsRate">State cap-gains rate AT SALE (-1 = same as today)</label>
+        <div class="input-affix">
+          <input type="number" id="stateAtSaleCapGainsRate" min="-1" max="14" step="0.1" />
+          <span class="affix right">%</span>
+        </div>
+        <div class="cite">For relocation scenarios. CA §17951 trailing nexus on real-property gain regardless of residency at sale (not modeled).</div>
+      </div>
+
+      <div class="drawer-section-title">Tax-law mode</div>
+
+      <div class="field" style="grid-column: 1 / -1">
+        <label>Tax-law mode</label>
+        <div class="chips" id="tcjaMode-chips" role="radiogroup">
+          <button class="chip" type="button" data-tcja="current">Current 2026 law</button>
+          <button class="chip" type="button" data-tcja="legacySunset">Legacy sunset stress</button>
+          <button class="chip" type="button" data-tcja="extended">Old TCJA stress</button>
+        </div>
+        <div class="cite">Current law uses 2026 IRS values: $750K MID cap for post-2017 acquisition debt, $40.4K SALT cap with phaseout, and $32.2K MFJ standard deduction. Stress modes are historical hypotheticals, not the default forecast.</div>
+      </div>
+
+      <div class="field">
+        <label for="currentYear">Calendar year sim starts</label>
+        <div class="input-affix">
+          <input type="number" id="currentYear" min="2024" max="2050" step="1" />
+        </div>
+        <div class="cite">Anchors indexed tax thresholds and temporary SALT-cap years.</div>
+      </div>
+
+      <div class="drawer-section-title">Filing status &amp; life events</div>
+
+      <div class="toggle-row">
+        <div>
+          <span class="label">Married filing jointly</span>
+          <span class="sub">Section 121 exclusion: $500k vs $250k single</span>
+        </div>
+        <button class="toggle on" id="married" type="button" aria-pressed="true"></button>
+      </div>
+
+      <div class="toggle-row">
+        <div>
+          <span class="label">Itemize mortgage interest deduction</span>
+          <span class="sub">Compares against standard deduction (inflated each year)</span>
+        </div>
+        <button class="toggle on" id="itemize" type="button" aria-pressed="true"></button>
       </div>
 
       <div class="field">
@@ -2400,20 +2483,11 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
       </div>
 
       <div class="field">
-        <label for="stateAtSaleCapGainsRate">State cap-gains rate AT SALE (-1 = same as today)</label>
+        <label for="convertToRentalAtYear">Convert to rental at year (0 = primary throughout)</label>
         <div class="input-affix">
-          <input type="number" id="stateAtSaleCapGainsRate" min="-1" max="14" step="0.1" />
-          <span class="affix right">%</span>
+          <input type="number" id="convertToRentalAtYear" min="0" max="29" step="1" />
         </div>
-        <div class="cite">For relocation scenarios. CA §17951 trailing nexus on real-property gain regardless of residency at sale (not modeled).</div>
-      </div>
-
-      <div class="toggle-row">
-        <div>
-          <span class="label">Married filing jointly</span>
-          <span class="sub">Section 121 exclusion: $500k vs $250k single</span>
-        </div>
-        <button class="toggle on" id="married" type="button" aria-pressed="true"></button>
+        <div class="cite">If converted: §121 exclusion erodes by non-qualified-use proration; depreciation becomes §1250 unrecaptured gain at 25%.</div>
       </div>
 
       <div class="drawer-section-title">Uncertainty (Monte Carlo)</div>
@@ -2480,14 +2554,6 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
           <span class="sub">Real exit horizons follow Weibull(median=9, k=1.5) — divorce, relocation. Variable T per trial.</span>
         </div>
         <button class="toggle" id="useWeibullHorizon" type="button" aria-pressed="false"></button>
-      </div>
-
-      <div class="toggle-row">
-        <div>
-          <span class="label">Itemize mortgage interest deduction</span>
-          <span class="sub">Compares against standard deduction (inflated each year)</span>
-        </div>
-        <button class="toggle on" id="itemize" type="button" aria-pressed="true"></button>
       </div>
 
       <div class="drawer-section-title">Affordability check</div>
