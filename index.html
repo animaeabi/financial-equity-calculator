@@ -1235,6 +1235,31 @@ footer.method b { color: var(--text-2); font-weight: 500; }
   letter-spacing: -0.005em;
 }
 
+/* Renter monthly-contribution override — sits inside the archetype callout
+   under the three cards, behind an "or be exact" divider. */
+.renter-override {
+  margin-top: var(--s-4);
+  padding-top: var(--s-4);
+  border-top: 1px dashed var(--border-2);
+  display: flex; flex-direction: column; gap: var(--s-2);
+}
+.renter-override-or {
+  display: flex; align-items: center; justify-content: center;
+  margin: -22px 0 var(--s-2);
+  pointer-events: none;
+}
+.renter-override-or span {
+  background: var(--surface);
+  padding: 0 10px;
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-3);
+}
+.renter-override-label {
+  font-size: 13px; font-weight: 500; color: var(--text-1);
+}
+.renter-override-input { max-width: 320px; }
+
 /* "Show all the levers" CTA — promote to a real button, not a link */
 body.simple-mode .show-advanced-cta button {
   height: 44px; padding: 0 var(--s-5);
@@ -1514,6 +1539,18 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
         </button>
       </div>
       <div class="hint">Most renters say 100% but invest 20–35% (Goodman-Mayer 2018, Dalbar QAIB). Be honest — the model adjusts everything from this single answer.</div>
+
+      <!-- Explicit override: skip the archetype % and set an exact monthly stock contribution -->
+      <div class="renter-override">
+        <div class="renter-override-or"><span>or be exact</span></div>
+        <label for="renterMonthlyContribution" class="renter-override-label">If you already know what you'd invest to stocks each month while renting</label>
+        <div class="input-affix renter-override-input">
+          <span class="affix">$</span>
+          <input type="number" id="renterMonthlyContribution" inputmode="numeric" min="0" step="50" placeholder="0 = use the % above" />
+          <span class="affix right">/mo to stocks</span>
+        </div>
+        <div class="hint">Overrides the archetype %. Treated as a flat amount in today's dollars (doesn't grow with rent or inflation).</div>
+      </div>
     </div>
   </section>
 
@@ -2049,7 +2086,7 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
   <!-- Net-worth chart — the trajectory chart that actually answers the question -->
   <section class="chart-card" id="trajectory-card">
     <div class="section-title"><svg width="14" height="14"><use href="#i-trend"/></svg> The two trajectories, side by side</div>
-    <p class="section-sub">Same starting capital, year by year. Both lines include transaction costs and capital-gains taxes at exit. Buy side = down payment + closing → home equity. Rent + invest side = same dollars invested up front, plus the monthly cost difference (× your discipline rate) added every month.</p>
+    <p class="section-sub">Same starting capital, year by year. Both lines include transaction costs and capital-gains taxes at exit. Buy side = down payment + closing → home equity. Rent + invest side = same dollars invested up front, plus a monthly contribution into stocks (set explicitly above, or auto-computed from the cost gap × your discipline rate).</p>
     <div class="chart-legend">
       <div class="legend-item"><span class="legend-dot" style="background: var(--brand-500)"></span>Buy: home equity at sale</div>
       <div class="legend-item"><span class="legend-dot" style="background: var(--info-500)"></span>Rent + invest: portfolio after tax</div>
@@ -2153,6 +2190,7 @@ const DEFAULTS = {
   itemize: true,
   grossIncome: 0,
   disciplineRate: 50,             // v6 Phase 4: 50% default (Mixed archetype). Was 40% (Round 3). CFP Round 4: empirical norm is 25-40% population-weighted, 50% matches "Mixed" archetype card default
+  renterMonthlyContribution: 0,   // override: explicit $/mo (today's dollars) the renter invests into stocks. 0 = auto-compute from gap × discipline. >0 = bypass gap × discipline and use this directly.
   taxAdvantagedPct: 30,           // v6 Phase 2.1: % of renter's monthly contributions going to tax-advantaged accounts (Roth IRA, 401(k)). Default 30% reflects typical W-2 employee with 401(k) match + Roth space. Sheltered fraction pays $0 LTCG at exit. CPA Round 4: closes the $100-300K under-credited-investor gap.
   stateCapGainsRate: 0,           // additional state LTCG % (CA 13.3, NY 10.9, WA 7, TX/FL 0)
   stateIncomeTax: 0,              // v6 Phase 2.2: state income tax that already fills SALT bucket. Default 0 (TX/FL). For CA/NY this is non-trivial. Subtracted from $10K SALT cap BEFORE crediting property tax. Closes the SALT-stacking bug ($25-60K phantom MID benefit per CPA Round 4).
@@ -2447,7 +2485,11 @@ function simulate(inp) {
     const monthlyUserCostReal  = yearUserCostReal  / 12;        // decision: HMS user cost
     const monthlyRentForYearReal = rentReal;
     const monthlyGapReal = Math.max(0, monthlyUserCostReal - monthlyRentForYearReal);
-    const monthlyDiffReal = monthlyGapReal * disciplineThisYear;
+    // Renter contribution: explicit user override (in today's $) takes precedence over gap × discipline.
+    // The override is a flat real monthly amount — it does not grow with rent or inflation.
+    const monthlyDiffReal = (inp.renterMonthlyContribution > 0)
+      ? inp.renterMonthlyContribution
+      : monthlyGapReal * disciplineThisYear;
 
     // Compound portfolio monthly + add monthly contribution
     for (let m = 0; m < 12; m++) {
@@ -3822,6 +3864,19 @@ function renderChart(yearly, mc, result) {
     const buyEnd = mc ? mc.agg[mc.agg.length - 1].buyerMedian : last.buyerNetWorthReal;
     const investEnd = mc ? mc.agg[mc.agg.length - 1].investorMedian : last.renterNetWorthReal;
     const yrs = last.year;
+    // Describe the monthly stock contribution: explicit override (flat) or auto from year-1 gap × discipline
+    const override = state.renterMonthlyContribution > 0 ? state.renterMonthlyContribution : 0;
+    let monthlyLine;
+    if (override > 0) {
+      monthlyLine = `+ ${fmtMoneyExact(override)}/mo to stocks (your override)`;
+    } else if (yearly[0] && typeof yearly[0].monthlyDiffReal === 'number') {
+      const m = Math.round(yearly[0].monthlyDiffReal);
+      monthlyLine = m > 0
+        ? `+ ${fmtMoneyExact(m)}/mo to stocks (auto: cost gap × discipline)`
+        : `Rent ≥ ownership cost — no monthly contribution computed`;
+    } else {
+      monthlyLine = '';
+    }
     endpoints.innerHTML = `
       <div class="ep buy">
         <span class="ep-label">Buy: home equity at year ${yrs}</span>
@@ -3831,7 +3886,7 @@ function renderChart(yearly, mc, result) {
       <div class="ep invest">
         <span class="ep-label">Rent + invest: portfolio at year ${yrs}</span>
         <span class="ep-value">${fmtMoneyExact(investEnd)}</span>
-        <span class="ep-arc">Started with the same ${fmtMoneyExact(startCap)} in stocks</span>
+        <span class="ep-arc">Started with the same ${fmtMoneyExact(startCap)} in stocks · ${monthlyLine}</span>
       </div>`;
   }
 
@@ -4111,6 +4166,17 @@ function init() {
   bindNumber('homePrice', 'homePrice');
   bindNumber('monthlyRent', 'monthlyRent');
   bindNumber('mortgageRate', 'mortgageRate');
+  // Renter override: empty input means "no override" (0), so we don't use bindNumber
+  const renterContribEl = document.getElementById('renterMonthlyContribution');
+  if (renterContribEl) {
+    renterContribEl.value = state.renterMonthlyContribution > 0 ? state.renterMonthlyContribution : '';
+    renterContribEl.addEventListener('input', () => {
+      const raw = renterContribEl.value.trim();
+      const v = raw === '' ? 0 : parseFloat(raw);
+      state.renterMonthlyContribution = isNaN(v) || v < 0 ? 0 : v;
+      debouncedRender();
+    });
+  }
   bindNumber('homeInsurance', 'homeInsurance');
   bindNumber('monthlyHOA', 'monthlyHOA');
   bindNumber('grossIncome', 'grossIncome');
