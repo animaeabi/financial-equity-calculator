@@ -420,8 +420,8 @@ body.simple-mode .v6-card {
 }
 .path-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 132px minmax(0, 1fr);
-  gap: var(--s-4);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--s-6);
   align-items: stretch;
 }
 .path-card {
@@ -531,33 +531,6 @@ body.simple-mode .v6-card {
   height: 1px; background: var(--border-1);
   margin: var(--s-4) 0 0;
 }
-.path-bridge {
-  align-self: center;
-  min-height: 112px;
-  padding: var(--s-4) var(--s-3);
-  border: 1px dashed var(--border-2);
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  text-align: center;
-  background: var(--surface-sunken);
-}
-.path-bridge span {
-  color: var(--text-3);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-.path-bridge strong {
-  color: var(--text-1);
-  font-size: 16px;
-  line-height: 22px;
-  font-variant-numeric: tabular-nums slashed-zero;
-}
 .context-row {
   max-width: 360px;
 }
@@ -584,11 +557,6 @@ body.simple-mode .v6-card {
 @media (max-width: 760px) {
   .scenario-strip { grid-template-columns: 1fr; }
   .path-grid { grid-template-columns: 1fr; }
-  .path-bridge {
-    min-height: 0;
-    flex-direction: row;
-    justify-content: space-between;
-  }
   .context-row { max-width: none; }
 }
 @media (max-width: 540px) {
@@ -884,8 +852,7 @@ body.simple-mode .verdict-meta-item.advanced-only {
   display: none !important;
 }
 body.simple-mode .path-card .archetype-field,
-body.simple-mode .context-row,
-body.simple-mode #disclaimer {
+body.simple-mode .context-row {
   display: none !important;
 }
 body.simple-mode .intro h1 { font-size: 42px; line-height: 1.06; }
@@ -1172,18 +1139,17 @@ body:not(.untouched) .untouched-prompt { display: none; }
 
 .v6-grid {
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 40px;
-  align-items: center;
+  grid-template-columns: 1fr;
+  gap: 20px;
   margin-bottom: 24px;
 }
-@media (max-width: 640px) { .v6-grid { grid-template-columns: 1fr; gap: 20px; } }
 
-.v6-map-col { display: flex; align-items: center; justify-content: center; }
-.v6-regime-map { display: block; width: 280px; height: 160px; }
-@media (max-width: 640px) { .v6-regime-map { width: 100%; max-width: 320px; height: auto; aspect-ratio: 1.75 / 1; } }
-
-.v6-text-col { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+/* Source order is map-col first, text-col second. Use CSS order to push the
+   map below the text in Advanced mode (it's hidden entirely in Simple). */
+.v6-text-col { order: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.v6-map-col { order: 2; display: flex; align-items: center; justify-content: center; }
+.v6-regime-map { display: block; width: 100%; max-width: 360px; height: auto; aspect-ratio: 1.75 / 1; margin: 24px auto 0; }
+@media (max-width: 640px) { .v6-regime-map { max-width: 320px; margin-top: 12px; } }
 
 .v6-regime-label {
   font-size: 13px; font-weight: 600;
@@ -1489,7 +1455,7 @@ body .verdict-meta-detail {
   background: var(--surface-sunken); border: 1px solid var(--border-1);
   border-radius: var(--r-3); padding: var(--s-4) var(--s-5);
   max-width: 560px; margin: 0 auto var(--s-5);
-  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: var(--s-4);
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4);
 }
 @media (max-width: 540px) { body .verdict-meta-detail { grid-template-columns: 1fr 1fr; } }
 .verdict-meta-detail .vmd { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
@@ -1517,26 +1483,6 @@ body.untouched .v5-pills,
 body.untouched .v5-hero-circle { opacity: 0.85; transition: opacity var(--dur-base) var(--ease); }
 body.untouched .untouched-prompt { display: none; }
 
-/* Inline DTI chip (CFP #1: affordability gate) — neutral pill with small colored dot */
-.dti-chip {
-  display: inline-flex; align-items: center; gap: 8px;
-  margin-top: var(--s-2);
-  padding: 5px 11px 5px 10px; border-radius: 999px;
-  font-size: 12px; font-weight: 500; line-height: 1.4;
-  background: var(--surface-sunken);
-  border: 1px solid var(--border-1);
-  color: var(--text-2);
-}
-.dti-chip::before {
-  content: ''; width: 7px; height: 7px; border-radius: 50%;
-  background: var(--pos-500);
-  flex-shrink: 0;
-}
-.dti-chip.warn::before { background: var(--warn-500); }
-.dti-chip.bad::before { background: var(--neg-500); }
-.dti-chip b { color: var(--text-1); font-weight: 600; font-variant-numeric: tabular-nums; }
-.dti-chip svg { display: none; }
-[data-theme="dark"] .dti-chip { color: var(--text-2); }
 body.simple-mode .show-advanced-cta {
   display: block; text-align: center;
   margin: var(--s-5) auto;
@@ -1617,31 +1563,6 @@ body.simple-mode .show-advanced-cta button:hover { color: var(--text-1); border-
   letter-spacing: 0.02em; text-transform: none;
   color: var(--text-3);
 }
-
-/* Disclaimer — compact one-liner (was a brick) */
-.disclaimer {
-  display: flex; gap: var(--s-2); align-items: center;
-  padding: 8px 14px;
-  margin-bottom: var(--s-4);
-  background: transparent; color: var(--text-2);
-  border: 1px solid var(--border-1);
-  border-radius: 999px;
-  font-size: 12px; line-height: 16px;
-}
-.disclaimer .icon { flex-shrink: 0; color: var(--warn-500); display: flex; }
-.disclaimer .body { flex: 1; min-width: 0; }
-.disclaimer .body b { color: var(--text-1); font-weight: 600; }
-.disclaimer .disc-more {
-  background: none; border: none; padding: 0;
-  font: inherit; color: var(--brand-500); cursor: pointer;
-  text-decoration: underline; text-underline-offset: 2px;
-}
-.disclaimer .dismiss {
-  background: transparent; border: none; padding: 2px 4px;
-  color: var(--text-3); cursor: pointer; flex-shrink: 0;
-  display: flex;
-}
-.disclaimer .dismiss:hover { color: var(--text-1); }
 
 /* Slider field */
 .slider-row {
@@ -2081,10 +2002,6 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
   .verdict-meta-detail .vmd { flex-direction: row; justify-content: space-between; align-items: baseline; }
   .verdict-meta-detail .vmd .label { font-size: 11px; }
 
-  /* Disclaimer — stack icon/body/dismiss vertically so text breathes */
-  .disclaimer { flex-wrap: wrap; padding: 8px 12px; border-radius: var(--r-2); }
-  .disclaimer .body { flex-basis: 100%; order: 2; }
-
   /* Verdict cards — squeeze a bit more padding out at this width */
   .verdict-v5, .v6-card { padding: 20px 16px 0; }
   .v5-big { font-size: 56px; }
@@ -2274,11 +2191,6 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
         </div>
       </article>
 
-      <div class="path-bridge" aria-label="Both paths start with the same cash">
-        <span>Same starting cash</span>
-        <strong id="shared-start-cash">—</strong>
-      </div>
-
       <article class="path-card renter-path">
         <div class="path-card-head">
           <span class="path-icon"><svg width="18" height="18"><use href="#i-trend"/></svg></span>
@@ -2357,13 +2269,6 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
     </div>
   </section>
 
-  <!-- Disclaimer compact line (was a brick of yellow text) -->
-  <div id="disclaimer" class="disclaimer">
-    <span class="icon"><svg width="14" height="14"><use href="#i-alert"/></svg></span>
-    <div class="body"><b>One input, not the whole decision.</b> Doesn't check your reserves, job stability, or partner alignment — <button class="disc-more" id="disc-more">read what it ignores →</button></div>
-    <button class="dismiss" id="dismiss-disclaimer" type="button" aria-label="Dismiss"><svg width="14" height="14"><use href="#i-x"/></svg></button>
-  </div>
-
   <!-- Affordability banner (only if salary set) -->
   <div id="afford-banner"></div>
 
@@ -2428,12 +2333,13 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
     <div class="v6-footnote">Estimate only. Your rate, taxes, insurance, and home-specific maintenance will differ — get a lender quote and a CPA's read before deciding.</div>
   </section>
 
-  <!-- Detail meta grid (4 cells, hidden in simple by per-cell class) -->
+  <!-- Detail meta grid (3 cells, hidden in simple by per-cell class).
+       The "owning costs / mo more" cell is dropped because the first invest
+       pill already conveys the same number with cleaner copy. -->
   <div class="verdict-meta-detail">
     <div class="vmd"><span class="label">Break-even at</span><span class="value" id="meta-breakeven">—</span></div>
     <div class="vmd advanced-only"><span class="label">Break-even rent</span><span class="value" id="meta-equivrent">—</span></div>
     <div class="vmd"><span class="label">Price vs rent</span><span class="value" id="meta-pr">—</span></div>
-    <div class="vmd"><span class="label">Owning costs / mo more</span><span class="value" id="meta-monthly">—</span></div>
   </div>
 
   <!-- Legacy verdict shells (offscreen — render() still references some IDs; kept null-safe via CSS hide) -->
@@ -2518,8 +2424,8 @@ body.simple-mode .verdict-v5 .v6-math-link { margin-top: var(--s-3); }
 
   <!-- v6.2: Saved scenarios (Advanced-only) -->
   <section class="chart-card" id="scenarios-card">
-    <div class="section-title"><svg width="14" height="14"><use href="#i-info"/></svg> Saved scenarios</div>
-    <p class="section-sub">Save up to 5 named scenarios and compare verdicts.</p>
+    <div class="section-title" style="text-transform:none; letter-spacing:0; font-size:15px;"><svg width="14" height="14"><use href="#i-info"/></svg> Compare scenarios</div>
+    <p class="section-sub">Save the current setup to compare it against alternatives later — for example, "Buy in 2 years" vs "Keep renting and invest more." Up to 5.</p>
     <div class="scenarios-save-row">
       <input type="text" id="scenario-name-input" class="scenario-name-input" placeholder="Name this scenario" maxlength="30" />
       <button class="btn btn-secondary" id="scenario-save-btn" type="button">Save current</button>
@@ -4257,7 +4163,6 @@ function renderPathSummary(inp, result) {
     setText('buyer-monthly-cost', `${fmtMoneyExact(monthlyTotal)}/mo`);
     setText('buyer-monthly-breakdown', `${fmtMoneyExact(monthlyPI)} mortgage + ${fmtMoneyExact(monthlyTaxIns)} tax/ins/HOA + ${fmtMoneyExact(monthlyTotal - monthlyPI - monthlyTaxIns)} maint`);
   }
-  setText('shared-start-cash', fmtMoneyExact(upfront));
   setText('renter-start-cash', fmtMoneyExact(upfront));
   setText('renter-start-note', `Matches the buyer's day-1 cash, invested in stocks.`);
 
@@ -4996,19 +4901,48 @@ function render() {
     // 3 factor pills (compact, replaces wall-of-text "why")
     const pillsEl = document.getElementById('v5-pills');
     const pr = inp.homePrice / (inp.monthlyRent * 12);
+    const be = result.breakEvenPersistent || result.breakEven;
+    const stockHomeGap = inp.stockReturnReal - inp.homeAppreciationReal;
     const pills = [];
     if (verdictState === 'buy') {
-      pills.push({icon: 'i-clock', label: `${yrs}-year stay outweighs ${Math.round(inp.sellingCostPct)}% sell cost`});
-      if (pr <= 20) pills.push({icon: 'i-tag-down', label: `Price ${pr.toFixed(1)}× rent (under 20× favors buying)`});
-      else pills.push({icon: 'i-alert', label: `Price ${pr.toFixed(1)}× rent (over 20× usually rents)`});
-      pills.push({icon: 'i-trend', label: `${inp.homeAppreciationReal.toFixed(1)}% real home appreciation`});
+      // Pill 1: pick the strongest reason buying wins.
+      if (pr < 15) {
+        pills.push({icon: 'i-tag-down', label: `Price ${pr.toFixed(1)}x rent (under 15x favors buying)`});
+      } else if (be !== null && be !== 99 && be <= yrs) {
+        pills.push({icon: 'i-clock', label: `${yrs}-yr stay clears the year-${be} break-even`});
+      } else if (stockHomeGap <= 0) {
+        pills.push({icon: 'i-trend', label: `Home returns ${(-stockHomeGap).toFixed(1)}pp/yr above stocks`});
+      } else {
+        pills.push({icon: 'i-tag-down', label: `Price ${pr.toFixed(1)}x rent at these inputs`});
+      }
+      // Pill 2: stay vs sell-cost story, only meaningful when stay is long enough.
+      if (be !== null && be !== 99 && be <= yrs) {
+        pills.push({icon: 'i-clock', label: `${yrs}-yr stay outweighs ${Math.round(inp.sellingCostPct)}% sell cost`});
+      } else {
+        pills.push({icon: 'i-trend', label: `${inp.homeAppreciationReal.toFixed(1)}% real home appreciation`});
+      }
+      // Pill 3: returns comparison (always informative).
+      pills.push({icon: 'i-trend', label: `Stocks: ${inp.stockReturnReal.toFixed(1)}% real vs home: ${inp.homeAppreciationReal.toFixed(1)}%`});
     } else if (verdictState === 'invest') {
+      // Pill 1: cash-flow story (always relevant).
       pills.push({icon: 'i-tag-down', label: `Owning costs ${fmtMoneyExact(result.monthlyDelta)}/mo more`});
-      pills.push({icon: 'i-clock', label: `${yrs}-year stay too short`});
+      // Pill 2: pick the strongest reason.
+      if (be === 99 || be === null) {
+        pills.push({icon: 'i-alert', label: `Buying never catches up at these numbers`});
+      } else if (be > yrs) {
+        pills.push({icon: 'i-clock', label: `${yrs}-yr stay is ${be - yrs} short of break-even (year ${be})`});
+      } else if (pr > 22) {
+        pills.push({icon: 'i-alert', label: `Price ${pr.toFixed(1)}x rent (over 20x favors renting)`});
+      } else if (stockHomeGap >= 3) {
+        pills.push({icon: 'i-trend', label: `Stocks lead home returns by ${stockHomeGap.toFixed(1)}pp/yr`});
+      } else {
+        pills.push({icon: 'i-info', label: `Discipline ${inp.disciplineRate}% — close decision`});
+      }
+      // Pill 3: returns comparison (always informative).
       pills.push({icon: 'i-trend', label: `Stocks: ${inp.stockReturnReal.toFixed(1)}% real vs home: ${inp.homeAppreciationReal.toFixed(1)}%`});
     } else {
       pills.push({icon: 'i-clock', label: `${yrs}-year stay near break-even`});
-      pills.push({icon: 'i-tag-down', label: `Price ${pr.toFixed(1)}× rent`});
+      pills.push({icon: 'i-tag-down', label: `Price ${pr.toFixed(1)}x rent`});
       pills.push({icon: 'i-info', label: `Try a different stay length to see what flips`});
     }
     pillsEl.innerHTML = pills.map(p =>
@@ -5055,10 +4989,8 @@ function render() {
   }
   const pr = inp.homePrice / (inp.monthlyRent * 12);
   document.getElementById('meta-pr').textContent = pr.toFixed(1) + '×';
-  const monthlyDeltaStr = result.monthlyDelta > 0
-    ? '+' + fmtMoneyExact(result.monthlyDelta)
-    : fmtMoneyExact(result.monthlyDelta);
-  document.getElementById('meta-monthly').textContent = monthlyDeltaStr;
+  // Note: meta-monthly cell was retired — the first invest pill carries the same
+  // "owning costs $X/mo more" number with clearer copy.
 
   // P/R gauge
   // Map P/R to a 0-100% position: 5x → 0%, 30x → 100%
@@ -5172,15 +5104,9 @@ function renderAffordability(inp, result) {
   const ratio = piti / monthlyGross;
   const status = ratio < 0.28 ? 'pos' : ratio < 0.36 ? 'warn' : 'bad';
   const pct = Math.round(ratio * 100);
-  // Inline DTI chip in tier-1 (CFP #1: above-fold affordability gate)
-  if (dtiHint) {
-    const verdict = ratio < 0.28
-      ? `within the 28% guideline`
-      : ratio < 0.36
-      ? `above the 28% guideline — stretching`
-      : `above the 36% lender ceiling — most won't approve`;
-    dtiHint.innerHTML = `<span class="dti-chip ${status === 'bad' ? 'bad' : status === 'warn' ? 'warn' : ''}"><svg width="12" height="12" style="vertical-align:-2px"><use href="#${status === 'pos' ? 'i-check' : 'i-alert'}"/></svg> This home is <b>${pct}%</b> of gross income — ${verdict}.</span>`;
-  }
+  // Income entered: the .afford banner below covers the DTI story. Keep the
+  // inline hint slot empty to avoid duplicating it.
+  if (dtiHint) dtiHint.innerHTML = '';
   // Banner (only shown in advanced mode now)
   const word = ratio < 0.28 ? 'Within the 28% guideline' : ratio < 0.36 ? 'Stretching your budget (above 28%)' : 'Above the 36% lender ceiling';
   const icon = status === 'pos' ? 'i-check' : 'i-alert';
@@ -6154,21 +6080,6 @@ function init() {
     });
   }
 
-  // "Read what it ignores" inside the compact disclaimer pill — same target as footer link
-  const discMore = document.getElementById('disc-more');
-  if (discMore) {
-    discMore.addEventListener('click', (e) => {
-      e.preventDefault();
-      const wasSimple = document.body.classList.contains('simple-mode');
-      if (wasSimple) setMode('advanced');
-      const accBody = document.getElementById('acc-body');
-      const accBtn = document.getElementById('acc-toggle');
-      if (accBody && accBody.hidden && accBtn) accBtn.click();
-      const acc = document.getElementById('assumptions-acc');
-      if (acc) setTimeout(() => acc.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
-    });
-  }
-
   // Footer link in simple mode opens the assumptions accordion (and scrolls to it)
   const openAssumpBtn = document.getElementById('open-assumptions-from-simple');
   if (openAssumpBtn) {
@@ -6191,22 +6102,6 @@ function init() {
       const open = !accBody.hidden;
       accBody.hidden = open;
       accBtn.setAttribute('aria-expanded', String(!open));
-    });
-  }
-
-  // Disclaimer dismiss + persistence
-  try {
-    if (localStorage.getItem('bvi-disclaimer-dismissed') === '1') {
-      const d = document.getElementById('disclaimer');
-      if (d) d.style.display = 'none';
-    }
-  } catch (e) {}
-  const dismissBtn = document.getElementById('dismiss-disclaimer');
-  if (dismissBtn) {
-    dismissBtn.addEventListener('click', () => {
-      const d = document.getElementById('disclaimer');
-      if (d) d.style.display = 'none';
-      try { localStorage.setItem('bvi-disclaimer-dismissed', '1'); } catch (e) {}
     });
   }
 
